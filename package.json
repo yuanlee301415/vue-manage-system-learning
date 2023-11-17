@@ -1,6 +1,6 @@
 {
-  "name": "vue3-ts-template",
-  "version": "1.2.0",
+  "name": "vue-manage-system-learning",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
     "dev": "vite",
