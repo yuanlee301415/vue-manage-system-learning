@@ -1,4 +1,4 @@
-import {ROOT_ROUTE, HOME_ROUTE, PAGE_NOT_FOUND_ROUTE } from "@/router/routes/basic";
+import { ROOT_ROUTE, HOME_ROUTE, PAGE_NOT_FOUND_ROUTE } from '@/router/routes/basic'
 import ABOUT_ROUTE from '@/router/routes/modules/about'
 import TEST_ROUTE from '@/router/routes/modules/test'
 // import NESTED_ROUTE from "@/router/routes/modules/nested";

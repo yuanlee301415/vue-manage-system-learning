@@ -1,4 +1,4 @@
-import type {AppRouteRecordRaw} from "@/router/types"
+import type { AppRouteRecordRaw } from '@/router/types'
 
 import { PAGE_NOT_FOUND_NAME, LAYOUT, EXCEPTION_404 } from '@/router/constant'
 

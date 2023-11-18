@@ -8,7 +8,7 @@ type _RouteMeta = Partial<{
 
 export type AppRouteMeta = RouteMeta & _RouteMeta
 
-export interface AppRouteRecordRaw extends Omit<RouteRecordRaw, 'meta'|'children'> {
+export interface AppRouteRecordRaw extends Omit<RouteRecordRaw, 'meta' | 'children'> {
   name: string
   meta: AppRouteMeta
   children?: AppRouteRecordRaw[]
