@@ -1,9 +1,21 @@
-import type { AppRouteModule } from '@/router/types'
+import type {AppRouteRecordRaw} from "@/router/types"
+
 import { PAGE_NOT_FOUND_NAME, LAYOUT, EXCEPTION_404 } from '@/router/constant'
 
-export const HOME_ROUTE: AppRouteModule = {
+export const ROOT_ROUTE: AppRouteRecordRaw = {
+  path: '/',
+  name: 'Root',
+  redirect: '/home',
+  meta: {
+    title: 'Root',
+    hiddenMenu: true
+  }
+}
+
+export const HOME_ROUTE: AppRouteRecordRaw = {
   path: '/home',
   name: 'Home',
+  redirect: '/home',
   component: LAYOUT,
   meta: {
     title: '首页',
@@ -19,13 +31,14 @@ export const HOME_ROUTE: AppRouteModule = {
   ]
 }
 
-export const PAGE_NOT_FOUND_ROUTE: AppRouteModule = {
+export const PAGE_NOT_FOUND_ROUTE: AppRouteRecordRaw = {
   path: '/:path(.*)*',
   name: PAGE_NOT_FOUND_NAME,
   component: LAYOUT,
   meta: {
     title: PAGE_NOT_FOUND_NAME,
-    hideMenu: true
+    hiddenMenu: true,
+    hiddenChildrenInMenu: true
   },
   children: [
     {

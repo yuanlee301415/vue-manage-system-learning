@@ -25,8 +25,6 @@ export interface AppRouteRecordRaw extends Omit<RouteRecordRaw, 'meta'> {
   fullPath?: string
 }
 
-export type AppRouteModule = AppRouteRecordRaw
-
 declare module 'vue-router' {
   interface RouteMeta extends _RouteMeta {}
 }
