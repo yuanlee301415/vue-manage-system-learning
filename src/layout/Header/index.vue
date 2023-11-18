@@ -1,11 +1,46 @@
 <template>
   <header>
-    <div class="headerLeft">
-      <h1>{{ title }}</h1>
+    <div
+      class="float-left h-full px-[20px] flex justify-center items-center cursor-pointer text-[22px]"
+    >
+      <el-icon>
+        <Expand />
+      </el-icon>
     </div>
+    <h1 class="logo float-left">{{ title }}</h1>
 
-    <div class="headerRight">
-      <span v-if="userInfo.userName">{{ userInfo.userName }}({{ userInfo.realName }})</span>
+    <div class="float-right pr-[50px]">
+      <div class="head-user-con flex items-center">
+        <div class="flex items-center cursor-pointer h-[30px]">
+          <el-tooltip effect="dark" content="消息中心" placement="bottom">
+            <el-badge is-dot>
+              <el-icon :size="30">
+                <bell />
+              </el-icon>
+            </el-badge>
+          </el-tooltip>
+        </div>
+
+        <el-avatar class="mx-3.5" :size="30" :src="avatarUrl" />
+
+        <el-dropdown trigger="click" @command="handleCommand">
+          <span class="cursor-pointer">
+            {{ userInfo.userName }}
+            <el-icon>
+              <arrow-down />
+            </el-icon>
+          </span>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item>
+                <a href="https://github.com/lin-xin/vue-manage-system" target="_blank">项目仓库</a>
+              </el-dropdown-item>
+              <el-dropdown-item command="user">个人中心</el-dropdown-item>
+              <el-dropdown-item divided command="loginout">退出登录</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+      </div>
     </div>
   </header>
 </template>
@@ -13,18 +48,14 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { useUserStore } from '@/store/modules/user'
+import { ArrowDown, Bell } from '@element-plus/icons-vue'
+import avatarUrl from '@/assets/img/avatar.jpg'
 
 const title = import.meta.env.VITE_APP_TITLE
 const userStore = useUserStore()
 const userInfo = computed(() => userStore.getUserInfo)
-</script>
 
-<style scoped lang="less">
-header {
-  display: flex;
-  flex: 0 0 auto;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 10px;
+function handleCommand(command: string) {
+  console.log('handleCommand>command:', command)
 }
-</style>
+</script>
