@@ -5,48 +5,50 @@
 @tailwind utilities;
 
 @headerHeight: 70px;
-@sideWidth: 210px;
+@sideWidth: 250px;
 @breadcrumbsHeight: 30px;
 
-.layout {
-  width: 100%;
-  header {
-    height: @headerHeight;
-    color: #fff;
-    background-color: #242f42;
-    .logo {
-      line-height: @headerHeight;
-    }
-    .head-user-con {
-      height: @headerHeight;
-    }
+header {
+  height: @headerHeight;
+  color: #fff;
+  background-color: #242f42;
+  .logo {
+    line-height: @headerHeight;
   }
-  main {
-    height: calc(100vh - @headerHeight);
-    position: relative;
-    aside {
-      position: absolute;
-      width: @sideWidth;
-      height: 100%;
-      background-color: #324157;
-    }
-    .container {
-      position: absolute;
-      left: @sideWidth;
-      top: 0;
-      bottom: 0;
-      right: 0;
-      .breadcrumbs {
-        height: @breadcrumbsHeight;
-      }
-      .content {
-        width: 100%;
-        height: calc(100% - @breadcrumbsHeight);
-        padding: 10px;
-        background-color: #f0f0f0;
-        overflow: auto;
-      }
-    }
+  .head-user-con {
+    height: @headerHeight;
+  }
+}
+.sidebar {
+  position: absolute;
+  left: 0;
+  top: @headerHeight;
+  bottom: 0;
+  overflow-y: auto;
+  background-color: #324157;
+  .sidebar-el-menu:not(.el-menu--collapse) {
+    width: 250px;
+  }
+}
+.container {
+  position: absolute;
+  left: @sideWidth;
+  top: @headerHeight;
+  bottom: 0;
+  right: 0;
+  transition: left 0.3s ease-in-out;
+  &.collapsed {
+    left: 64px;
+  }
+  .breadcrumbs {
+    height: @breadcrumbsHeight;
+  }
+  .content {
+    width: 100%;
+    height: calc(100% - @breadcrumbsHeight);
+    padding: 10px;
+    background-color: #f0f0f0;
+    overflow: auto;
   }
 }
 

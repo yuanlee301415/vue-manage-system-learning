@@ -2,6 +2,7 @@
   <header>
     <div
       class="float-left h-full px-[20px] flex justify-center items-center cursor-pointer text-[22px]"
+      @click="sidebarStore.collapse()"
     >
       <el-icon>
         <Expand />
@@ -47,12 +48,14 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { useUserStore } from '@/store/modules/user'
+import { useUserStoreWithOut } from '@/store/modules/user'
+import { useSidebarState } from '@/store/modules/sidebar'
 import { ArrowDown, Bell } from '@element-plus/icons-vue'
 import avatarUrl from '@/assets/img/avatar.jpg'
 
 const title = import.meta.env.VITE_APP_TITLE
-const userStore = useUserStore()
+const userStore = useUserStoreWithOut()
+const sidebarStore = useSidebarState()
 const userInfo = computed(() => userStore.getUserInfo)
 
 function handleCommand(command: string) {

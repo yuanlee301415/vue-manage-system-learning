@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <h1>About</h1>
-  </div>
+  <h1>导入 Excel.</h1>
 </template>
 
 <script lang="ts" setup></script>

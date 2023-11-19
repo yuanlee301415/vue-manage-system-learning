@@ -1,51 +1,36 @@
-import type { AppRouteRecordRaw } from '@/router/types'
+import type { RouteRecordRaw } from 'vue-router'
 
 import { PAGE_NOT_FOUND_NAME, LAYOUT, EXCEPTION_404 } from '@/router/constant'
 
-export const ROOT_ROUTE: AppRouteRecordRaw = {
+export const ROOT_ROUTE: RouteRecordRaw = {
   path: '/',
-  name: 'Root',
-  redirect: '/home',
-  meta: {
-    title: 'Root',
-    hiddenMenu: true
-  }
+  redirect: '/dashboard'
 }
 
-export const HOME_ROUTE: AppRouteRecordRaw = {
-  path: '/home',
-  name: 'Home',
-  redirect: '/home',
+export const HOME_ROUTE: RouteRecordRaw = {
+  path: '/dashboard',
   component: LAYOUT,
-  meta: {
-    title: '首页',
-    hiddenChildrenInMenu: true
-  },
   children: [
     {
       path: '',
-      name: 'HomePage',
-      component: () => import('@/views/Home.vue'),
-      meta: {}
+      name: 'dashboard',
+      component: () => import('@/views/dashboard.vue'),
+      meta: {
+        title: '首页',
+        icon: 'Odometer'
+      }
     }
   ]
 }
 
-export const PAGE_NOT_FOUND_ROUTE: AppRouteRecordRaw = {
+export const PAGE_NOT_FOUND_ROUTE: RouteRecordRaw = {
   path: '/:path(.*)*',
-  name: PAGE_NOT_FOUND_NAME,
   component: LAYOUT,
-  meta: {
-    title: PAGE_NOT_FOUND_NAME,
-    hiddenMenu: true,
-    hiddenChildrenInMenu: true
-  },
   children: [
     {
       path: '',
       name: PAGE_NOT_FOUND_NAME,
-      component: EXCEPTION_404,
-      meta: {}
+      component: EXCEPTION_404
     }
   ]
 }

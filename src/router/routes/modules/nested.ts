@@ -1,8 +1,8 @@
-import type { AppRouteRecordRaw } from '@/router/types'
+import type { RouteRecordRaw } from 'vue-router'
 
 import { LAYOUT } from '@/router/constant'
 
-const NESTED_ROUTE: AppRouteRecordRaw = {
+const NESTED_ROUTE: RouteRecordRaw = {
   path: '/nested',
   name: 'Nested',
   component: LAYOUT,

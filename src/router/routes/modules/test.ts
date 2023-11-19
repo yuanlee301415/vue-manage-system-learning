@@ -1,10 +1,9 @@
-import type { AppRouteRecordRaw } from '@/router/types'
+import type { RouteRecordRaw } from 'vue-router'
 
 import { LAYOUT } from '@/router/constant'
 
-const TEST_ROUTE: AppRouteRecordRaw = {
+const TEST_ROUTE: RouteRecordRaw = {
   path: '/test',
-  name: 'Test',
   component: LAYOUT,
   redirect: '/test/a',
   meta: {
