@@ -25,7 +25,7 @@
         <el-avatar class="mx-3.5" :size="30" :src="avatarUrl" />
 
         <el-dropdown trigger="click" @command="handleCommand">
-          <span class="cursor-pointer">
+          <span class="cursor-pointer text-white">
             {{ userInfo.userName }}
             <el-icon>
               <arrow-down />

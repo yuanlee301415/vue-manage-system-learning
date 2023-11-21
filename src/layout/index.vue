@@ -3,8 +3,8 @@
 
   <LayoutSideBar />
 
-  <div :class="{ collapsed: sidebarStore.collapsed }" class="container">
-    <LayoutBreadcrumbs />
+  <div :class="{ collapsed: sidebarStore.collapsed }" class="content-box">
+    <LayoutTags />
     <div class="content">
       <RouterView v-slot="{ Component, route }">
         <transition name="fade-slide" mode="out-in">
@@ -20,7 +20,7 @@ import { useSidebarState } from '@/store/modules/sidebar'
 
 import LayoutHeader from './Header/index.vue'
 import LayoutSideBar from './SideBar/index.vue'
-import LayoutBreadcrumbs from './Breadcrumbs/index.vue'
+import LayoutTags from './Tags/index.vue'
 
 const sidebarStore = useSidebarState()
 </script>

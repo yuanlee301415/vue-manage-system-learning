@@ -30,7 +30,7 @@ header {
     width: 250px;
   }
 }
-.container {
+.content-box {
   position: absolute;
   left: @sideWidth;
   top: @headerHeight;
@@ -40,8 +40,13 @@ header {
   &.collapsed {
     left: 64px;
   }
-  .breadcrumbs {
+  .tags {
+    position: relative;
     height: @breadcrumbsHeight;
+    overflow: hidden;
+    background-color: #fff;
+    padding-right: 120px;
+    box-shadow: 0 5px 10px #ddd;
   }
   .content {
     width: 100%;
