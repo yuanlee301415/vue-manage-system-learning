@@ -10,11 +10,13 @@
     "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier --write src/",
-    "gen": "node ./scripts/gen.js"
+    "gen": "node ./scripts/gen.js",
+    "server": "json-server --watch server/db.json --routes server/routes.json --port 3101 --delay 500"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
     "axios": "^1.6.2",
+    "dayjs": "^1.11.10",
     "element-plus": "^2.4.2",
     "pinia": "^2.1.7",
     "vue": "^3.3.4",
@@ -32,6 +34,7 @@
     "autoprefixer": "^10.4.16",
     "eslint": "^8.49.0",
     "eslint-plugin-vue": "^9.17.0",
+    "json-server": "^0.17.4",
     "less": "^4.2.0",
     "npm-run-all2": "^6.1.1",
     "postcss": "^8.4.31",

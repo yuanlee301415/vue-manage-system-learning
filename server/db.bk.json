@@ -1,0 +1,70 @@
+{
+  "user": [
+    {
+      "id": 0,
+      "name": "Admin",
+      "realName": "超级管理员",
+      "money": 9999999,
+      "state": 1,
+      "date": 1700985037429,
+      "avatar": "/logos/vue.png"
+    },
+    {
+      "id": 1001,
+      "name": "张三",
+      "money": 123,
+      "address": "广东省东莞市长安镇",
+      "state": 1,
+      "date": 1700885046264,
+      "avatar": "/logos/alipay.png",
+      "desc": "该方案作为一套多功能的后台框架模板，适用于绝大部分的后台管理系统开发。基于 Vue3 + pinia + typescript，引用 Element Plus 组件库，方便开发。实现逻辑简单，适合外包项目，快速交付。"
+    },
+    {
+      "id": 1002,
+      "name": "李四",
+      "money": 456,
+      "address": "广东省广州市白云区",
+      "state": 0,
+      "date": 1700785053580,
+      "avatar": "/logos/angular.png",
+      "desc": "暂无。"
+    },
+    {
+      "id": 1003,
+      "name": "王五",
+      "money": 789,
+      "address": "湖南省长沙市",
+      "state": 0,
+      "date": 1700685061485,
+      "avatar": "/logos/ant.png",
+      "desc": "暂无。"
+    },
+    {
+      "id": 1004,
+      "name": "赵六",
+      "money": 1011,
+      "address": "福建省厦门市鼓浪屿",
+      "state": 1,
+      "date": 1700585072037,
+      "avatar": "/logos/react.png",
+      "desc": "该方案作为一套多功能的后台框架模板，适用于绝大部分的后台管理系统开发。基于 Vue3 + pinia + typescript，引用 Element Plus 组件库，方便开发。实现逻辑简单，适合外包项目，快速交付。"
+    }
+  ],
+  "posts": [
+    {
+      "id": 1,
+      "title": "Post-1",
+      "time": 1697297717376
+    },
+    {
+      "id": 2,
+      "title": "Post-2",
+      "time": 1697297717376
+    },
+    {
+      "id": 3,
+      "title": "Post-3",
+      "time": 1697297717376
+    }
+  ]
+}
