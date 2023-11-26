@@ -5,7 +5,7 @@
       :collapse="userSidebar.collapsed"
       class="sidebar-el-menu"
       text-color="#bfcbd9"
-      background-color="initial"
+      background-color="#324157"
       router
     >
       <SideMenuBar :items="items" />

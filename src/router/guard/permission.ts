@@ -5,7 +5,7 @@ import { useUserStoreWithOut } from '@/store/modules/user'
 export function createPermissionGuard(router: Router) {
   const userStore = useUserStoreWithOut()
   router.beforeEach(async (to, from, next) => {
-    if (!userStore.getUserInfo?.userName) {
+    if (!userStore.getUserInfo?.name) {
       await userStore.getUserInfoAction()
     }
     next()

@@ -1,11 +1,11 @@
 <template>
-  <header>
+  <header class="header">
     <div
       class="float-left h-full px-[20px] flex justify-center items-center cursor-pointer text-[22px]"
       @click="sidebarStore.collapse()"
     >
       <el-icon>
-        <Expand />
+        <Expand/>
       </el-icon>
     </div>
     <h1 class="logo float-left">{{ title }}</h1>
@@ -26,7 +26,7 @@
 
         <el-dropdown trigger="click" @command="handleCommand">
           <span class="cursor-pointer text-white">
-            {{ userInfo.userName }}
+            {{ userInfo.name }}
             <el-icon>
               <arrow-down />
             </el-icon>
@@ -50,7 +50,7 @@
 import { computed } from 'vue'
 import { useUserStoreWithOut } from '@/store/modules/user'
 import { useSidebarState } from '@/store/modules/sidebar'
-import { ArrowDown, Bell } from '@element-plus/icons-vue'
+import {ArrowDown, Bell, Expand} from '@element-plus/icons-vue'
 import avatarUrl from '@/assets/img/avatar.jpg'
 
 const title = import.meta.env.VITE_APP_TITLE
