@@ -32,6 +32,7 @@
 <script lang="ts" setup>
 import {computed, ref} from "vue";
 import * as XLSL from 'xlsx'
+import {ElNotification} from "element-plus";
 
 import Student from "@/models/Student";
 import {Gender} from "@/enums/gender";
@@ -85,6 +86,11 @@ async function handleMany() {
   }))
   console.log('list:', list)
   students.value = [...students.value ?? [], ...list]
+
+  ElNotification.success({
+    message: `【成功】批量导入成功.`,
+    showClose: false
+  })
 }
 
 </script>
