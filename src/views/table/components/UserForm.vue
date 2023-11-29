@@ -47,10 +47,10 @@ import type {FormInstance, FormRules} from "element-plus";
 
 import {reactive, ref} from "vue";
 import {FormAction} from "@/enums/formAction";
-import UserModel from "@/models/UserModel";
+import User from "@/models/User";
 import {State} from "@/enums/state";
 
-const rules: FormRules<UserModel> = {
+const rules: FormRules<User> = {
   name: [{ required: true, trigger: 'blur', message: '请输入用户名' }],
   avatar: [{ required: true, trigger: 'blur', message: '请选择头像' }],
   address: [{ required: true, trigger: 'blur', message: '请选择地址' }],
@@ -58,8 +58,8 @@ const rules: FormRules<UserModel> = {
   money: [{ required: true, trigger: 'blur', message: '请输入帐户余额' }]
 }
 
-const props = defineProps<{ user: UserModel, action: FormAction }>()
-const user = reactive<UserModel>(new UserModel(props.user))
+const props = defineProps<{ user: User, action: FormAction }>()
+const user = reactive<User>(new User(props.user))
 
 const avatars = [
   {label: 'Alipay', value: '/logos/alipay.png'},

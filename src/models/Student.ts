@@ -3,7 +3,7 @@ import {Gender} from "@/enums/gender";
 /**
  * 用户 Model
  */
-export default class StudentModel {
+export default class Student {
   id: number
 
   // 姓名
@@ -21,7 +21,7 @@ export default class StudentModel {
   // 性别
   gender: Gender
 
-  constructor(_: StudentModel) {
+  constructor(_: Student) {
     const { id, name, sno, grade, age, gender } = { ..._ }
     this.id = id
     this.name = name

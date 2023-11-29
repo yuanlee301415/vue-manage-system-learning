@@ -1,11 +1,11 @@
 import {defineStore} from 'pinia'
 
 import {store} from '@/store'
-import UserModel from '@/models/UserModel'
+import User from '@/models/User'
 import {getUserInfoApi} from '@/api/user'
 
 interface UserState {
-    userInfo: Nullable<UserModel>
+    userInfo: Nullable<User>
     token?: string
     lastUpdateTime?: number
 }
@@ -16,7 +16,7 @@ export const useUserStore = defineStore({
         userInfo:
             import.meta.env.VITE_PERMISSION && JSON.parse(import.meta.env.VITE_PERMISSION)
                 ? null
-                : new UserModel({
+                : new User({
                     "id": 0,
                     "name": "Admin",
                     "money": 9999999,
@@ -31,19 +31,19 @@ export const useUserStore = defineStore({
     }),
 
     getters: {
-        getUserInfo(): UserModel {
-            return this.userInfo ?? (Object.create(null) as UserModel)
+        getUserInfo(): User {
+            return this.userInfo ?? (Object.create(null) as User)
         }
     },
 
     actions: {
-        setUserInfo(userInfo: UserModel | null) {
+        setUserInfo(userInfo: User | null) {
             this.userInfo = userInfo
             this.lastUpdateTime = Date.now()
         },
 
         async getUserInfoAction() {
-            const data = new UserModel(await getUserInfoApi())
+            const data = new User(await getUserInfoApi())
             console.log('getUserInfoAction>data:', data)
             this.setUserInfo(data)
             return data

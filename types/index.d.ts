@@ -1,10 +1,10 @@
 import type {Params} from "#/axios";
 
-import UserModel from "@/models/UserModel";
+import User from "@/models/User";
 import {State} from "@/enums/state";
 
-export type CreateUser = Omit<UserModel, 'id' | 'date' | 'money' | 'state'>
-export type UpdateUser = Omit<UserModel, 'id' | 'date' | 'name'>
+export type CreateUser = Omit<User, 'id' | 'date' | 'money' | 'state'>
+export type UpdateUser = Omit<User, 'id' | 'date' | 'name'>
 
 export type UserParams = Params & {address?: string, name?: string, state?: State}
 

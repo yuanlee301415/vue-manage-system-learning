@@ -3,7 +3,7 @@ import {State} from "@/enums/state";
 /**
  * 用户 Model
  */
-export default class UserModel {
+export default class User {
   id: number
 
   // 用户名称
@@ -27,7 +27,7 @@ export default class UserModel {
   // 用户简介
   desc: string
 
-  constructor(_: UserModel) {
+  constructor(_: User) {
     const { id, name, address, date, avatar, money, state, desc } = { ..._ }
     this.id = id
     this.name = name
@@ -39,7 +39,7 @@ export default class UserModel {
     this.desc = desc
   }
 
-  static create(_?: UserModel) {
+  static create(_?: User) {
     const { name = '', address = '', avatar = '', desc = '' } = { ..._ }
     return new this({
       id: void 0 as unknown as number,

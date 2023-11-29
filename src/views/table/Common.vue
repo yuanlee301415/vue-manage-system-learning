@@ -97,7 +97,7 @@ import {Delete, Edit, Plus, Search} from "@element-plus/icons-vue";
 import dayjs from "dayjs";
 import {ElNotification} from "element-plus";
 
-import UserModel from "@/models/UserModel";
+import User from "@/models/User";
 import {createUserApi, getUsersApi, updateUserApi, deleteUserApi} from "@/api/user";
 import UserForm from "./components/UserForm.vue";
 import {FormAction} from '@/enums/formAction'
@@ -114,13 +114,13 @@ const params = reactive<UserParams>({
 
 const currentPage = ref(1)
 const pageSize = ref(20)
-const tableData = ref<UserModel[]>()
+const tableData = ref<User[]>()
 const pageTotal = ref(0)
 const stateStr = computed(() => (state: State) => stateFilter(state))
 const dateStr = computed(() => (date: number) => dayjs(date).format('YYYY-MM-DD HH:mm:ss'))
 const strMoney = computed(() => (money: number) => '￥' + money)
 const visible = ref(false)
-const userFormData = ref<UserModel>()
+const userFormData = ref<User>()
 const userFormRef = ref()
 const ing = ref(false)
 const formAction = ref<FormAction>(FormAction.ADD)
@@ -156,17 +156,17 @@ function handleSizeChange(val: number) {
 
 function handleAdd() {
   formAction.value = FormAction.ADD
-  userFormData.value = UserModel.create()
+  userFormData.value = User.create()
   visible.value = true
 }
 
-function handleEdit(user: UserModel) {
+function handleEdit(user: User) {
   formAction.value = FormAction.EDIT
   userFormData.value = user
   visible.value = true
 }
 
-function handleDelete(user: UserModel) {
+function handleDelete(user: User) {
   deleteUserApi(user.id).then(res => {
     if (res.code !== 0) return
     getData()
@@ -181,7 +181,7 @@ function handleSubmit() {
   userFormRef.value!.validate()
 }
 
-function onUserFormSubmit(data: UserModel) {
+function onUserFormSubmit(data: User) {
   console.log('onUserFormSubmit>data:', data)
   console.log('onUserFormSubmit>action:', formAction.value)
   const {id, address, name, avatar, desc, money, state} = data

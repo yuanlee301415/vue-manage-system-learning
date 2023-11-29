@@ -33,15 +33,15 @@
 import {computed, ref} from "vue";
 import * as XLSL from 'xlsx'
 
-import StudentModel from "@/models/Student";
+import Student from "@/models/Student";
 import {Gender} from "@/enums/gender";
 import {getStudentsApi} from "@/api/student";
 import {genderFilter} from "@/filters";
 
-const students = ref<StudentModel[]>()
+const students = ref<Student[]>()
 const studentTotal = ref(0)
 const genderStr = computed(() => (gender: Gender) => genderFilter(gender))
-const importList = ref<StudentModel[]>([])
+const importList = ref<Student[]>([])
 
 getStudents()
 
@@ -57,7 +57,7 @@ async function beforeUpload(rawFile: File) {
   importList.value = await analysisExcel(rawFile)
 }
 
-function analysisExcel(file: File): Promise<StudentModel[]> {
+function analysisExcel(file: File): Promise<Student[]> {
   return new Promise(resolve => {
     const reader = new FileReader()
     reader.onload = function (e: any) {
@@ -65,7 +65,7 @@ function analysisExcel(file: File): Promise<StudentModel[]> {
       const dataJson = XLSL.read(data, {
         type: 'binary'
       })
-      const result = XLSL.utils.sheet_to_json<StudentModel>(dataJson.Sheets[dataJson.SheetNames[0]])
+      const result = XLSL.utils.sheet_to_json<Student>(dataJson.Sheets[dataJson.SheetNames[0]])
       console.log('result:', result)
       resolve(result)
     }
@@ -75,7 +75,7 @@ function analysisExcel(file: File): Promise<StudentModel[]> {
 
 async function handleMany() {
   let id = studentTotal.value || 0
-  const list = importList.value.map((_: any) => new StudentModel({
+  const list = importList.value.map((_: any) => new Student({
     id: id++,
     name: _['姓名'],
     sno: _['学号'],
