@@ -42,21 +42,76 @@
       "desc": "暂无。"
     }
   ],
-  "posts": [
+  "student": [
     {
       "id": 1,
-      "title": "Post-1",
-      "time": 1697297717376
+      "name": "张三",
+      "sno": "S001",
+      "grade": "一班",
+      "age": 10,
+      "gender": 1
     },
     {
       "id": 2,
-      "title": "Post-2",
-      "time": 1697297717376
+      "name": "李四",
+      "sno": "S002",
+      "grade": "二班",
+      "age": 12,
+      "gender": 0
     },
     {
       "id": 3,
-      "title": "Post-3",
-      "time": 1697297717376
+      "name": "王五",
+      "sno": "S003",
+      "grade": "三班",
+      "age": 13,
+      "gender": 1
+    },
+    {
+      "id": 4,
+      "name": "赵六",
+      "sno": "S004",
+      "grade": "二班",
+      "age": 11,
+      "gender": 0
+    }
+  ],
+  "message": [
+    {
+      "id": 1,
+      "title": "Message-1",
+      "date": 1701347344486,
+      "status": 0
+    },
+    {
+      "id": 2,
+      "title": "Message-2",
+      "time": 1701346344486,
+      "status": 1
+    },
+    {
+      "id": 3,
+      "title": "Message-3",
+      "time": 1701345344486,
+      "status": 2
+    },
+    {
+      "id": 4,
+      "title": "Message-4",
+      "time": 1701344344486,
+      "status": 0
+    },
+    {
+      "id": 5,
+      "title": "Message-5",
+      "time": 1701343344486,
+      "status": 1
+    },
+    {
+      "id": 6,
+      "title": "Message-6",
+      "time": 1701342344486,
+      "status": 2
     }
   ]
 }
