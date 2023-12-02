@@ -3,7 +3,7 @@
     <el-card>
       <el-form inline>
         <el-form-item>
-          <el-input v-model="params.name" placeholder="用户名" clearable class="w-[200px]"/>
+          <el-input v-model="params.displayName" placeholder="用户名" clearable class="w-[200px]"/>
         </el-form-item>
 
         <el-form-item>
@@ -25,10 +25,10 @@
       </el-form>
 
       <el-table :data="tableData" border stripe show-overflow-tooltip>
-        <el-table-column prop="id" label="ID" width="60" fixed/>
-        <el-table-column prop="name" label="用户名" width="150" fixed/>
-        <el-table-column prop="money" label="帐户余额" width="100">
-          <template #default="{row: {money}}">{{strMoney(money)}}</template>
+        <el-table-column prop="username" label="用户名" width="150" fixed/>
+        <el-table-column prop="displayName" label="显示名称" width="150" fixed/>
+        <el-table-column prop="amount" label="帐户余额" width="100">
+          <template #default="{row: {amount}}">{{strMoney(amount)}}</template>
         </el-table-column>
         <el-table-column prop="avatar" label="头像" width="70" align="center">
           <template #default="scope">
@@ -43,7 +43,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="address" label="地址" width="200"/>
-        <el-table-column prop="desc" label="简介"/>
+        <el-table-column prop="signature" label="简介"/>
         <el-table-column prop="state" label="状态" width="80" align="center">
           <template #default="{row: {state}}">
             <el-tag :type="state === State.SUCCESS ? 'success' : 'danger'">{{ stateStr(state) }}</el-tag>
@@ -107,7 +107,7 @@ import {stateFilter} from "@/filters";
 const address = ['广东', '湖南', '福建']
 
 const params = reactive<UserParams>({
-  name: '',
+  displayName: '',
   address: '',
   state: void 0
 })
@@ -118,7 +118,7 @@ const tableData = ref<User[]>()
 const pageTotal = ref(0)
 const stateStr = computed(() => (state: State) => stateFilter(state))
 const dateStr = computed(() => (date: number) => dayjs(date).format('YYYY-MM-DD HH:mm:ss'))
-const strMoney = computed(() => (money: number) => '￥' + money)
+const strMoney = computed(() => (amount: number) => '￥' + amount)
 const visible = ref(false)
 const userFormData = ref<User>()
 const userFormRef = ref()
@@ -133,7 +133,7 @@ function getData() {
     _page: currentPage.value,
     _limit: pageSize.value
   }).then(res => {
-    if (res.code !== 0) return
+    console.log(res)
     tableData.value = res.data
     pageTotal.value = res.total!
   })
@@ -184,7 +184,7 @@ function handleSubmit() {
 function onUserFormSubmit(data: User) {
   console.log('onUserFormSubmit>data:', data)
   console.log('onUserFormSubmit>action:', formAction.value)
-  const {id, address, name, avatar, desc, money, state} = data
+  const {id, username, email, mobile, password, displayName, address, avatar, signature, amount, state} = data
   const cb = (action: FormAction) => {
     getData()
     ing.value = false
@@ -199,7 +199,7 @@ function onUserFormSubmit(data: User) {
   switch (formAction.value) {
     case FormAction.ADD:
       createUserApi({
-        address, name, avatar, desc
+        username, email, mobile, password, amount, address, displayName, avatar, signature
       }).then(res => {
         if (res.code !== 0) return
         cb(formAction.value)
@@ -208,7 +208,7 @@ function onUserFormSubmit(data: User) {
 
     case FormAction.EDIT:
       updateUserApi(id, {
-        address, avatar, desc, money, state
+        username, mobile, email, password, displayName, address, avatar, signature, amount, state
       }).then(res => {
         if (res.code !== 0) return
         cb(formAction.value)

@@ -16,13 +16,14 @@ export function getUserInfoApi(): Promise<User> {
   })
 }
 
-export function getUsersApi({address, name, state, _limit = 5, _page = 1}: UserParams = { _limit: 5, _page: 1}): Promise<Result<User[]>> {
+export function getUsersApi({address, username, displayName, state, _limit = 5, _page = 1}: UserParams = { _limit: 5, _page: 1}): Promise<Result<User[]>> {
   return request({
     url: 'user',
     method: HttpMethod.GET,
     params: {
-      address_like: address,
-      name_like: name,
+      username,
+      displayName,
+      address,
       state,
       _limit,
       _page
@@ -30,34 +31,42 @@ export function getUsersApi({address, name, state, _limit = 5, _page = 1}: UserP
   })
 }
 
-export function createUserApi({address, name, avatar, desc}: CreateUser): Promise<Result<User>> {
+export function createUserApi({username, email, mobile, password, address, displayName, avatar, signature}: CreateUser): Promise<Result<User>> {
   return request({
     url: 'user',
     method: HttpMethod.POST,
     data: {
+      username,
+      email,
+      mobile,
+      password,
+      displayName,
       address,
       avatar,
-      desc,
-      name
+      signature
     }
   })
 }
 
-export function updateUserApi(id: number, {address, avatar, desc, money, state }: UpdateUser): Promise<Result<User>> {
+export function updateUserApi(id: string, {username, mobile, email, password, displayName, address, avatar, signature, amount, state }: UpdateUser): Promise<Result<User>> {
   return request({
     url: `user/${id}`,
     method: HttpMethod.PATCH,
     data: {
+      username,
+      displayName,
+      mobile,
+      email,
       address,
       avatar,
-      desc,
-      money,
+      signature,
+      amount,
       state
     }
   })
 }
 
-export function deleteUserApi(id: number): Promise<Result<User>> {
+export function deleteUserApi(id: string): Promise<Result<User>> {
   return request({
     url: `user/${id}`,
     method: HttpMethod.DELETE

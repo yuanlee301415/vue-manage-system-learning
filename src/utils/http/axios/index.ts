@@ -11,12 +11,12 @@ const request = axios.create({
 // 添加响应拦截器
 request.interceptors.response.use(
 // @ts-ignore
-  function (response: AxiosResponse): Result {
-    return {
-        code: 0,
-        data: response.data,
-        total: Number(response.headers['x-total-count'])
-    }
+  function (response: AxiosResponse<Result>): Result {
+      const data = response.data
+      if (data.code !== 0) {
+          throw new Error(data.message ?? '系统异常')
+      }
+      return data
   },
   function (error) {
     return Promise.reject(error)

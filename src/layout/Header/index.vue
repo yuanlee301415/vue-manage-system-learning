@@ -26,7 +26,7 @@
 
         <el-dropdown trigger="click" @command="handleCommand">
           <span class="cursor-pointer text-white">
-            {{ userInfo.name }}
+            {{ userInfo.displayName }}
             <el-icon>
               <arrow-down />
             </el-icon>

@@ -1,7 +1,7 @@
 <template>
   <el-form ref="formRef" :model="user" :rules="rules" label-width="100">
     <el-form-item prop="name" label="用户名">
-      <el-input v-model="user.name" :disabled="action === FormAction.EDIT" maxlength="10" placeholder="请输入用户名"/>
+      <el-input v-model="user.username" :disabled="action === FormAction.EDIT" maxlength="10" placeholder="请输入用户名"/>
     </el-form-item>
 
     <el-form-item prop="avatar" label="头像">
@@ -21,8 +21,8 @@
       </el-select>
     </el-form-item>
 
-    <el-form-item prop="desc" label="简介">
-      <el-input type="textarea" rows="3" v-model="user.desc" placeholder="请输入简介" maxlength="200"/>
+    <el-form-item prop="signature" label="签名">
+      <el-input type="textarea" rows="3" v-model="user.signature" placeholder="请输入简介" maxlength="200"/>
     </el-form-item>
 
     <template v-if="props.action === FormAction.EDIT">
@@ -33,8 +33,8 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item prop="money" label="帐户余额">
-        <el-input-number v-model="user.money" :max="99999"/>
+      <el-form-item prop="amount" label="帐户余额">
+        <el-input-number v-model="user.amount" :max="99999"/>
       </el-form-item>
     </template>
 
@@ -51,11 +51,11 @@ import User from "@/models/User";
 import {State} from "@/enums/state";
 
 const rules: FormRules<User> = {
-  name: [{ required: true, trigger: 'blur', message: '请输入用户名' }],
+  displayName: [{ required: true, trigger: 'blur', message: '请输入用户名' }],
   avatar: [{ required: true, trigger: 'blur', message: '请选择头像' }],
   address: [{ required: true, trigger: 'blur', message: '请选择地址' }],
   state: [{ required: true, trigger: 'blur', message: '请选择状态' }],
-  money: [{ required: true, trigger: 'blur', message: '请输入帐户余额' }]
+  amount: [{ required: true, trigger: 'blur', message: '请输入帐户余额' }]
 }
 
 const props = defineProps<{ user: User, action: FormAction }>()

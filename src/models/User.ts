@@ -4,10 +4,20 @@ import {State} from "@/enums/state";
  * 用户 Model
  */
 export default class User {
-  id: number
+  id: string
 
-  // 用户名称
-  name: string
+  username: string
+
+  displayName: string
+
+  email: string;
+
+  mobile: string;
+
+  password: string;
+
+  // 帐户余额
+  amount: number
 
   // 地址
   address: string
@@ -15,41 +25,41 @@ export default class User {
   // 头像
   avatar: string
 
-  // 注册时间
-  date: number
-
-  // 帐户余额
-  money: number
-
   // 状态
   state: State
 
   // 用户简介
-  desc: string
+  signature: string
 
   constructor(_: User) {
-    const { id, name, address, date, avatar, money, state, desc } = { ..._ }
+    const { id, username, email, mobile, password, displayName, address, avatar, amount, state, signature } = { ..._ }
     this.id = id
-    this.name = name
+    this.username = username
+    this.displayName = displayName
+    this.email = email
+    this.mobile = mobile
+    this.password = password
     this.address = address
-    this.date = date
     this.avatar = avatar
-    this.money = money
+    this.amount = amount
     this.state = state
-    this.desc = desc
+    this.signature = signature
   }
 
   static create(_?: User) {
-    const { name = '', address = '', avatar = '', desc = '' } = { ..._ }
+    const { username = '', displayName = '', email = '', mobile = '', password = '', address = '', amount = 0, avatar = '', signature = '' } = { ..._ }
     return new this({
-      id: void 0 as unknown as number,
-      date: Date.now(),
-      money: 0,
-      state: State.SUCCESS,
-      name,
-      address,
+      id: void 0 as unknown as string,
+      username,
+      email,
+      mobile,
+      password,
+      displayName,
       avatar,
-      desc
+      address,
+      amount,
+      state: State.SUCCESS,
+      signature
     })
   }
 }

@@ -84,18 +84,18 @@ function getMessage() {
   getMessagesApi({status: MessageStatus.UNREAD}).then(res => {
     if (res.code !== 0) return
     message.unread = res.data
-    message.unreadTotal = res.total
+    message.unreadTotal = res.total!
     console.log('message.unread:', message.unread)
   })
   getMessagesApi({status: MessageStatus.READ}).then(res => {
     if (res.code !== 0) return
     message.read = res.data
-    message.readTotal = res.total
+    message.readTotal = res.total!
   })
   getMessagesApi({status: MessageStatus.DELETED}).then(res => {
     if (res.code !== 0) return
     message.deleted = res.data
-    message.deletedTotal = res.total
+    message.deletedTotal = res.total!
   })
 }
 

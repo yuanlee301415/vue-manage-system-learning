@@ -50,7 +50,7 @@ function getStudents() {
   getStudentsApi().then(res => {
     if (res.code !== 0) return
     students.value = res.data
-    studentTotal.value = res.total
+    studentTotal.value = res.total!
   })
 }
 
