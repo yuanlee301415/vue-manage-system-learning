@@ -3,7 +3,7 @@
     <el-card>
       <el-form inline>
         <el-form-item>
-          <el-input v-model="params.displayName" placeholder="用户名" clearable class="w-[200px]"/>
+          <el-input v-model="params.username" placeholder="用户名" clearable class="w-[200px]"/>
         </el-form-item>
 
         <el-form-item>
@@ -107,7 +107,7 @@ import {stateFilter} from "@/filters";
 const address = ['广东', '湖南', '福建']
 
 const params = reactive<UserParams>({
-  displayName: '',
+  username: '',
   address: '',
   state: void 0
 })
