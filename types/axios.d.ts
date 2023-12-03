@@ -5,8 +5,9 @@ export interface Result<T = any> {
   total?: number
 }
 
-
-export type Params = {
-  _limit?: number
-  _page?: number
+export interface QueryParams {
+  page?: number;
+  size?: number;
+  keyword?: string;
+  [key: string]: any;
 }

@@ -130,8 +130,8 @@ getData()
 function getData() {
   getUsersApi({
     ...params,
-    _page: currentPage.value,
-    _limit: pageSize.value
+    page: currentPage.value,
+    size: pageSize.value
   }).then(res => {
     console.log(res)
     tableData.value = res.data

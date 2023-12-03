@@ -16,7 +16,7 @@ export function getUserInfoApi(): Promise<User> {
   })
 }
 
-export function getUsersApi({address, username, displayName, state, _limit = 5, _page = 1}: UserParams = { _limit: 5, _page: 1}): Promise<Result<User[]>> {
+export function getUsersApi({address, username, displayName, state, size = 5, page = 1}: UserParams = { size: 5, page: 1}): Promise<Result<User[]>> {
   return request({
     url: 'user',
     method: HttpMethod.GET,
@@ -25,8 +25,8 @@ export function getUsersApi({address, username, displayName, state, _limit = 5, 
       displayName,
       address,
       state,
-      _limit,
-      _page
+      size,
+      page
     }
   })
 }

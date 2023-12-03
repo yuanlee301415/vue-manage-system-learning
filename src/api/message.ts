@@ -6,17 +6,17 @@ import {HttpMethod} from "@/enums";
 import {Message} from "@/models/Message";
 import {MessageStatus} from "@/enums/messageStatus";
 
-export function getMessagesApi({_limit = 10, _page = 1, status}: MessageParams = {
-    _limit: 10,
-    _page: 1
+export function getMessagesApi({size = 10, page = 1, status}: MessageParams = {
+    size: 10,
+    page: 1
 }): Promise<Result<Message[]>> {
     return request({
         url: `message`,
         method: HttpMethod.GET,
         params: {
             status,
-            _limit,
-            _page
+            size,
+            page
         }
     })
 }
