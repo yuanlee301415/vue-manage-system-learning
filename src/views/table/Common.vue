@@ -7,8 +7,8 @@
         </el-form-item>
 
         <el-form-item>
-          <el-select v-model="params.address" placeholder="地址" clearable class="w-[200px]">
-            <el-option v-for="_ of address" :key="_" :label="_" :value="_"></el-option>
+          <el-select v-model="params.province" placeholder="地址" clearable class="w-[200px]">
+            <el-option v-for="_ of province" :key="_" :label="_" :value="_"></el-option>
           </el-select>
         </el-form-item>
 
@@ -99,16 +99,17 @@ import {ElNotification} from "element-plus";
 
 import User from "@/models/User";
 import {createUserApi, getUsersApi, updateUserApi, deleteUserApi} from "@/api/user";
+import { getProvinceApi } from "@/api/code";
 import UserForm from "./components/UserForm.vue";
 import {FormAction} from '@/enums/formAction'
 import {State, StateMap} from "@/enums/state";
 import {stateFilter} from "@/filters";
 
-const address = ['广东', '湖南', '福建']
+const province = ref<string[]>()
 
 const params = reactive<UserParams>({
   username: '',
-  address: '',
+  province: '',
   state: void 0
 })
 
@@ -126,6 +127,7 @@ const ing = ref(false)
 const formAction = ref<FormAction>(FormAction.ADD)
 
 getData()
+getProvince()
 
 function getData() {
   getUsersApi({
@@ -136,6 +138,12 @@ function getData() {
     console.log(res)
     tableData.value = res.data
     pageTotal.value = res.total!
+  })
+}
+
+function getProvince() {
+  getProvinceApi().then(res => {
+    province.value = res.data
   })
 }
 

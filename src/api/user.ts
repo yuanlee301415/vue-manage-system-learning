@@ -16,13 +16,13 @@ export function getUserInfoApi(): Promise<User> {
   })
 }
 
-export function getUsersApi({address, username, state, size = 5, page = 1}: UserParams = { size: 5, page: 1}): Promise<Result<User[]>> {
+export function getUsersApi({username, province, state, size = 5, page = 1}: UserParams = { size: 5, page: 1}): Promise<Result<User[]>> {
   return request({
     url: 'user',
     method: HttpMethod.GET,
     params: {
       username,
-      address,
+      province,
       state,
       size,
       page
