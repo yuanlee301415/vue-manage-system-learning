@@ -14,3 +14,11 @@ export function getStudentsApi({size = 10, page = 1}: QueryParams = {size: 10, p
         }
     })
 }
+
+export function importStudentsApi(students: Student[]): Promise<Result<Student[]>> {
+    return request({
+        url: `student/import`,
+        method: HttpMethod.POST,
+        data: students
+    })
+}

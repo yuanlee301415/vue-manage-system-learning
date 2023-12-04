@@ -5,7 +5,6 @@
     </div>
 
     <el-table :data="students" border stripe>
-      <el-table-column prop="id" label="ID" width="40"/>
       <el-table-column prop="name" label="姓名"/>
       <el-table-column prop="sno" label="学号"/>
       <el-table-column prop="grade" label="班级"/>
@@ -46,7 +45,7 @@ function handleExport() {
   const list = [['序号', '姓名', '学号', '班级', '年龄', '性别']];
   students.value.map((item: Student, idx: number) => {
     const arr: any = [idx + 1]
-    arr.push(...[item.name, item.sno, item.grade, item.age, GenderMap.get(item.gender)])
+    arr.push(...[item.name, item.sno, item.grade, item.age, GenderMap.get(item.gender!)])
     list.push(arr)
   })
 

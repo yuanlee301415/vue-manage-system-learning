@@ -14,7 +14,6 @@
     </div>
 
     <el-table :data="students" border stripe>
-      <el-table-column prop="id" label="ID" width="40"/>
       <el-table-column prop="name" label="姓名"/>
       <el-table-column prop="sno" label="学号"/>
       <el-table-column prop="grade" label="班级"/>
@@ -36,7 +35,7 @@ import {ElNotification} from "element-plus";
 
 import Student from "@/models/Student";
 import {Gender} from "@/enums/gender";
-import {getStudentsApi} from "@/api/student";
+import {getStudentsApi, importStudentsApi} from "@/api/student";
 import {genderFilter} from "@/filters";
 
 const students = ref<Student[]>()
@@ -75,9 +74,7 @@ function analysisExcel(file: File): Promise<Student[]> {
 }
 
 async function handleMany() {
-  let id = studentTotal.value || 0
   const list = importList.value.map((_: any) => new Student({
-    id: id++,
     name: _['姓名'],
     sno: _['学号'],
     grade: _['班级'],
@@ -85,11 +82,13 @@ async function handleMany() {
     gender: _['性别']
   }))
   console.log('list:', list)
-  students.value = [...students.value ?? [], ...list]
-
-  ElNotification.success({
-    message: `【成功】批量导入成功.`,
-    showClose: false
+  importStudentsApi(list).then(res => {
+    if (res.code !== 0) return
+    getStudents()
+    ElNotification.success({
+      message: `【成功】批量导入成功.`,
+      showClose: false
+    })
   })
 }
 
