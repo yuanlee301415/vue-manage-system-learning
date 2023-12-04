@@ -81,7 +81,14 @@
     </el-card>
 
     <el-dialog v-model="visible" :title="formAction + '用户'" :close-on-click-modal="false">
-      <UserForm v-if="visible" ref="userFormRef" :user="userFormData!" :action="formAction" @submit="onUserFormSubmit"/>
+      <UserForm
+          v-if="visible"
+          ref="userFormRef"
+          :user="userFormData!"
+          :action="formAction"
+          :province="province"
+          @submit="onUserFormSubmit"
+      />
       <template #footer>
         <el-button type="primary" :loading="ing" @click="handleSubmit">确定</el-button>
         <el-button @click="visible=false">取消</el-button>
@@ -105,7 +112,7 @@ import {FormAction} from '@/enums/formAction'
 import {State, StateMap} from "@/enums/state";
 import {stateFilter} from "@/filters";
 
-const province = ref<string[]>()
+const province = ref<string[]>([])
 
 const params = reactive<UserParams>({
   username: '',
@@ -164,7 +171,7 @@ function handleSizeChange(val: number) {
 
 function handleAdd() {
   formAction.value = FormAction.ADD
-  userFormData.value = User.create()
+  userFormData.value = new User()
   visible.value = true
 }
 
@@ -175,7 +182,7 @@ function handleEdit(user: User) {
 }
 
 function handleDelete(user: User) {
-  deleteUserApi(user.id).then(res => {
+  deleteUserApi(user.id!).then(res => {
     if (res.code !== 0) return
     getData()
     ElNotification.success({
@@ -192,7 +199,8 @@ function handleSubmit() {
 function onUserFormSubmit(data: User) {
   console.log('onUserFormSubmit>data:', data)
   console.log('onUserFormSubmit>action:', formAction.value)
-  const {id, username, email, mobile, password, displayName, address, avatar, signature, amount, state} = data
+  const {id, username, displayName, mobile, email, province, city,
+    street, gender, avatar, signature, amount, state} = data
   const cb = (action: FormAction) => {
     getData()
     ing.value = false
@@ -207,16 +215,17 @@ function onUserFormSubmit(data: User) {
   switch (formAction.value) {
     case FormAction.ADD:
       createUserApi({
-        username, email, mobile, password, amount, address, displayName, avatar, signature
-      }).then(res => {
+        username, displayName, email, mobile, province, city,
+        street, gender, avatar, signature }).then(res => {
         if (res.code !== 0) return
         cb(formAction.value)
       })
       break;
 
     case FormAction.EDIT:
-      updateUserApi(id, {
-        username, mobile, email, password, displayName, address, avatar, signature, amount, state
+      updateUserApi(id!, {
+        username, displayName, email, mobile, province, city,
+        street, gender, avatar, signature, amount, state
       }).then(res => {
         if (res.code !== 0) return
         cb(formAction.value)

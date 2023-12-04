@@ -30,33 +30,42 @@ export function getUsersApi({username, province, state, size = 5, page = 1}: Use
   })
 }
 
-export function createUserApi({username, email, mobile, password, address, displayName, avatar, signature}: CreateUser): Promise<Result<User>> {
+export function createUserApi({
+    username, displayName, mobile, email, province, city, street, gender, avatar, signature
+}: CreateUser): Promise<Result<User>> {
   return request({
     url: 'user',
     method: HttpMethod.POST,
     data: {
       username,
-      email,
-      mobile,
-      password,
       displayName,
-      address,
+      mobile,
+      email,
+      province,
+      city,
+      street,
+      gender,
       avatar,
       signature
     }
   })
 }
 
-export function updateUserApi(id: string, {username, mobile, email, password, displayName, address, avatar, signature, amount, state }: UpdateUser): Promise<Result<User>> {
+export function updateUserApi(id: string, {
+  username, displayName, email, mobile, province, city, street, gender, avatar, signature, amount, state
+}: UpdateUser): Promise<Result<User>> {
   return request({
     url: `user/${id}`,
     method: HttpMethod.PATCH,
     data: {
       username,
       displayName,
-      mobile,
       email,
-      address,
+      mobile,
+      province,
+      city,
+      street,
+      gender,
       avatar,
       signature,
       amount,

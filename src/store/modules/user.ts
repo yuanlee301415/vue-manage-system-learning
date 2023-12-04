@@ -22,9 +22,7 @@ export const useUserStore = defineStore({
                     "displayName": "超级管理员",
                     "email": "-",
                     "mobile": "-",
-                    "password": "-",
                     "amount": 99999,
-                    "address": "广东省东莞市长安镇",
                     "state": 1,
                     "avatar": "/logos/alipay.png",
                     "signature": "暂无"
