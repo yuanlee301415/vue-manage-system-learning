@@ -1,50 +1,77 @@
 <template>
   <el-card>
-    <el-tabs v-model="status">
+    <el-tabs v-model="tabName">
 
-      <el-tab-pane :label="`未读(${message.unread?.length??0})`" :name="MessageStatus.UNREAD">
-        <el-table :data="message.unread" :show-header="false">
+      <el-tab-pane :label="`未读(${letter[LetterStatus.UNREAD].total??0})`" :name="LetterStatus.UNREAD">
+        <el-table :data="letter[LetterStatus.UNREAD].data" :show-header="false">
           <el-table-column prop="title"/>
           <el-table-column width="160">
-            <template #default="{row: { date }}">{{ formatDate(date) }}</template>
+            <template #default="{row: { createdAt }}">{{ formatDate(createdAt) }}</template>
           </el-table-column>
           <el-table-column width="100">
-            <template #default="{row: { id }}">
-              <el-button size="small" @click="handleRead(id)">标为已读</el-button>
+            <template #default="{row: { _id }}">
+              <el-button size="small" @click="handleRead(_id)">标为已读</el-button>
             </template>
           </el-table-column>
         </el-table>
-        <el-button :disabled="!message.unread?.length" type="primary" class="mt-3" @click="handleReadAll">全部标记为已读</el-button>
+        <el-button :disabled="!letter[LetterStatus.UNREAD]?.total" type="primary" class="mt-3" @click="handleReadAll">全部标记为已读</el-button>
+        <el-pagination
+            v-model:current-page="letter[LetterStatus.UNREAD].page"
+            v-model:page-size="letter[LetterStatus.UNREAD].size"
+            :total="letter[LetterStatus.UNREAD].total"
+            layout="total, sizes, prev, pager, next"
+            class="mt-3"
+            @size-change="getLetters(LetterStatus.UNREAD)"
+            @current-change="getLetters(LetterStatus.UNREAD)"
+        />
       </el-tab-pane>
 
-      <el-tab-pane :label="`已读(${message.read?.length??0})`" :name="MessageStatus.READ">
-        <el-table :data="message.read" :show-header="false">
+      <el-tab-pane :label="`已读(${letter[LetterStatus.READ].total??0})`" :name="LetterStatus.READ">
+        <el-table :data="letter[LetterStatus.READ].data" :show-header="false">
           <el-table-column prop="title"/>
           <el-table-column width="160">
-            <template #default="{row: { date }}">{{ formatDate(date) }}</template>
+            <template #default="{row: { createdAt }}">{{ formatDate(createdAt) }}</template>
           </el-table-column>
           <el-table-column width="100">
-            <template #default="{row: { id }}">
-              <el-button size="small" type="danger" @click="handleRemove(id)">删除</el-button>
+            <template #default="{row: { _id }}">
+              <el-button size="small" type="danger" @click="handleRemove(_id)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
-        <el-button :disabled="!message.read?.length" type="danger" class="mt-3" @click="handleRemoveAll">删除全部</el-button>
+        <el-button :disabled="!letter[LetterStatus.READ]?.total" type="danger" class="mt-3" @click="handleRemoveAll">删除全部</el-button>
+        <el-pagination
+            v-model:current-page="letter[LetterStatus.READ].page"
+            v-model:page-size="letter[LetterStatus.READ].size"
+            :total="letter[LetterStatus.READ].total"
+            layout="total, sizes, prev, pager, next"
+            class="mt-3"
+            @size-change="getLetters(LetterStatus.READ)"
+            @current-change="getLetters(LetterStatus.READ)"
+        />
       </el-tab-pane>
 
-      <el-tab-pane :label="`回收站(${message.deleted?.length})`" :name="MessageStatus.DELETED">
-        <el-table :data="message.deleted" :show-header="false">
+      <el-tab-pane :label="`回收站(${letter[LetterStatus.DELETED].total??0})`" :name="LetterStatus.DELETED">
+        <el-table :data="letter[LetterStatus.DELETED].data" :show-header="false">
           <el-table-column prop="title"/>
           <el-table-column width="160">
-            <template #default="{row: { date }}">{{ formatDate(date) }}</template>
+            <template #default="{row: { createdAt }}">{{ formatDate(createdAt) }}</template>
           </el-table-column>
           <el-table-column width="100">
-            <template #default="{row: { id }}">
-              <el-button size="small" @click="handleRevert(id)">还原</el-button>
+            <template #default="{row: { _id }}">
+              <el-button size="small" @click="handleRevert(_id)">还原</el-button>
             </template>
           </el-table-column>
         </el-table>
-        <el-button :disabled="!message.deleted?.length" type="danger" class="mt-3" @click="handleClear">清空回收站</el-button>
+        <el-button :disabled="!letter[LetterStatus.DELETED]?.total" type="danger" class="mt-3" @click="handleClear">清空回收站</el-button>
+        <el-pagination
+            v-model:current-page="letter[LetterStatus.DELETED].page"
+            v-model:page-size="letter[LetterStatus.DELETED].size"
+            :total="letter[LetterStatus.DELETED].total"
+            layout="total, sizes, prev, pager, next"
+            class="mt-3"
+            @size-change="getLetters(LetterStatus.DELETED)"
+            @current-change="getLetters(LetterStatus.DELETED)"
+        />
       </el-tab-pane>
 
     </el-tabs>
@@ -52,57 +79,65 @@
 </template>
 
 <script setup lang="ts">
-import type {Message} from "@/models/Message";
+import {Letter} from "@/models/Letter";
 
-import {MessageStatus} from "@/enums/messageStatus";
-import {deleteMessageStatusApi, getMessagesApi, updateMessageStatusApi} from "@/api/message";
+import {LetterStatus} from "@/enums/letterStatus";
+import {deleteLettersApi, getLettersApi, updateLetterStatusApi} from "@/api/letter";
 import {reactive, ref} from "vue";
 import {ElNotification} from "element-plus";
 import {formatDate} from "@/filters";
 
-const message = reactive<{
-  unread: Message[],
-  unreadTotal: number,
-  read: Message[],
-  readTotal: number,
-  deleted: Message[],
-  deletedTotal: number
+type LetterData = {
+  data: Letter[]
+  total: number
+  page: number
+  size: number
+}
+
+const tabName = ref<LetterStatus>(LetterStatus.UNREAD)
+
+const letter = reactive<{
+  [LetterStatus.UNREAD]: LetterData
+  [LetterStatus.READ]: LetterData
+  [LetterStatus.DELETED]: LetterData
 }>({
-  unread: [],
-  unreadTotal: 0,
-  read: [],
-  readTotal: 0,
-  deleted: [],
-  deletedTotal: 0
+  [LetterStatus.UNREAD]: {
+    data: [],
+    total: 0,
+    page: 1,
+    size: 10
+  },
+  [LetterStatus.READ]: {
+    data: [],
+    total: 0,
+    page: 1,
+    size: 10
+  },
+  [LetterStatus.DELETED]: {
+    data: [],
+    total: 0,
+    page: 1,
+    size: 10
+  }
 })
 
-const status = ref<MessageStatus>(MessageStatus.UNREAD)
+getLetters(LetterStatus.UNREAD)
+getLetters(LetterStatus.READ)
+getLetters(LetterStatus.DELETED)
 
-getMessage()
-
-function getMessage() {
-  getMessagesApi({status: MessageStatus.UNREAD}).then(res => {
+function getLetters(status: LetterStatus) {
+  getLettersApi({page: letter[status].page, size: letter[status].size, status }).then(res => {
     if (res.code !== 0) return
-    message.unread = res.data
-    message.unreadTotal = res.total!
-    console.log('message.unread:', message.unread)
-  })
-  getMessagesApi({status: MessageStatus.READ}).then(res => {
-    if (res.code !== 0) return
-    message.read = res.data
-    message.readTotal = res.total!
-  })
-  getMessagesApi({status: MessageStatus.DELETED}).then(res => {
-    if (res.code !== 0) return
-    message.deleted = res.data
-    message.deletedTotal = res.total!
+    letter[status].data = res.data && res.data.map(_ => new Letter(_))
+    letter[status].total = res.total!
   })
 }
 
-function handleRead(id: number) {
-  updateMessageStatusApi(id, MessageStatus.READ).then(res => {
+function handleRead(id: string) {
+  updateLetterStatusApi([id], LetterStatus.READ).then(res => {
     if (res.code !== 0) return
-    getMessage()
+    getLetters(LetterStatus.UNREAD)
+    getLetters(LetterStatus.READ)
     ElNotification.success({
       message: `【成功】标记为已读成功.`,
       showClose: false
@@ -111,9 +146,10 @@ function handleRead(id: number) {
 }
 
 function handleReadAll() {
-  Promise.all(message.unread.map(_ => updateMessageStatusApi(_.id, MessageStatus.READ))).then(res => {
-    if (res.some(_ => _.code !== 0)) return
-    getMessage()
+  updateLetterStatusApi(letter[LetterStatus.UNREAD].data.map(_ => _._id), LetterStatus.READ).then(res => {
+    if (res.code !== 0) return
+    getLetters(LetterStatus.UNREAD)
+    getLetters(LetterStatus.READ)
     ElNotification.success({
       message: `【成功】全部标记为已读成功.`,
       showClose: false
@@ -121,10 +157,11 @@ function handleReadAll() {
   })
 }
 
-function handleRemove(id: number) {
-  updateMessageStatusApi(id, MessageStatus.DELETED).then(res => {
+function handleRemove(id: string) {
+  updateLetterStatusApi([id], LetterStatus.DELETED).then(res => {
     if (res.code !== 0) return
-    getMessage()
+    getLetters(LetterStatus.READ)
+    getLetters(LetterStatus.DELETED)
     ElNotification.success({
       message: `【成功】删除成功.`,
       showClose: false
@@ -133,9 +170,10 @@ function handleRemove(id: number) {
 }
 
 function handleRemoveAll() {
-  Promise.all(message.read.map(_ => updateMessageStatusApi(_.id, MessageStatus.DELETED))).then(res => {
-    if (res.some(_ => _.code !== 0)) return
-    getMessage()
+  updateLetterStatusApi(letter[LetterStatus.READ].data.map(_ => _._id), LetterStatus.DELETED).then(res => {
+    if (res.code !== 0) return
+    getLetters(LetterStatus.READ)
+    getLetters(LetterStatus.DELETED)
     ElNotification.success({
       message: `【成功】删除全部成功.`,
       showClose: false
@@ -143,10 +181,11 @@ function handleRemoveAll() {
   })
 }
 
-function handleRevert(id: number) {
-  updateMessageStatusApi(id, MessageStatus.READ).then(res => {
+function handleRevert(id: string) {
+  updateLetterStatusApi([id], LetterStatus.READ).then(res => {
     if (res.code !== 0) return
-    getMessage()
+    getLetters(LetterStatus.DELETED)
+    getLetters(LetterStatus.READ)
     ElNotification.success({
       message: `【成功】还原成功.`,
       showClose: false
@@ -155,11 +194,11 @@ function handleRevert(id: number) {
 }
 
 function handleClear() {
-  Promise.all(message.deleted.map(_ => deleteMessageStatusApi(_.id))).then(res => {
-    if (res.some(_ => _.code !== 0)) return
-    getMessage()
+  deleteLettersApi(letter[LetterStatus.DELETED].data.map(_ => _._id)).then(res => {
+    if (res.code !== 0) return
+    getLetters(LetterStatus.DELETED)
     ElNotification.success({
-      message: `【成功】清空成功.`,
+      message: `【成功】清空回收站成功.`,
       showClose: false
     })
   })

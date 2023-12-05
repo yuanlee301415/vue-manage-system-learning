@@ -2,11 +2,11 @@ import type {QueryParams} from "#/axios";
 
 import User from "@/models/User";
 import {State} from "@/enums/state";
-import {MessageStatus} from "@/enums/messageStatus";
+import {LetterStatus} from "@/enums/letterStatus";
 
 export type CreateUser = Omit<User, 'id' | 'amount' | 'state'>
 export type UpdateUser = Omit<User, 'id'>
 
 export type UserParams = QueryParams & {username?: string, address?: string, displayName?: string, state?: State }
-export type MessageParams = QueryParams & { status?: MessageStatus }
+export type LetterParams = QueryParams & { status?: LetterStatus }
 

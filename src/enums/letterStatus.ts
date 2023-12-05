@@ -5,7 +5,7 @@ const deleted = 2
 /**
  * 消息状态
  */
-export enum MessageStatus {
+export enum LetterStatus {
     UNREAD = unread,
     READ = read,
     DELETED = deleted
