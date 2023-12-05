@@ -24,7 +24,7 @@
         </el-form-item>
       </el-form>
 
-      <el-table :data="tableData" border stripe show-overflow-tooltip>
+      <el-table :data="userData.list" border stripe show-overflow-tooltip>
         <el-table-column prop="username" label="用户名" width="150" fixed/>
         <el-table-column prop="displayName" label="显示名称" width="150" fixed/>
         <el-table-column prop="amount" label="帐户余额" width="100">
@@ -70,12 +70,12 @@
 
       <div class="mt-4">
         <el-pagination
-            v-model:current-page="currentPage"
-            v-model:page-size="pageSize"
-            :total="pageTotal"
+            v-model:current-page="params.page"
+            v-model:page-size="params.size"
+            :total="userData.total"
             layout="total, sizes, prev, pager, next"
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
+            @size-change="getData()"
+            @current-change="getData()"
         />
       </div>
     </el-card>
@@ -117,13 +117,18 @@ const province = ref<string[]>([])
 const params = reactive<UserParams>({
   username: '',
   province: '',
-  state: void 0
+  state: void 0,
+  page: 1,
+  size: 20
 })
 
-const currentPage = ref(1)
-const pageSize = ref(20)
-const tableData = ref<User[]>()
-const pageTotal = ref(0)
+const userData: {
+  list: User[]
+  total: number
+} = {
+  list: [],
+  total: 0
+}
 const stateStr = computed(() => (state: State) => stateFilter(state))
 const dateStr = computed(() => (date: number) => dayjs(date).format('YYYY-MM-DD HH:mm:ss'))
 const strMoney = computed(() => (amount: number) => '￥' + amount)
@@ -137,14 +142,12 @@ getData()
 getProvince()
 
 function getData() {
-  getUsersApi({
-    ...params,
-    page: currentPage.value,
-    size: pageSize.value
-  }).then(res => {
+  getUsersApi(params).then(res => {
     console.log(res)
-    tableData.value = res.data
-    pageTotal.value = res.total!
+    if (res.code !== 0) return
+    userData.list = res.data && res.data.map(_ => new User(_))
+    userData.total = res.total!
+    console.log('userData:', userData)
   })
 }
 
@@ -155,19 +158,10 @@ function getProvince() {
 }
 
 function handleSearch() {
-  currentPage.value = 1
+  params.page = 1
   getData()
 }
 
-function handleCurrentChange(val: number) {
-  currentPage.value = val
-  getData()
-}
-
-function handleSizeChange(val: number) {
-  pageSize.value = val
-  getData()
-}
 
 function handleAdd() {
   formAction.value = FormAction.ADD
