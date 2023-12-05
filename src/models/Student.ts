@@ -21,6 +21,8 @@ export default class Student {
   // 性别
   gender: Gender
 
+  createdAt: number
+
   constructor(student: Student = {} as Student) {
     this._id = student._id
     this.name = student.name
@@ -28,5 +30,6 @@ export default class Student {
     this.grade = student.grade
     this.age = student.age
     this.gender = student.gender
+    this.createdAt = student.createdAt
   }
 }

@@ -28,7 +28,7 @@
         <el-table-column prop="username" label="用户名" width="150" fixed/>
         <el-table-column prop="displayName" label="显示名称" width="150" fixed/>
         <el-table-column prop="amount" label="帐户余额" width="100">
-          <template #default="{row: {amount}}">{{strMoney(amount)}}</template>
+          <template #default="{row: {amount}}">{{ '￥' + amount}}</template>
         </el-table-column>
         <el-table-column prop="avatar" label="头像" width="70" align="center">
           <template #default="scope">
@@ -46,12 +46,12 @@
         <el-table-column prop="signature" label="简介"/>
         <el-table-column prop="state" label="状态" width="80" align="center">
           <template #default="{row: {state}}">
-            <el-tag :type="state === State.SUCCESS ? 'success' : 'danger'">{{ stateStr(state) }}</el-tag>
+            <el-tag :type="state === State.SUCCESS ? 'success' : 'danger'">{{ stateFilter(state) }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column prop="date" label="注册时间" width="160" align="center">
           <template #default="{row: {createdAt}}">
-            {{ dateStr(createdAt) }}
+            {{ formatDate(createdAt) }}
           </template>
         </el-table-column>
         <el-table-column label="操作" width="150" align="center" fixed="right">
@@ -101,7 +101,6 @@
 import type { UserParams} from "#/index";
 import {computed, reactive, ref} from "vue";
 import {Delete, Edit, Plus, Search} from "@element-plus/icons-vue";
-import dayjs from "dayjs";
 import {ElNotification} from "element-plus";
 
 import User from "@/models/User";
@@ -110,7 +109,7 @@ import { getProvinceApi } from "@/api/code";
 import UserForm from "./components/UserForm.vue";
 import {FormAction} from '@/enums/formAction'
 import {State, StateMap} from "@/enums/state";
-import {stateFilter} from "@/filters";
+import {stateFilter, formatDate} from "@/filters";
 
 const province = ref<string[]>([])
 
@@ -129,9 +128,7 @@ const userData = reactive<{
   list: [],
   total: 0
 })
-const stateStr = computed(() => (state: State) => stateFilter(state))
-const dateStr = computed(() => (date: number) => dayjs(date).format('YYYY-MM-DD HH:mm:ss'))
-const strMoney = computed(() => (amount: number) => '￥' + amount)
+
 const visible = ref(false)
 const userFormData = ref<User>()
 const userFormRef = ref()
