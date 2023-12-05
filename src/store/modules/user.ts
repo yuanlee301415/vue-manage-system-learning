@@ -18,19 +18,20 @@ export const useUserStore = defineStore({
             import.meta.env.VITE_PERMISSION && JSON.parse(import.meta.env.VITE_PERMISSION)
                 ? null
                 : new User({
-                    "_id": void 0 as unknown as string,
-                    "username": "Admin",
-                    "displayName": "超级管理员",
-                    "email": "-",
-                    "mobile": "-",
-                    "amount": 99999,
-                    "state": 1,
-                    "avatar": "/logos/alipay.png",
-                    "signature": "暂无",
+                    _id: void 0 as unknown as string,
+                    createdAt: void 0 as unknown as number,
+                    username: "Admin",
+                    displayName: "超级管理员",
+                    email: "-",
+                    mobile: "-",
+                    amount: 99999,
+                    state: 1,
+                    avatar: "/logos/alipay.png",
+                    signature: "暂无",
                     province: "-",
                     city: "-",
                     street: "-",
-                    gender: Gender.MALE
+                    gender: Gender.MALE,
                 }),
         token: undefined,
         lastUpdateTime: undefined

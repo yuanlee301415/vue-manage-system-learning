@@ -50,8 +50,8 @@
           </template>
         </el-table-column>
         <el-table-column prop="date" label="注册时间" width="160" align="center">
-          <template #default="{row: {date}}">
-            {{ dateStr(date) }}
+          <template #default="{row: {createdAt}}">
+            {{ dateStr(createdAt) }}
           </template>
         </el-table-column>
         <el-table-column label="操作" width="150" align="center" fixed="right">

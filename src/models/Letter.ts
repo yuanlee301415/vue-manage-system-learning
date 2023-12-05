@@ -3,14 +3,13 @@ import { LetterStatus } from "@/enums/letterStatus";
 export class Letter {
     _id: string
     title: string
-    createdAt: number
     status: LetterStatus
+    createdAt: number
 
-    constructor(_: Letter = {} as Letter) {
-        const { _id, title, createdAt, status } = { ..._ }
-        this._id = _id
-        this.title = title
-        this.createdAt = createdAt
-        this.status = status
+    constructor(letter: Letter = {} as Letter) {
+        this._id = letter._id
+        this.title = letter.title
+        this.status = letter.status
+        this.createdAt = letter.createdAt
     }
 }

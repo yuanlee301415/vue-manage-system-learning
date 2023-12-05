@@ -35,20 +35,22 @@ export default class User {
   // 用户简介
   signature: string
 
-  constructor(_: User = {} as User) {
-    const { _id, username, displayName, email, mobile, province, city, street, gender, avatar, amount, state, signature } = { ..._ }
-    this._id = _id
-    this.username = username
-    this.displayName = displayName
-    this.email = email
-    this.mobile = mobile
-    this.province = province
-    this.city = city
-    this.street = street
-    this.gender = gender
-    this.avatar = avatar
-    this.amount = amount
-    this.state = state
-    this.signature = signature
+  createdAt: number
+
+  constructor(user: User = {} as User) {
+    this._id = user._id
+    this.username = user.username
+    this.displayName = user.displayName
+    this.email = user.email
+    this.mobile = user.mobile
+    this.province = user.province
+    this.city = user.city
+    this.street = user.street
+    this.gender = user.gender
+    this.avatar = user.avatar
+    this.amount = user.amount
+    this.state = user.state
+    this.signature = user.signature
+    this.createdAt = user.createdAt
   }
 }

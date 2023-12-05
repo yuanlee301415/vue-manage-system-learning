@@ -21,13 +21,12 @@ export default class Student {
   // 性别
   gender: Gender
 
-  constructor(_: Student = {} as Student) {
-    const { _id, name, sno, grade, age, gender } = { ..._ }
-    this._id = _id
-    this.name = name
-    this.sno = sno
-    this.grade = grade
-    this.age = age
-    this.gender = gender
+  constructor(student: Student = {} as Student) {
+    this._id = student._id
+    this.name = student.name
+    this.sno = student.sno
+    this.grade = student.grade
+    this.age = student.age
+    this.gender = student.gender
   }
 }
