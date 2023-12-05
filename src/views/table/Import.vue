@@ -39,7 +39,6 @@ import {getStudentsApi, importStudentsApi} from "@/api/student";
 import {genderFilter} from "@/filters";
 
 const students = ref<Student[]>()
-const studentTotal = ref(0)
 const genderStr = computed(() => (gender: Gender) => genderFilter(gender))
 const importList = ref<Student[]>([])
 
@@ -49,7 +48,6 @@ function getStudents() {
   getStudentsApi().then(res => {
     if (res.code !== 0) return
     students.value = res.data
-    studentTotal.value = res.total!
   })
 }
 
@@ -75,6 +73,7 @@ function analysisExcel(file: File): Promise<Student[]> {
 
 async function handleMany() {
   const list = importList.value.map((_: any) => new Student({
+    _id: void 0 as unknown as string,
     name: _['姓名'],
     sno: _['学号'],
     grade: _['班级'],

@@ -6,7 +6,7 @@ export class Letter {
     createdAt: number
     status: LetterStatus
 
-    constructor(_: Letter) {
+    constructor(_: Letter = {} as Letter) {
         const { _id, title, createdAt, status } = { ..._ }
         this._id = _id
         this.title = title

@@ -122,13 +122,13 @@ const params = reactive<UserParams>({
   size: 20
 })
 
-const userData: {
+const userData = reactive<{
   list: User[]
   total: number
-} = {
+}>({
   list: [],
   total: 0
-}
+})
 const stateStr = computed(() => (state: State) => stateFilter(state))
 const dateStr = computed(() => (date: number) => dayjs(date).format('YYYY-MM-DD HH:mm:ss'))
 const strMoney = computed(() => (amount: number) => '￥' + amount)
@@ -143,11 +143,9 @@ getProvince()
 
 function getData() {
   getUsersApi(params).then(res => {
-    console.log(res)
     if (res.code !== 0) return
-    userData.list = res.data && res.data.map(_ => new User(_))
+    userData.list = res.data?.map(_ => new User(_))
     userData.total = res.total!
-    console.log('userData:', userData)
   })
 }
 
@@ -176,7 +174,7 @@ function handleEdit(user: User) {
 }
 
 function handleDelete(user: User) {
-  deleteUserApi(user.id!).then(res => {
+  deleteUserApi(user._id).then(res => {
     if (res.code !== 0) return
     getData()
     ElNotification.success({
@@ -193,8 +191,7 @@ function handleSubmit() {
 function onUserFormSubmit(data: User) {
   console.log('onUserFormSubmit>data:', data)
   console.log('onUserFormSubmit>action:', formAction.value)
-  const {id, username, displayName, mobile, email, province, city,
-    street, gender, avatar, signature, amount, state} = data
+  const {_id, username, displayName, mobile, email, province, city, street, gender, avatar, signature, amount, state} = data
   const cb = (action: FormAction) => {
     getData()
     ing.value = false
@@ -209,17 +206,16 @@ function onUserFormSubmit(data: User) {
   switch (formAction.value) {
     case FormAction.ADD:
       createUserApi({
-        username, displayName, email, mobile, province, city,
-        street, gender, avatar, signature }).then(res => {
+        username, displayName, email, mobile, province, city, street, gender, avatar, signature
+      }).then(res => {
         if (res.code !== 0) return
         cb(formAction.value)
       })
       break;
 
     case FormAction.EDIT:
-      updateUserApi(id!, {
-        username, displayName, email, mobile, province, city,
-        street, gender, avatar, signature, amount, state
+      updateUserApi(_id, {
+        username, displayName, email, mobile, province, city, street, gender, avatar, signature, amount, state
       }).then(res => {
         if (res.code !== 0) return
         cb(formAction.value)

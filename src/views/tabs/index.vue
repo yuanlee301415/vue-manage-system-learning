@@ -128,7 +128,7 @@ getLetters(LetterStatus.DELETED)
 function getLetters(status: LetterStatus) {
   getLettersApi({page: letter[status].page, size: letter[status].size, status }).then(res => {
     if (res.code !== 0) return
-    letter[status].data = res.data && res.data.map(_ => new Letter(_))
+    letter[status].data = res.data?.map(_ => new Letter(_))
     letter[status].total = res.total!
   })
 }

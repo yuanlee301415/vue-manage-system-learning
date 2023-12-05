@@ -1,29 +1,29 @@
 import {Gender} from "@/enums/gender";
 
 /**
- * 用户 Model
+ * 学生 Model
  */
 export default class Student {
-  id?: number
+  _id: string
 
   // 姓名
-  name?: string
+  name: string
 
   // 学号
-  sno?: string
+  sno: string
 
   // 年级
-  grade?: string
+  grade: string
 
   // 年龄
-  age?: number
+  age: number
 
   // 性别
-  gender?: Gender
+  gender: Gender
 
-  constructor(_: Student) {
-    const { id, name, sno, grade, age, gender } = { ..._ }
-    this.id = id
+  constructor(_: Student = {} as Student) {
+    const { _id, name, sno, grade, age, gender } = { ..._ }
+    this._id = _id
     this.name = name
     this.sno = sno
     this.grade = grade

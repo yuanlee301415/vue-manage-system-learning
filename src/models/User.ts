@@ -5,39 +5,39 @@ import {Gender} from "@/enums/gender";
  * 用户 Model
  */
 export default class User {
-  readonly id?: string
+  _id: string
 
-  username?: string
+  username: string
 
-  displayName?: string
+  displayName: string
 
-  mobile?: string;
+  mobile: string;
 
-  email?: string;
+  email: string;
 
   // 帐户余额
-  amount?: number
+  amount: number
 
-  province?: string
+  province: string
 
-  city?: string
+  city: string
 
-  street?: string
+  street: string
 
-  gender?: Gender
+  gender: Gender
 
   // 头像
-  avatar?: string
+  avatar: string
 
   // 状态
-  state?: State
+  state: State
 
   // 用户简介
-  signature?: string
+  signature: string
 
-  constructor(_?: User) {
-    const { id, username, displayName, email, mobile, province, city, street, gender, avatar, amount, state, signature } = { ..._ }
-    this.id = id
+  constructor(_: User = {} as User) {
+    const { _id, username, displayName, email, mobile, province, city, street, gender, avatar, amount, state, signature } = { ..._ }
+    this._id = _id
     this.username = username
     this.displayName = displayName
     this.email = email

@@ -3,6 +3,7 @@ import {defineStore} from 'pinia'
 import {store} from '@/store'
 import User from '@/models/User'
 import {getUserInfoApi} from '@/api/user'
+import {Gender} from "@/enums/gender";
 
 interface UserState {
     userInfo: Nullable<User>
@@ -17,7 +18,7 @@ export const useUserStore = defineStore({
             import.meta.env.VITE_PERMISSION && JSON.parse(import.meta.env.VITE_PERMISSION)
                 ? null
                 : new User({
-                    "id": void 0 as unknown as string,
+                    "_id": void 0 as unknown as string,
                     "username": "Admin",
                     "displayName": "超级管理员",
                     "email": "-",
@@ -25,7 +26,11 @@ export const useUserStore = defineStore({
                     "amount": 99999,
                     "state": 1,
                     "avatar": "/logos/alipay.png",
-                    "signature": "暂无"
+                    "signature": "暂无",
+                    province: "-",
+                    city: "-",
+                    street: "-",
+                    gender: Gender.MALE
                 }),
         token: undefined,
         lastUpdateTime: undefined

@@ -36,7 +36,7 @@ getStudents()
 function getStudents() {
   getStudentsApi().then(res => {
     if (res.code !== 0) return
-    students.value = res.data
+    students.value = res.data?.map(_ => new Student(_))
   })
 }
 
