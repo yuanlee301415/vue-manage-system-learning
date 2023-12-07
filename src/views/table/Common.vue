@@ -8,7 +8,7 @@
 
         <el-form-item>
           <el-select v-model="params.province" placeholder="地址" clearable class="w-[200px]">
-            <el-option v-for="_ of province" :key="_" :label="_" :value="_"></el-option>
+            <el-option v-for="_ of province" :key="_.value" :label="_.label" :value="_.value"></el-option>
           </el-select>
         </el-form-item>
 
@@ -99,19 +99,20 @@
 
 <script lang="ts" setup>
 import type { UserParams} from "#/index";
-import {computed, reactive, ref} from "vue";
+import {reactive, ref} from "vue";
 import {Delete, Edit, Plus, Search} from "@element-plus/icons-vue";
 import {ElNotification} from "element-plus";
 
 import User from "@/models/User";
+import Configure from "@/models/Configure";
 import {createUserApi, getUsersApi, updateUserApi, deleteUserApi} from "@/api/user";
-import { getProvinceApi } from "@/api/code";
+import { getProvinceApi } from "@/api/configure";
 import UserForm from "./components/UserForm.vue";
 import {FormAction} from '@/enums/formAction'
 import {State, StateMap} from "@/enums/state";
 import {stateFilter, formatDate} from "@/filters";
 
-const province = ref<string[]>([])
+const province = ref<Configure[]>([])
 
 const params = reactive<UserParams>({
   username: '',

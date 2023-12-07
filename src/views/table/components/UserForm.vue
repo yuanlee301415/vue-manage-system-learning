@@ -48,7 +48,7 @@
 
     <el-form-item prop="province" label="省份">
       <el-select v-model="user.province" class="w-full" placeholder="请选择省份">
-        <el-option v-for="_ of province" :key="_" :label="_" :value="_"/>
+        <el-option v-for="_ of province" :key="_.value" :label="_.label" :value="_.value"/>
       </el-select>
     </el-form-item>
 
@@ -73,6 +73,7 @@ import type {FormInstance, FormRules} from "element-plus";
 import {reactive, ref} from "vue";
 import {FormAction} from "@/enums/formAction";
 import User from "@/models/User";
+import Configure from "@/models/Configure";
 import {State} from "@/enums/state";
 import {GenderMap} from "@/enums/gender";
 import { NAME_REG, EMAIL_REG, MOBILE_REG } from "@/constants";
@@ -89,7 +90,7 @@ const rules: FormRules<User> = {
   province: [{ required: true, trigger: 'blur', message: '请选择省份' }]
 }
 
-const props = defineProps<{ user: User, province: string[], action: FormAction }>()
+const props = defineProps<{ user: User, province: Configure[], action: FormAction }>()
 const user = reactive<User>(new User(props.user))
 
 const avatars = [
