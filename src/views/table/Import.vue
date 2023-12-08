@@ -20,7 +20,7 @@
       <el-table-column prop="age" label="年龄"/>
       <el-table-column prop="gender" label="性别">
         <template #default="{row: {gender}}">
-          {{ genderFilter(gender) }}
+          {{ formatGender(gender) }}
         </template>
       </el-table-column>
       <el-table-column prop="date" label="注册时间" width="160" align="center">
@@ -53,7 +53,7 @@ import {ElNotification} from "element-plus";
 import Student from "@/models/Student";
 import {Gender} from "@/enums/gender";
 import {getStudentsApi, importStudentsApi} from "@/api/student";
-import {formatDate, genderFilter} from "@/filters";
+import {formatDate, formatGender} from "@/filters";
 
 const studentData = reactive<{
   list: Student[]

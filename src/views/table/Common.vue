@@ -46,7 +46,7 @@
         <el-table-column prop="signature" label="简介"/>
         <el-table-column prop="state" label="状态" width="80" align="center">
           <template #default="{row: {state}}">
-            <el-tag :type="state === State.SUCCESS ? 'success' : 'danger'">{{ stateFilter(state) }}</el-tag>
+            <el-tag :type="state === State.SUCCESS ? 'success' : 'danger'">{{ formatState(state) }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column prop="date" label="注册时间" width="160" align="center">
@@ -110,7 +110,7 @@ import { getProvinceApi } from "@/api/configure";
 import UserForm from "./components/UserForm.vue";
 import {FormAction} from '@/enums/formAction'
 import {State, StateMap} from "@/enums/state";
-import {stateFilter, formatDate} from "@/filters";
+import {formatState, formatDate} from "@/filters";
 
 const province = ref<Configure[]>([])
 
