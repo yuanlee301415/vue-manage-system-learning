@@ -3,15 +3,14 @@
 
     <el-upload
         v-model:file-list="fileList"
-        ref="coverRef"
-        :name="singleConfig.name"
-        :accept="singleConfig.accept.join()"
-        :limit="singleConfig.limit"
+        ref="uploadRef"
+        :name="config.name"
+        :accept="config.accept.join()"
+        :limit="config.limit"
         :http-request="upload"
         :auto-upload="false"
         :on-exceed="onExceed"
         :before-upload="beforeUpload"
-        action=""
         drag
     >
       <el-icon class="el-icon--upload"><UploadFilled/></el-icon>
@@ -21,7 +20,7 @@
       </div>
       <template #tip>
         <div class="el-upload__tip">
-          {{ singleConfig.accept.join('/') }} files with a size less than {{ formatFileSize(singleConfig.size) }}.
+          {{ config.accept.join('/') }} files with a size less than {{ formatFileSize(config.size) }}.
         </div>
       </template>
     </el-upload>
@@ -40,43 +39,38 @@ import type {UploadRawFile, UploadRequestOptions } from "element-plus";
 import {ref} from "vue";
 import {UploadFilled} from "@element-plus/icons-vue";
 
-import { uploadApi } from "@/api/common";
+import { uploadSingleApi } from "@/api/common";
 import {ElNotification} from "element-plus";
 import { formatFileSize } from "@/filters";
 
-console.log(formatFileSize(1000))
-console.log(formatFileSize(1024))
-console.log(formatFileSize(1024 * 1024 ))
-console.log(formatFileSize(1024 * 1024 * 1024 ))
-
-const singleConfig = {
-  name: 'cover',
+const config = {
+  name: 'file',
   limit: 1,
   size: 1024 * 1024 * 10, // 1 MB
   accept: ['.jpg', '.jpeg', '.png', '.gif'],
 }
 
 const fileList = ref<UploadRawFile[]>([])
-const coverRef = ref()
+const uploadRef = ref()
 const url = ref('')
 
 function onUpload() {
-  coverRef.value.submit()
+  uploadRef.value.submit()
 }
 
 function onExceed() {
   ElNotification({
     type: 'warning',
-    message: `文件数量超出限制：${singleConfig.limit}`
+    message: `文件数量超出限制：${config.limit}`
   })
 }
 
 function beforeUpload(file: UploadRawFile) {
   console.log('beforeUpload:', file)
-  if (file.size > singleConfig.size) {
+  if (file.size > config.size) {
     ElNotification({
       type: 'warning',
-      message: `文件大小超出限制：${formatFileSize(singleConfig.size)}`
+      message: `文件大小超出限制：${formatFileSize(config.size)}`
     })
     return false
   }
@@ -85,9 +79,9 @@ function beforeUpload(file: UploadRawFile) {
 
 function upload(opt: UploadRequestOptions) {
   const formData = new FormData()
-  formData.set('cover', opt.file)
+  formData.set(config.name, opt.file)
   console.log(formData)
-  uploadApi(formData).then(res => {
+  uploadSingleApi(formData).then(res => {
     if (res.code !== 0) return
     ElNotification({ type: 'success', message: '上传成功' })
     url.value = res.data?.url
@@ -95,7 +89,3 @@ function upload(opt: UploadRequestOptions) {
 }
 
 </script>
-
-<style scoped>
-
-</style>

@@ -5,9 +5,20 @@ import {HttpMethod} from "@/enums";
 
 
 
-export function uploadApi(formData: FormData): Promise<Result<{url: string}>> {
+export function uploadSingleApi(formData: FormData): Promise<Result<{url: string}>> {
     return request({
-        url: `upload`,
+        url: `upload/single`,
+        method: HttpMethod.POST,
+        data: formData,
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    })
+}
+
+export function uploadMultiApi(formData: FormData): Promise<Result<{url: string}>> {
+    return request({
+        url: `upload/multi`,
         method: HttpMethod.POST,
         data: formData,
         headers: {

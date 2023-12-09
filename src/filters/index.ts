@@ -16,10 +16,10 @@ export function formatDate(date: number, type = 'YYYY-MM-DD HH:mm:ss') {
 }
 
 
-export function formatFileSize(size: number) {
+export function formatFileSize(size: number): string {
     const units = ['', 'K', 'M', 'G', 'T']
     function _(size: number, idx = 0) {
-        if (size < 1024) return size + units[idx] + 'B'
+        if (size < 1024) return Number(size.toFixed(2)) + units[idx] + 'B'
         return _(size / 1024, idx + 1)
     }
     return _(size)
