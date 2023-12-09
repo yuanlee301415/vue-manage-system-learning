@@ -22,33 +22,24 @@ const FORM_ROUTE: RouteRecordRaw = {
     {
       path: 'upload',
       name: 'Upload',
-      component: () => import('@/views/form/Upload.vue'),
       meta: {
         title: '文件上传'
-      }
-    },
-    {
-      path: 'editor',
-      name: 'Editor',
-      redirect: '/form/editor/rich-text',
-      meta: {
-        title: '三级菜单'
       },
       children: [
         {
-          path: 'rich-text',
-          name: 'RichText',
-          component: () => import('@/views/form/editor/RichText.vue'),
+          path: 'single',
+          name: 'Single',
+          component: () => import('@/views/form/upload/Single.vue'),
           meta: {
-            title: '富文本编辑器'
+            title: '单文件上传'
           }
         },
         {
-          path: 'markdown',
-          name: 'Markdown',
-          component: () => import('@/views/form/editor/Markdown.vue'),
+          path: 'multi',
+          name: 'Multi',
+          component: () => import('@/views/form/upload/Multi.vue'),
           meta: {
-            title: 'Markdown 编辑器'
+            title: '多文件上传'
           }
         },
       ]

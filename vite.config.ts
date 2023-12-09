@@ -60,10 +60,10 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api\//, "/api/v1/"),
         },
-        '/public': {
-          target: VITE_PROXY + '/public',
+        '/uploads': {
+          target: VITE_PROXY + '/uploads',
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/public\//, ""),
+          rewrite: (path) => path.replace(/^\/uploads\//, ""),
         },
       }
     },

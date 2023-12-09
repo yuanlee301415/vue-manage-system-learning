@@ -14,3 +14,13 @@ export function formatGender(gender: Gender) {
 export function formatDate(date: number, type = 'YYYY-MM-DD HH:mm:ss') {
     return dayjs(date).format(type)
 }
+
+
+export function formatFileSize(size: number) {
+    const units = ['', 'K', 'M', 'G', 'T']
+    function _(size: number, idx = 0) {
+        if (size < 1024) return size + units[idx] + 'B'
+        return _(size / 1024, idx + 1)
+    }
+    return _(size)
+}
