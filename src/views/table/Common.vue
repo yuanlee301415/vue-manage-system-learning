@@ -7,7 +7,7 @@
         </el-form-item>
 
         <el-form-item>
-          <el-select v-model="params.province" placeholder="地址" clearable class="w-[200px]">
+          <el-select v-model="params.province" placeholder="省份" clearable class="w-[200px]">
             <el-option v-for="_ of province" :key="_.value" :label="_.label" :value="_.value"></el-option>
           </el-select>
         </el-form-item>
@@ -42,7 +42,7 @@
             />
           </template>
         </el-table-column>
-        <el-table-column prop="address" label="地址" width="200"/>
+        <el-table-column prop="province" label="省份" width="200"/>
         <el-table-column prop="signature" label="简介"/>
         <el-table-column prop="state" label="状态" width="80" align="center">
           <template #default="{row: {state}}">

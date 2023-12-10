@@ -94,14 +94,14 @@ const props = defineProps<{ user: User, province: Configure[], action: FormActio
 const user = reactive<User>(new User(props.user))
 
 const avatars = [
-  {label: 'Alipay', value: '/public/logos/alipay.png'},
-  {label: 'Angular', value: '/public/logos/angular.png'},
-  {label: 'Ant', value: '/public/logos/ant.png'},
-  {label: 'Bootstrap', value: '/public/logos/bootstrap.png'},
-  {label: 'Pro', value: '/public/logos/pro.png'},
-  {label: 'React', value: '/public/logos/react.png'},
-  {label: 'Vue', value: '/public/logos/vue.png'},
-  {label: 'Webpack', value: '/public/logos/webpack.png'}
+  {label: 'Alipay', value: '/logos/alipay.png'},
+  {label: 'Angular', value: '/logos/angular.png'},
+  {label: 'Ant', value: '/logos/ant.png'},
+  {label: 'Bootstrap', value: '/logos/bootstrap.png'},
+  {label: 'Pro', value: '/logos/pro.png'},
+  {label: 'React', value: '/logos/react.png'},
+  {label: 'Vue', value: '/logos/vue.png'},
+  {label: 'Webpack', value: '/logos/webpack.png'}
 ]
 const formRef = ref<FormInstance>()
 const emit = defineEmits(['submit'])
