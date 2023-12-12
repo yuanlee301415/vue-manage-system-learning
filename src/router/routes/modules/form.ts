@@ -6,6 +6,7 @@ const FORM_ROUTE: RouteRecordRaw = {
   path: '/form',
   component: LAYOUT,
   redirect: '/form/basic',
+  name: 'Form',
   meta: {
     title: '表单',
     icon: 'Edit'

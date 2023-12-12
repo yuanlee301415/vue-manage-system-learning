@@ -13,7 +13,7 @@ export const HOME_ROUTE: RouteRecordRaw = {
   children: [
     {
       path: '',
-      name: 'dashboard',
+      name: 'Dashboard',
       component: () => import('@/views/dashboard.vue'),
       meta: {
         title: '首页',

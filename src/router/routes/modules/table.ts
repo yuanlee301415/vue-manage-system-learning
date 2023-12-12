@@ -6,6 +6,7 @@ const TABLE_ROUTE: RouteRecordRaw = {
   path: '/table',
   component: LAYOUT,
   redirect: '/table/common',
+  name: 'Table',
   meta: {
     title: '表格',
     icon: 'Grid'

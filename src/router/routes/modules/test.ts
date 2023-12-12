@@ -6,6 +6,7 @@ const TEST_ROUTE: RouteRecordRaw = {
   path: '/test',
   component: LAYOUT,
   redirect: '/test/a',
+  name: 'Test',
   meta: {
     title: 'Test'
   },
