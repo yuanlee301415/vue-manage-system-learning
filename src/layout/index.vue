@@ -8,7 +8,9 @@
     <div class="content">
       <RouterView v-slot="{ Component, route }">
         <transition name="fade-slide" mode="out-in">
-          <component :is="Component" :key="route.path" />
+          <keep-alive :include="tags.names">
+            <component :is="Component" :key="route.path" />
+          </keep-alive>
         </transition>
       </RouterView>
     </div>
@@ -17,10 +19,12 @@
 
 <script lang="ts" setup>
 import { useSidebarState } from '@/store/modules/sidebar'
-
+import { useTagsState } from "@/store/modules/tags";
 import LayoutHeader from './Header/index.vue'
 import LayoutSideBar from './SideBar/index.vue'
 import LayoutTags from './Tags/index.vue'
 
 const sidebarStore = useSidebarState()
+const tags = useTagsState();
+
 </script>

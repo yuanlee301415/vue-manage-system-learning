@@ -6,7 +6,7 @@
 
 @headerHeight: 70px;
 @sideWidth: 250px;
-@breadcrumbsHeight: 30px;
+@breadcrumbsHeight: 35px;
 
 .header {
   height: @headerHeight;
@@ -45,8 +45,37 @@
     height: @breadcrumbsHeight;
     overflow: hidden;
     background-color: #fff;
-    padding-right: 120px;
     box-shadow: 0 5px 10px #ddd;
+    padding: 5px 120px 0 10px;
+    .warp {
+      display: flex;
+      .tag {
+        display: flex; flex-shrink: 0; justify-items: center; justify-content: center;
+        border: 1px solid #e9eaec;
+        border-radius: 3px;
+        margin-right: 5px;
+        padding: 0 2px;
+        a {
+          color: black;
+        }
+        i {
+          font-style: normal;
+          cursor: pointer;
+          padding: 0 2px;
+          border-radius: 100%;
+          &:hover {
+            font-weight: bold;
+          }
+        }
+      }
+      .active {
+        a {
+          color: white;
+        }
+        background-color: #1890ff;
+        color: white;
+      }
+    }
   }
   .content {
     width: 100%;
