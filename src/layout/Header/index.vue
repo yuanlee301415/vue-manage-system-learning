@@ -56,6 +56,7 @@ import {ArrowDown, Bell, Expand, Fold} from '@element-plus/icons-vue'
 import avatarUrl from '@/assets/img/avatar.jpg'
 import TABS_ROUTE from '@/router/routes/modules/tabs'
 import USER_ROUTE from '@/router/routes/modules/user'
+import LOGIN_ROUTE from '@/router/routes/modules/login'
 
 enum Command {
   User,
@@ -72,6 +73,9 @@ function handleCommand(command: Command) {
       router.push(USER_ROUTE.path)
       break
     case Command.SignOut:
+      router.push(LOGIN_ROUTE.path).then(() => {
+        window.location.reload()
+      })
       break
   }
 }

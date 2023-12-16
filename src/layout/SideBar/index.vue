@@ -31,8 +31,6 @@ class MenuItem {
 const route = useRoute()
 const currentRoute = computed(() => route.path)
 const items: MenuItem[] = genItems(basicRoutes)
-console.log('items:', items)
-
 const userSidebar = useSidebarState()
 
 function genItems(routes: RouteRecordRaw[], items: MenuItem[] = [], index?: string): MenuItem[] {
