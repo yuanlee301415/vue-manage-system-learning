@@ -15,9 +15,9 @@
       <div class="head-user-con flex items-center">
         <div class="flex items-center cursor-pointer h-[30px]">
           <el-tooltip effect="dark" content="消息中心" placement="bottom">
-            <el-badge is-dot>
+            <el-badge is-dot @click="$router.push(TABS_ROUTE.path)">
               <el-icon :size="30">
-                <bell />
+                <Bell />
               </el-icon>
             </el-badge>
           </el-tooltip>
@@ -53,6 +53,7 @@ import { useUserStoreWithOut } from '@/store/modules/user'
 import { useSidebarState } from '@/store/modules/sidebar'
 import {ArrowDown, Bell, Expand, Fold} from '@element-plus/icons-vue'
 import avatarUrl from '@/assets/img/avatar.jpg'
+import TABS_ROUTE from '@/router/routes/modules/tabs'
 
 const userStore = useUserStoreWithOut()
 const sidebarStore = useSidebarState()
