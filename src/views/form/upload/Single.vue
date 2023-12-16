@@ -5,9 +5,9 @@
         v-model:file-list="fileList"
         ref="uploadRef"
         :name="config.name"
-        :accept="config.accept.join()"
+        :accept="config.accept"
         :limit="config.limit"
-        :http-request="upload"
+        :http-request="httpRequest"
         :auto-upload="false"
         :on-exceed="onExceed"
         :before-upload="beforeUpload"
@@ -20,12 +20,12 @@
       </div>
       <template #tip>
         <div class="el-upload__tip">
-          {{ config.accept.join('/') }} files with a size less than {{ formatFileSize(config.size) }}.
+          Image files with a size less than {{ formatFileSize(config.size) }}.
         </div>
       </template>
     </el-upload>
 
-    <el-button @click="onUpload">上传</el-button>
+    <el-button @click="handleUpload">上传</el-button>
 
     <el-card v-if="url">
       <el-image  :src="url" />
@@ -35,7 +35,8 @@
 </template>
 
 <script setup lang="ts">
-import type {UploadRawFile, UploadRequestOptions } from "element-plus";
+import type {UploadRawFile, UploadRequestOptions, UploadInstance, UploadProps } from "element-plus";
+
 import {ref} from "vue";
 import {UploadFilled} from "@element-plus/icons-vue";
 
@@ -47,26 +48,28 @@ const config = {
   name: 'file',
   limit: 1,
   size: 1024 * 1024 * 10, // 1 MB
-  accept: ['.jpg', '.jpeg', '.png', '.gif'],
+  accept: 'image/*',
 }
 
 const fileList = ref<UploadRawFile[]>([])
-const uploadRef = ref()
+const uploadRef = ref<UploadInstance>()
 const url = ref('')
 
-function onUpload() {
-  uploadRef.value.submit()
-}
-
-function onExceed() {
+const onExceed: UploadProps['onExceed'] = () =>{
   ElNotification({
     type: 'warning',
     message: `文件数量超出限制：${config.limit}`
   })
 }
 
-function beforeUpload(file: UploadRawFile) {
-  console.log('beforeUpload:', file)
+const beforeUpload: UploadProps['beforeUpload'] = (file: UploadRawFile) => {
+  if (file.type.split('/')[0] !== config.accept.split('/')[0]) {
+    ElNotification({
+      type: 'warning',
+      message: `文件格式不支持：${file.type}`
+    })
+    return false
+  }
   if (file.size > config.size) {
     ElNotification({
       type: 'warning',
@@ -77,9 +80,13 @@ function beforeUpload(file: UploadRawFile) {
   return true
 }
 
-function upload(opt: UploadRequestOptions) {
+function handleUpload() {
+  uploadRef.value?.submit()
+}
+
+function httpRequest({file}: UploadRequestOptions) {
   const formData = new FormData()
-  formData.set(config.name, opt.file)
+  formData.set(config.name, file)
   console.log(formData)
   uploadSingleApi(formData).then(res => {
     if (res.code !== 0) return

@@ -6,16 +6,17 @@
         ref="uploadRef"
         :list-type="'picture-card'"
         :name="config.name"
-        :accept="config.accept.join()"
+        :accept="config.accept"
         :limit="config.limit"
         :auto-upload="false"
         :on-exceed="onExceed"
+        :before-upload="beforeUpload"
         multiple
     >
       <el-icon><Plus/></el-icon>
       <template #tip>
         <div class="el-upload__tip">
-          {{ config.accept.join('/') }} files with a size less than {{ formatFileSize(config.size) }}.
+          Image files with a size less than {{ formatFileSize(config.size) }}.
         </div>
       </template>
     </el-upload>
@@ -39,12 +40,12 @@
 </template>
 
 <script setup lang="ts">
-import type {UploadFiles} from "element-plus";
+import type {UploadFiles, UploadInstance, UploadProps, UploadRawFile} from "element-plus";
 
 import {ref} from "vue";
 import {Plus} from "@element-plus/icons-vue";
 import { uploadMultiApi } from "@/api/common";
-import {ElNotification} from "element-plus";
+import {ElNotification } from "element-plus";
 import {formatDate, formatFileSize} from "@/filters";
 
 
@@ -52,15 +53,40 @@ const config = {
   name: 'files',
   limit: 3,
   size: 1024 * 1024 * 1, // 1 MB
-  accept: ['.jpg', '.jpeg', '.png', '.gif'],
+  accept: 'image/*',
 }
 
 const fileList = ref<UploadFiles>([])
-const uploadRef = ref()
+const uploadRef = ref<UploadInstance>()
 const filesData = ref()
 
+// Todo: beforeUpload 失效
+const beforeUpload: UploadProps['beforeUpload'] = (file: UploadRawFile) => {
+  if (file.type.split('/')[0] !== config.accept.split('/')[0]) {
+    ElNotification({
+      type: 'warning',
+      message: `文件格式不支持：${file.type}`
+    })
+    return false
+  }
+  if (file.size > config.size) {
+    ElNotification({
+      type: 'warning',
+      message: `文件大小超出限制：${formatFileSize(config.size)}`
+    })
+    return false
+  }
+  return true
+}
+
+const onExceed: UploadProps['onExceed'] = () => {
+  ElNotification({
+    type: 'warning',
+    message: `文件数量超出限制：${config.limit}`
+  })
+}
+
 function handleUpload() {
-  console.log('fileList:', fileList)
   const formData = new FormData()
   for (const file of fileList.value) {
     formData.append(config.name, file.raw!)
@@ -69,15 +95,7 @@ function handleUpload() {
     if (res.code !== 0) return
     ElNotification({ type: 'success', message: '上传成功' })
     filesData.value = res.data
-    fileList.value = []
+    uploadRef.value?.clearFiles()
   })
 }
-
-function onExceed() {
-  ElNotification({
-    type: 'warning',
-    message: `文件数量超出限制：${config.limit}`
-  })
-}
-
 </script>
