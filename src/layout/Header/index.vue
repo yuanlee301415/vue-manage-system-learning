@@ -5,10 +5,11 @@
       @click="sidebarStore.collapse()"
     >
       <el-icon>
-        <Expand/>
+        <Expand v-if="sidebarStore.collapsed"/>
+        <Fold v-else/>
       </el-icon>
     </div>
-    <h1 class="logo float-left">{{ title }}</h1>
+    <h1 class="logo float-left">后台管理系统</h1>
 
     <div class="float-right pr-[50px]">
       <div class="head-user-con flex items-center">
@@ -50,10 +51,9 @@
 import { computed } from 'vue'
 import { useUserStoreWithOut } from '@/store/modules/user'
 import { useSidebarState } from '@/store/modules/sidebar'
-import {ArrowDown, Bell, Expand} from '@element-plus/icons-vue'
+import {ArrowDown, Bell, Expand, Fold} from '@element-plus/icons-vue'
 import avatarUrl from '@/assets/img/avatar.jpg'
 
-const title = import.meta.env.VITE_APP_TITLE
 const userStore = useUserStoreWithOut()
 const sidebarStore = useSidebarState()
 const userInfo = computed(() => userStore.getUserInfo)
