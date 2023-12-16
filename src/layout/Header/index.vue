@@ -37,8 +37,8 @@
               <el-dropdown-item>
                 <a href="https://github.com/lin-xin/vue-manage-system" target="_blank">项目仓库</a>
               </el-dropdown-item>
-              <el-dropdown-item command="user">个人中心</el-dropdown-item>
-              <el-dropdown-item divided command="loginout">退出登录</el-dropdown-item>
+              <el-dropdown-item :command="Command.User">个人中心</el-dropdown-item>
+              <el-dropdown-item divided :command="Command.SignOut">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -49,17 +49,30 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
+import { router } from "@/router";
 import { useUserStoreWithOut } from '@/store/modules/user'
 import { useSidebarState } from '@/store/modules/sidebar'
 import {ArrowDown, Bell, Expand, Fold} from '@element-plus/icons-vue'
 import avatarUrl from '@/assets/img/avatar.jpg'
 import TABS_ROUTE from '@/router/routes/modules/tabs'
+import USER_ROUTE from '@/router/routes/modules/user'
+
+enum Command {
+  User,
+  SignOut
+}
 
 const userStore = useUserStoreWithOut()
 const sidebarStore = useSidebarState()
 const userInfo = computed(() => userStore.getUserInfo)
 
-function handleCommand(command: string) {
-  console.log('handleCommand>command:', command)
+function handleCommand(command: Command) {
+  switch (command) {
+    case Command.User:
+      router.push(USER_ROUTE.path)
+      break
+    case Command.SignOut:
+      break
+  }
 }
 </script>

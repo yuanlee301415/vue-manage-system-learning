@@ -20,3 +20,5 @@ declare const __APP_VERSION__: string
 
 // 构建时间
 declare const __APP_BUILD_TIME__: string
+
+declare module 'vue-cropperjs';
