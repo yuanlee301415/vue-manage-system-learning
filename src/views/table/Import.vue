@@ -2,10 +2,12 @@
   <el-card>
     <div class="flex mb-3">
       <el-upload
+          ref="uploadRef"
           :limit="1"
+          :on-exceed="onExceed"
           :show-file-list="false"
           :before-upload="beforeUpload"
-          :http-request="handleMany"
+          :http-request="httpRequest"
           accept=".xlsx, .xsl"
       >
         <el-button type="success">批量导入</el-button>
@@ -44,12 +46,13 @@
 </template>
 
 <script lang="ts" setup>
+import type { UploadProps, UploadInstance, UploadRawFile } from "element-plus";
 import type {QueryParams} from "#/axios";
 
 import {reactive, ref} from "vue";
 import * as XLSL from 'xlsx'
 
-import {ElNotification} from "element-plus";
+import {ElNotification, genFileId} from "element-plus";
 import Student from "@/models/Student";
 import {Gender} from "@/enums/gender";
 import {getStudentsApi, importStudentsApi} from "@/api/student";
@@ -62,45 +65,31 @@ const studentData = reactive<{
   list: [],
   total: 0
 })
-
 const params = reactive<QueryParams>({
   page: 1,
   size: 10
 })
-
 const importList = ref<Student[]>([])
+const uploadRef = ref<UploadInstance>()
 
-getStudents()
-
-function getStudents() {
-  getStudentsApi(params).then(res => {
-    if (res.code !== 0) return
-    studentData.list = res.data
-    studentData.total = res.total!
-  })
+const beforeUpload: UploadProps['beforeUpload'] = async rawFile => {
+  try {
+    importList.value = await analysisExcel(rawFile)
+  } catch (e) {
+    ElNotification.error('导入文件错误：' + (e as Error).message)
+    return false
+  }
 }
 
-async function beforeUpload(rawFile: File) {
-  importList.value = await analysisExcel(rawFile)
+const onExceed: UploadProps['onExceed'] = (files) => {
+  const file = files[0] as UploadRawFile
+  file.uid = genFileId()
+  uploadRef.value?.clearFiles()
+  uploadRef.value?.handleStart(file)
+  uploadRef.value?.submit()
 }
 
-function analysisExcel(file: File): Promise<Student[]> {
-  return new Promise(resolve => {
-    const reader = new FileReader()
-    reader.onload = function (e: any) {
-      const data = e.target.result
-      const dataJson = XLSL.read(data, {
-        type: 'binary'
-      })
-      const result = XLSL.utils.sheet_to_json<Student>(dataJson.Sheets[dataJson.SheetNames[0]])
-      console.log('result:', result)
-      resolve(result)
-    }
-    reader.readAsBinaryString(file)
-  })
-}
-
-async function handleMany() {
+const httpRequest: UploadProps['httpRequest'] = async () =>{
   const list = importList.value.map((_: any) => {
     const gender = ['男', '女'].indexOf(_['性别'])
     return new Student({
@@ -113,7 +102,6 @@ async function handleMany() {
       gender: (gender == -1 ? void 0 : gender) as Gender
     })
   })
-  console.table(list)
   importStudentsApi(list).then(res => {
     if (res.code !== 0) return
     getStudents()
@@ -124,4 +112,32 @@ async function handleMany() {
   })
 }
 
+getStudents()
+
+function getStudents() {
+  getStudentsApi(params).then(res => {
+    if (res.code !== 0) return
+    studentData.list = res.data
+    studentData.total = res.total!
+  })
+}
+
+function analysisExcel(file: File): Promise<Student[]> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = function (evt: any) {
+      const data = evt.target.result
+      try {
+        const dataJson = XLSL.read(data, {
+          type: 'binary'
+        })
+        const result = XLSL.utils.sheet_to_json<Student>(dataJson.Sheets[dataJson.SheetNames[0]])
+        resolve(result)
+      } catch (err) {
+        reject(err)
+      }
+    }
+    reader.readAsBinaryString(file)
+  })
+}
 </script>
