@@ -18,6 +18,3 @@ export const useSidebarState = defineStore({
   }
 })
 
-export function useSidebarStoreWithOut() {
-  return useSidebarState(store)
-}

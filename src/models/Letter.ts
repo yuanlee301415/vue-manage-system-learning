@@ -1,5 +1,8 @@
 import { LetterStatus } from "@/enums/letterStatus";
 
+/**
+ * 消息 Model
+ */
 export class Letter {
     _id: string
     title: string

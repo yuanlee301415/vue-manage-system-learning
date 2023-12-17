@@ -24,6 +24,9 @@ export const useTagsState = defineStore({
       this.list.push({ title: tag.title, name: tag.name, path: tag.path })
     },
 
+    /**
+     * @return {TagItem} tag 下一个可用的标签
+     */
     closeTag(tag: TagItem): TagItem | void {
       if (this.list.length === 1) return;
       const idx = this.list.indexOf(tag)
@@ -34,9 +37,9 @@ export const useTagsState = defineStore({
 
     closeOther(currName: string) {
       if (this.list.length === 1) return;
-      const rest = this.list.filter(_ => _.name === currName)
-      if (!rest.length) return;
-      this.list = rest
+      const curr = this.list.filter(_ => _.name === currName)
+      if (!curr.length) return;
+      this.list = curr
     },
 
     closeAll() {

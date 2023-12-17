@@ -1,5 +1,6 @@
 const unread = 0
 const read = 1
+// 回收的
 const deleted = 2
 
 /**

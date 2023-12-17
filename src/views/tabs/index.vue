@@ -81,10 +81,11 @@
 <script setup lang="ts">
 import {Letter} from "@/models/Letter";
 
-import {LetterStatus} from "@/enums/letterStatus";
-import {deleteLettersApi, getLettersApi, updateLetterStatusApi} from "@/api/letter";
 import {reactive, ref} from "vue";
 import {ElNotification} from "element-plus";
+
+import {LetterStatus} from "@/enums/letterStatus";
+import {deleteLettersApi, getLettersApi, updateLetterStatusApi} from "@/api/letter";
 import {formatDate} from "@/filters";
 
 type LetterData = {

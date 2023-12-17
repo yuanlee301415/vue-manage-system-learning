@@ -18,7 +18,7 @@
 
     <el-form-item prop="avatar" label="头像">
       <el-select v-model="user.avatar" class="w-full">
-        <el-option v-for="_ of avatars" :key="_.value" :label="_.label" :value="_.value">
+        <el-option v-for="_ of AVATARS" :key="_.value" :label="_.label" :value="_.value">
           <div class="flex justify-center items-center">
             <el-avatar :size="20" :src="_.value"/>
             <span class="flex-1 text-right">{{ _.label }}</span>
@@ -71,12 +71,24 @@
 import type {FormInstance, FormRules} from "element-plus";
 
 import {reactive, ref} from "vue";
+
 import {FormAction} from "@/enums/formAction";
 import User from "@/models/User";
 import Configure from "@/models/Configure";
 import {State} from "@/enums/state";
 import {GenderMap} from "@/enums/gender";
 import { NAME_REG, EMAIL_REG, MOBILE_REG } from "@/constants";
+
+const AVATARS = [
+  {label: 'Alipay', value: '/logos/alipay.png'},
+  {label: 'Angular', value: '/logos/angular.png'},
+  {label: 'Ant', value: '/logos/ant.png'},
+  {label: 'Bootstrap', value: '/logos/bootstrap.png'},
+  {label: 'Pro', value: '/logos/pro.png'},
+  {label: 'React', value: '/logos/react.png'},
+  {label: 'Vue', value: '/logos/vue.png'},
+  {label: 'Webpack', value: '/logos/webpack.png'}
+]
 
 const rules: FormRules<User> = {
   username: [{ required: true, pattern: NAME_REG, trigger: 'blur', message: '字母开头，可包含：字母、数字、下划线' }],
@@ -92,17 +104,6 @@ const rules: FormRules<User> = {
 
 const props = defineProps<{ user: User, province: Configure[], action: FormAction }>()
 const user = reactive<User>(new User(props.user))
-
-const avatars = [
-  {label: 'Alipay', value: '/logos/alipay.png'},
-  {label: 'Angular', value: '/logos/angular.png'},
-  {label: 'Ant', value: '/logos/ant.png'},
-  {label: 'Bootstrap', value: '/logos/bootstrap.png'},
-  {label: 'Pro', value: '/logos/pro.png'},
-  {label: 'React', value: '/logos/react.png'},
-  {label: 'Vue', value: '/logos/vue.png'},
-  {label: 'Webpack', value: '/logos/webpack.png'}
-]
 const formRef = ref<FormInstance>()
 const emit = defineEmits(['submit'])
 

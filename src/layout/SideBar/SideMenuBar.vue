@@ -20,5 +20,12 @@
 </template>
 
 <script setup lang="ts">
-defineProps(['items'])
+import { MenuItem } from "./typing";
+import {toRef} from "vue";
+
+const props = defineProps<{
+  items: MenuItem[]
+}>()
+
+const items = toRef(props, 'items')
 </script>

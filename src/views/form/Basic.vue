@@ -23,7 +23,6 @@
             <el-time-picker v-model="basicForm.time" style="width: 100%"/>
           </el-form-item>
         </el-col>
-
       </el-form-item>
 
       <el-form-item prop="required" label="是否必填">
@@ -57,6 +56,7 @@
 
 <script setup lang="ts">
 import type {FormInstance, FormRules} from "element-plus";
+
 import {reactive, ref} from "vue";
 import {ElNotification} from "element-plus";
 
@@ -98,7 +98,6 @@ const basicForm = reactive<BasicForm>({
 })
 
 function onSubmit() {
-  console.log(JSON.stringify(basicForm, null, 2))
   formRef.value?.validate((valid, fields) => {
     if (!valid) {
       ElNotification({

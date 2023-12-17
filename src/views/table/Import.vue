@@ -10,7 +10,7 @@
       >
         <el-button type="success">批量导入</el-button>
       </el-upload>
-      <el-button tag="a" href="/template.xlsx" download="template.xlsx" class="ml-3">下载模板</el-button>
+      <el-button tag="a" href="/template.xlsx" download="学生表-模板.xlsx" class="ml-3">下载模板</el-button>
     </div>
 
     <el-table :data="studentData.list" border stripe>

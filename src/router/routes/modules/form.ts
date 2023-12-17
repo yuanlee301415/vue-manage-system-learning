@@ -14,7 +14,7 @@ const FORM_ROUTE: RouteRecordRaw = {
   children: [
     {
       path: 'basic',
-      name: 'Basic',
+      name: 'FormBasic',
       component: () => import('@/views/form/Basic.vue'),
       meta: {
         title: '基本表单'
@@ -22,14 +22,14 @@ const FORM_ROUTE: RouteRecordRaw = {
     },
     {
       path: 'upload',
-      name: 'Upload',
+      name: 'FormUpload',
       meta: {
         title: '文件上传'
       },
       children: [
         {
           path: 'single',
-          name: 'Single',
+          name: 'FormSingle',
           component: () => import('@/views/form/upload/Single.vue'),
           meta: {
             title: '单文件上传'
@@ -37,7 +37,7 @@ const FORM_ROUTE: RouteRecordRaw = {
         },
         {
           path: 'multi',
-          name: 'Multi',
+          name: 'FormMulti',
           component: () => import('@/views/form/upload/Multi.vue'),
           meta: {
             title: '多文件上传'

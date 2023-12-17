@@ -25,6 +25,7 @@ import type {FormInstance, FormRules} from "element-plus";
 
 import {reactive, ref} from "vue";
 import {ElNotification} from "element-plus";
+
 import { router } from "@/router";
 
 type LoginForm = {
@@ -36,10 +37,12 @@ const loginForm = reactive<LoginForm>({
   username: 'admin',
   password: '123'
 })
+
 const rules: FormRules<LoginForm> = {
   username: [{required: true, trigger: 'blur', message: '请输入用户名'}],
   password: [{required: true, trigger: 'blur', message: '请输入密码'}],
 }
+
 const formRef = ref<FormInstance>()
 
 function handleLogin() {

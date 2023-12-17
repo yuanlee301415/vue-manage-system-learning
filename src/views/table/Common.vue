@@ -99,6 +99,7 @@
 
 <script lang="ts" setup>
 import type { UserParams} from "#/index";
+
 import {reactive, ref} from "vue";
 import {Delete, Edit, Plus, Search} from "@element-plus/icons-vue";
 import {ElNotification} from "element-plus";
@@ -158,7 +159,6 @@ function handleSearch() {
   getData()
 }
 
-
 function handleAdd() {
   formAction.value = FormAction.ADD
   userFormData.value = new User()
@@ -187,8 +187,6 @@ function handleSubmit() {
 }
 
 function onUserFormSubmit(data: User) {
-  console.log('onUserFormSubmit>data:', data)
-  console.log('onUserFormSubmit>action:', formAction.value)
   const {_id, username, displayName, mobile, email, province, city, street, gender, avatar, signature, amount, state} = data
   const cb = (action: FormAction) => {
     getData()

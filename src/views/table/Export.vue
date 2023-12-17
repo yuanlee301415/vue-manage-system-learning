@@ -36,9 +36,10 @@
 
 <script lang="ts" setup>
 import type {QueryParams} from "#/axios";
-import {reactive} from "vue";
 
+import {reactive} from "vue";
 import * as XLSL from 'xlsx'
+
 import Student from "@/models/Student";
 import {GenderMap} from "@/enums/gender";
 import {getStudentsApi} from "@/api/student";
@@ -79,6 +80,6 @@ function handleExport() {
   const workSheet = XLSL.utils.aoa_to_sheet(list)
   const newWorkBook = XLSL.utils.book_new()
   XLSL.utils.book_append_sheet(newWorkBook, workSheet, '学生表')
-  XLSL.writeFile(newWorkBook, '学生表.xlsx')
+  XLSL.writeFile(newWorkBook, `学生表-${formatDate(Date.now(), 'YYYY-MM-DD')}.xlsx`)
 }
 </script>

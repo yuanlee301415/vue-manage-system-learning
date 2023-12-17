@@ -49,10 +49,11 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
+import {ArrowDown, Bell, Expand, Fold} from '@element-plus/icons-vue'
+
 import { router } from "@/router";
 import { useUserStoreWithOut } from '@/store/modules/user'
 import { useSidebarState } from '@/store/modules/sidebar'
-import {ArrowDown, Bell, Expand, Fold} from '@element-plus/icons-vue'
 import avatarUrl from '@/assets/img/avatar.jpg'
 import TABS_ROUTE from '@/router/routes/modules/tabs'
 import USER_ROUTE from '@/router/routes/modules/user'

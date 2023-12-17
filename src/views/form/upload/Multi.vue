@@ -44,15 +44,15 @@ import type {UploadFiles, UploadInstance, UploadProps, UploadRawFile} from "elem
 
 import {ref} from "vue";
 import {Plus} from "@element-plus/icons-vue";
-import { uploadMultiApi } from "@/api/common";
 import {ElNotification } from "element-plus";
-import {formatDate, formatFileSize} from "@/filters";
 
+import { uploadMultiApi } from "@/api/common";
+import {formatDate, formatFileSize} from "@/filters";
 
 const config = {
   name: 'files',
   limit: 3,
-  size: 1024 * 1024 * 1, // 1 MB
+  size: 1024 * 1024, // 1 MB
   accept: 'image/*',
 }
 

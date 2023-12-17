@@ -14,7 +14,7 @@ const TABLE_ROUTE: RouteRecordRaw = {
   children: [
     {
       path: 'common',
-      name: 'Common',
+      name: 'TableCommon',
       component: () => import('@/views/table/Common.vue'),
       meta: {
         title: '常用表格'
@@ -22,7 +22,7 @@ const TABLE_ROUTE: RouteRecordRaw = {
     },
     {
       path: 'import',
-      name: 'Import',
+      name: 'TableImport',
       component: () => import('@/views/table/Import.vue'),
       meta: {
         title: '导入 Excel'
@@ -30,7 +30,7 @@ const TABLE_ROUTE: RouteRecordRaw = {
     },
     {
       path: 'export',
-      name: 'Export',
+      name: 'TableExport',
       component: () => import('@/views/table/Export.vue'),
       meta: {
         title: '导出 Excel'

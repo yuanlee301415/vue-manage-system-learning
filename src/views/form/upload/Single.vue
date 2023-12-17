@@ -39,15 +39,15 @@ import type {UploadRawFile, UploadRequestOptions, UploadInstance, UploadProps } 
 
 import {ref} from "vue";
 import {UploadFilled} from "@element-plus/icons-vue";
+import {ElNotification} from "element-plus";
 
 import { uploadSingleApi } from "@/api/common";
-import {ElNotification} from "element-plus";
 import { formatFileSize } from "@/filters";
 
 const config = {
   name: 'file',
   limit: 1,
-  size: 1024 * 1024 * 10, // 1 MB
+  size: 1024 * 1024, // 1 MB
   accept: 'image/*',
 }
 

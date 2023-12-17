@@ -15,7 +15,7 @@
           <div class="text-gray-400">
             <el-row>
               <el-col :span="12">上次登录时间：</el-col>
-              <el-col :span="12">2023-11-24</el-col>
+              <el-col :span="12">2023-10-24</el-col>
             </el-row>
             <el-row>
               <el-col :span="12">上次登录地点：</el-col>
@@ -111,18 +111,18 @@
 </template>
 
 <script setup lang="ts">
-import avatarUrl from '@/assets/img/avatar.jpg'
 import {ChatDotRound, Goods, User} from "@element-plus/icons-vue";
 import {reactive} from "vue";
 
-const todos = reactive([
-  { id: 1, todo: '今天要修复10个Bug', done: false },
-  { id: 2, todo: '今天要修复22个Bug', done: false },
-  { id: 3, todo: '今天要修复33个Bug', done: false },
-  { id: 4, todo: '今天要修复44个Bug', done: false },
-  { id: 5, todo: '今天要修复55个Bug', done: true },
-  { id: 6, todo: '今天要修复66个Bug', done: true },
-])
+import avatarUrl from '@/assets/img/avatar.jpg'
+
+const todos = reactive(Array.from({ length: 6 }, (_, idx) => ({
+      id: idx,
+      todo: `今天要修复${(idx + 1) * 10 }个Bug`,
+      done: idx > 3
+    }))
+)
+
 </script>
 
 <style scoped>

@@ -30,7 +30,7 @@
             <el-input v-model="userForm.newPassword2" type="password" maxlength="20"/>
           </el-form-item>
           <el-form-item label="签名" prop="signature">
-            <el-input v-model="userForm.signature" type="textarea" rows="3"/>
+            <el-input v-model="userForm.signature" type="textarea" maxlength="200" rows="3"/>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="handleSave">保存</el-button>
@@ -70,11 +70,12 @@
 import type {UploadInstance, UploadProps, UploadRawFile, FormInstance, FormRules} from "element-plus";
 
 import {computed, reactive, ref} from "vue";
-import {useUserStoreWithOut} from "@/store/modules/user";
 import {Camera} from "@element-plus/icons-vue";
 import VueCropper from 'vue-cropperjs';
 import 'cropperjs/dist/cropper.css';
 import {ElNotification, ElUpload, genFileId} from "element-plus";
+
+import {useUserStoreWithOut} from "@/store/modules/user";
 import {uploadSingleApi} from "@/api/common";
 import { NAME_REG } from "@/constants";
 
@@ -84,6 +85,7 @@ type UserForm = {
   newPassword2: string
   signature: string
 }
+
 const userStore = useUserStoreWithOut()
 const userInfo = computed(() => userStore.getUserInfo)
 const visible = ref(false)

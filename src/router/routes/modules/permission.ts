@@ -9,7 +9,7 @@ const PERMISSION_ROUTE: RouteRecordRaw = {
     {
       path: '',
       name: 'Permission',
-      component: () => import('@/views/Permission.vue'),
+      component: () => import('@/views/permission.vue'),
       meta: {
         title: '权限管理',
         icon: 'Warning'

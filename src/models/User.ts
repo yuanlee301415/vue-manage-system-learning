@@ -7,8 +7,10 @@ import {Gender} from "@/enums/gender";
 export default class User {
   _id: string
 
+  // 用户名
   username: string
 
+  // 显示名
   displayName: string
 
   mobile: string;
@@ -18,12 +20,16 @@ export default class User {
   // 帐户余额
   amount: number
 
+  // 省份
   province: string
 
+  // 城市
   city: string
 
+  // 街道
   street: string
 
+  // 性别
   gender: Gender
 
   // 头像
@@ -32,7 +38,7 @@ export default class User {
   // 状态
   state: State
 
-  // 用户简介
+  // 个性签名
   signature: string
 
   createdAt: number

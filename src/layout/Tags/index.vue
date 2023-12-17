@@ -2,7 +2,7 @@
   <div class="tags">
     <el-scrollbar>
       <div class="warp">
-        <div v-for="tag of tags.list" :key="tag.name" :class="{active: isActive(tag)}" class="tag">
+        <div v-for="tag of tags.list" :key="tag.name" :class="{active: $route.path === tag.path}" class="tag">
           <router-link :to="tag.path">{{ tag.title }}</router-link>
           <i v-show="tags.names.length>1" @click="handleClose(tag)">&times;</i>
         </div>
@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import type {RouteLocationNormalizedLoaded} from 'vue-router'
+import type {RouteLocationNormalized} from 'vue-router'
 import type {TagItem} from "@/store/modules/tags";
 
 import {
@@ -30,7 +30,7 @@ import {
 import {useTagsState} from "@/store/modules/tags";
 
 enum Command {
-    Other,
+  Other,
   All
 }
 
@@ -39,7 +39,7 @@ const router = useRouter()
 const route = useRoute()
 
 /**
- * 初始加载，添加“首页”到标签列表中
+ * 初始加载或刷新应用后，添加当前页面到标签列表中
  */
 setTag(route)
 
@@ -47,16 +47,12 @@ router.beforeResolve(to => {
   setTag(to)
 })
 
-function setTag(route: RouteLocationNormalizedLoaded) {
+function setTag(route: RouteLocationNormalized) {
   tags.addTag({
     name: route.name as string,
     title: route.meta.title as string,
     path: route.fullPath
   })
-}
-
-function isActive(tag: TagItem) {
-  return route.path === tag.path
 }
 
 function handleClose(tag: TagItem) {
