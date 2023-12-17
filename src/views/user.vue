@@ -57,10 +57,9 @@
             :limit="1"
             :auto-upload="false"
             :show-file-list="false"
-            :http-request="httpRequest"
             :on-change="onChange"
             :on-exceed="onExceed"
-            name="file"
+            :name="fieldName"
             accept="image/*"
             style="display: inline-flex; vertical-align: middle;margin-right: 20px;"
         >
@@ -99,7 +98,7 @@ const cropperRef = ref<InstanceType<typeof VueCropper>>()
 const elUploadRef = ref<UploadInstance>()
 const img = ref()
 const croppedBlob = ref<Blob>()
-
+const fieldName = 'file'
 const userForm = reactive<UserForm>({
   oldPassword: '',
   newPassword: '',
@@ -138,21 +137,6 @@ const onExceed: UploadProps['onExceed'] = (files) => {
   elUploadRef.value!.handleStart(file)
 }
 
-const httpRequest: UploadProps['httpRequest'] = ({ file, filename }) => {
-  const formData = new FormData()
-  /**
-   * VueCropper 裁剪图片后，返回的 Blob 文件名默认为 `blob`(没有文件后缀名)
-   * 使用 FormData.set() 方法的第 3 个参数设置文件名（用于后端根据上传的文件名生成新的文件名）
-   */
-  formData.set(filename, croppedBlob.value!, file.name)
-  return uploadSingleApi(formData).then(res => {
-    if (res.code !== 0) return
-    ElNotification({ type: 'success', message: '上传成功' })
-    visible.value = false
-    userInfo.value.avatar = res.data?.url
-  })
-}
-
 function handleOpen() {
   visible.value = true
   img.value = userInfo.value.avatar
@@ -160,8 +144,18 @@ function handleOpen() {
 
 function handleSubmit() {
   cropperRef.value.getCroppedCanvas().toBlob((blob: Blob) => {
-    croppedBlob.value = blob
-    elUploadRef.value?.submit()
+    const formData = new FormData()
+    /**
+     * VueCropper 裁剪图片后，返回的 Blob 文件名默认为 `blob`(没有文件后缀名)
+     * 使用 FormData.set() 方法的第 3 个参数设置文件名（用于后端根据上传的文件名生成新的文件名）
+     */
+    formData.set(fieldName, blob, 'avatar.png')
+    return uploadSingleApi(formData).then(res => {
+      if (res.code !== 0) return
+      ElNotification({ type: 'success', message: '上传成功' })
+      visible.value = false
+      userInfo.value.avatar = res.data?.url
+    })
   })
 }
 
