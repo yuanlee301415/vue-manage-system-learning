@@ -88,17 +88,30 @@
         <el-card class="h-[403px]">
           <template #header>
             <span class="text-base">待办事项</span>
-            <el-button text size="small" class="float-right">添加</el-button>
+            <el-button text size="small" class="float-right" @click="handleAdd">添加</el-button>
           </template>
-          <el-table :show-header="false" :data="todos">
+          <el-table :show-header="false" :data="todos.list">
             <el-table-column width="40">
               <template #default="scope">
                 <el-checkbox v-model="scope.row.done"></el-checkbox>
               </template>
             </el-table-column>
             <el-table-column prop="todo">
-              <template #default="scope">
-                <span :class="scope.row.done ? ['line-through', 'text-gray-400'] : null">{{scope.row.todo}}</span>
+              <template #default="{row}">
+                <template v-if="row.isNew">
+                  <el-input v-model="row.text" clearable @blur="handleConfirm(row)"/>
+                </template>
+                <template v-else>
+                  <span :class="row.done ? ['line-through', 'text-gray-400'] : null">{{row.text}}</span>
+                </template>
+              </template>
+            </el-table-column>
+            <el-table-column width="100">
+              <template #default="{row}">
+                <div class="space-x-3 text-right">
+                  <el-link v-if="row.isNew" type="primary" @click="handleConfirm(row)">确定</el-link>
+                  <el-link type="danger" @click="handleDel(row)">删除</el-link>
+                </div>
               </template>
             </el-table-column>
           </el-table>
@@ -116,12 +129,67 @@ import {reactive} from "vue";
 
 import avatarUrl from '@/assets/img/avatar.jpg'
 
-const todos = reactive(Array.from({ length: 6 }, (_, idx) => ({
-      id: idx,
-      todo: `今天要修复${(idx + 1) * 10 }个Bug`,
-      done: idx > 3
-    }))
+class Todo {
+  id: number
+  text: string
+  done: boolean
+  isNew?: boolean
+  constructor(_: Todo) {
+    this.id = _.id
+    this.text = _.text
+    this.done = _.done
+    this.isNew = _.isNew
+  }
+}
+
+class Todos {
+  list: Todo[]
+  limit: number
+  constructor(todos: Todo[], { limit = 6 } = {}) {
+    this.limit = limit
+    this.list = (todos ?? []).map(_ => new Todo(_)).slice(0, this.limit)
+  }
+  add(todo: Todo) {
+    if (this.list.length >= this.limit) {
+      this.list.pop()
+    }
+    this.list.unshift(new Todo({ ...todo, id: Date.now(), isNew: true, done: false }))
+  }
+  delete(todo: Todo) {
+    const idx = this.list.findIndex(_ => _.id === todo.id)
+    if (idx === -1) return
+    this.list.splice(idx, 1)
+    console.log('delete>list:', this.list)
+  }
+  confirm(todo: Todo) {
+    delete todo.isNew
+  }
+}
+
+const todos = reactive(new Todos(Array.from({ length: 61 }, (_, idx) => new Todo({
+          id: idx,
+          text: `今天要修复${(idx + 1) * 10 }个Bug`,
+          done: idx > 3
+        }))
+    )
 )
+
+function handleDel(todo: Todo) {
+  todos.delete(todo)
+}
+
+function handleAdd() {
+  todos.add(new Todo({
+    id: void 0 as unknown as number,
+    text: `今天要修复${(todos.list.length + 1) * 10 }个Bug`,
+    done: false
+  }))
+}
+
+function handleConfirm(todo: Todo) {
+  if (!todo.text || !todo.text.trim()) return
+  todos.confirm(todo)
+}
 
 </script>
 
