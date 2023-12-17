@@ -1,4 +1,4 @@
-import {Gender} from "@/enums/gender";
+import { Gender } from '@/enums/gender'
 
 /**
  * 学生 Model

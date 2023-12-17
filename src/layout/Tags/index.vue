@@ -2,9 +2,14 @@
   <div class="tags">
     <el-scrollbar>
       <div class="warp">
-        <div v-for="tag of tags.list" :key="tag.name" :class="{active: $route.path === tag.path}" class="tag">
+        <div
+          v-for="tag of tags.list"
+          :key="tag.name"
+          :class="{ active: $route.path === tag.path }"
+          class="tag"
+        >
           <router-link :to="tag.path">{{ tag.title }}</router-link>
-          <i v-show="tags.names.length>1" @click="handleClose(tag)">&times;</i>
+          <i v-show="tags.names.length > 1" @click="handleClose(tag)">&times;</i>
         </div>
       </div>
     </el-scrollbar>
@@ -20,14 +25,11 @@
 </template>
 
 <script setup lang="ts">
-import type {RouteLocationNormalized} from 'vue-router'
-import type {TagItem} from "@/store/modules/tags";
+import type { RouteLocationNormalized } from 'vue-router'
+import type { TagItem } from '@/store/modules/tags'
 
-import {
-  useRoute,
-  useRouter,
-} from "vue-router";
-import {useTagsState} from "@/store/modules/tags";
+import { useRoute, useRouter } from 'vue-router'
+import { useTagsState } from '@/store/modules/tags'
 
 enum Command {
   Other,
@@ -43,7 +45,7 @@ const route = useRoute()
  */
 setTag(route)
 
-router.beforeResolve(to => {
+router.beforeResolve((to) => {
   setTag(to)
 })
 
@@ -71,9 +73,6 @@ function handleCommand(command: Command) {
       break
   }
 }
-
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

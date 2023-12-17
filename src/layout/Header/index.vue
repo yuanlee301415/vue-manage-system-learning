@@ -5,8 +5,8 @@
       @click="sidebarStore.collapse()"
     >
       <el-icon>
-        <Expand v-if="sidebarStore.collapsed"/>
-        <Fold v-else/>
+        <Expand v-if="sidebarStore.collapsed" />
+        <Fold v-else />
       </el-icon>
     </div>
     <h1 class="logo float-left">后台管理系统</h1>
@@ -49,9 +49,9 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import {ArrowDown, Bell, Expand, Fold} from '@element-plus/icons-vue'
+import { ArrowDown, Bell, Expand, Fold } from '@element-plus/icons-vue'
 
-import { router } from "@/router";
+import { router } from '@/router'
 import { useUserStoreWithOut } from '@/store/modules/user'
 import { useSidebarState } from '@/store/modules/sidebar'
 import avatarUrl from '@/assets/img/avatar.jpg'

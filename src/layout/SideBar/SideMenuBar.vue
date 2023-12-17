@@ -20,8 +20,8 @@
 </template>
 
 <script setup lang="ts">
-import { MenuItem } from "./typing";
-import {toRef} from "vue";
+import { MenuItem } from './typing'
+import { toRef } from 'vue'
 
 const props = defineProps<{
   items: MenuItem[]

@@ -4,7 +4,6 @@
   <LayoutSideBar />
 
   <div :class="{ collapsed: sidebarStore.collapsed }" class="content-box">
-
     <LayoutTags />
 
     <div class="content">
@@ -16,18 +15,16 @@
         </transition>
       </RouterView>
     </div>
-
   </div>
 </template>
 
 <script lang="ts" setup>
 import { useSidebarState } from '@/store/modules/sidebar'
-import { useTagsState } from "@/store/modules/tags";
+import { useTagsState } from '@/store/modules/tags'
 import LayoutHeader from './Header/index.vue'
 import LayoutSideBar from './SideBar/index.vue'
 import LayoutTags from './Tags/index.vue'
 
 const sidebarStore = useSidebarState()
-const tags = useTagsState();
-
+const tags = useTagsState()
 </script>

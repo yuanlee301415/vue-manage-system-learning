@@ -1,5 +1,5 @@
-import {State} from "@/enums/state";
-import {Gender} from "@/enums/gender";
+import { State } from '@/enums/state'
+import { Gender } from '@/enums/gender'
 
 /**
  * 用户 Model
@@ -13,9 +13,9 @@ export default class User {
   // 显示名
   displayName: string
 
-  mobile: string;
+  mobile: string
 
-  email: string;
+  email: string
 
   // 帐户余额
   amount: number

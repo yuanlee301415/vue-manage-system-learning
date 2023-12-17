@@ -42,7 +42,7 @@ const FORM_ROUTE: RouteRecordRaw = {
           meta: {
             title: '多文件上传'
           }
-        },
+        }
       ]
     }
   ]

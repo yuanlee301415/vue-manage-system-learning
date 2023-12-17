@@ -7,10 +7,10 @@
         </template>
         <div class="text-center pt-8">
           <div class="relative rounded-full w-[180px] h-[180px] mx-auto group/avatar">
-            <el-avatar :src="userInfo.avatar" :size="180"/>
+            <el-avatar :src="userInfo.avatar" :size="180" />
             <div
-                class="absolute top-0 left-0 w-full h-full rounded-full bg-black/[0.3] flex items-center justify-center invisible group-hover/avatar:visible"
-                @click="handleOpen"
+              class="absolute top-0 left-0 w-full h-full rounded-full bg-black/[0.3] flex items-center justify-center invisible group-hover/avatar:visible"
+              @click="handleOpen"
             >
               <el-icon class="text-white" size="50"><Camera /></el-icon>
             </div>
@@ -27,16 +27,16 @@
         <el-form ref="userFormRef" :model="userForm" :rules="rules" label-width="100">
           <el-form-item label="用户名">{{ userInfo.username }}</el-form-item>
           <el-form-item label="旧密码" prop="oldPassword">
-            <el-input v-model="userForm.oldPassword" type="password" maxlength="20"/>
+            <el-input v-model="userForm.oldPassword" type="password" maxlength="20" />
           </el-form-item>
           <el-form-item label="新密码" prop="newPassword">
-            <el-input v-model="userForm.newPassword" type="password" maxlength="20"/>
+            <el-input v-model="userForm.newPassword" type="password" maxlength="20" />
           </el-form-item>
           <el-form-item label="确认密码" prop="newPassword2">
-            <el-input v-model="userForm.newPassword2" type="password" maxlength="20"/>
+            <el-input v-model="userForm.newPassword2" type="password" maxlength="20" />
           </el-form-item>
           <el-form-item label="签名" prop="signature">
-            <el-input v-model="userForm.signature" type="textarea" maxlength="200" rows="3"/>
+            <el-input v-model="userForm.signature" type="textarea" maxlength="200" rows="3" />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="handleSave">保存</el-button>
@@ -46,22 +46,18 @@
     </div>
 
     <el-dialog v-model="visible" title="裁剪图片" width="600">
-      <VueCropper
-          ref="cropperRef"
-          :src="img"
-          style="width: 100%;height: 400px;"
-      />
+      <VueCropper ref="cropperRef" :src="img" style="width: 100%; height: 400px" />
       <template #footer>
         <el-upload
-            ref="elUploadRef"
-            :name="config.name"
-            :limit="config.limit"
-            :accept="config.accept"
-            :auto-upload="false"
-            :show-file-list="false"
-            :on-change="onChange"
-            :on-exceed="onExceed"
-            style="display: inline-flex; vertical-align: middle;margin-right: 20px;"
+          ref="elUploadRef"
+          :name="config.name"
+          :limit="config.limit"
+          :accept="config.accept"
+          :auto-upload="false"
+          :show-file-list="false"
+          :on-change="onChange"
+          :on-exceed="onExceed"
+          style="display: inline-flex; vertical-align: middle; margin-right: 20px"
         >
           <el-button type="primary">选择图片</el-button>
         </el-upload>
@@ -72,18 +68,24 @@
 </template>
 
 <script setup lang="ts">
-import type {UploadInstance, UploadProps, UploadRawFile, FormInstance, FormRules} from "element-plus";
+import type {
+  UploadInstance,
+  UploadProps,
+  UploadRawFile,
+  FormInstance,
+  FormRules
+} from 'element-plus'
 
-import {computed, reactive, ref} from "vue";
-import {Camera} from "@element-plus/icons-vue";
-import VueCropper from 'vue-cropperjs';
-import 'cropperjs/dist/cropper.css';
-import {ElNotification, ElUpload, genFileId} from "element-plus";
+import { computed, reactive, ref } from 'vue'
+import { Camera } from '@element-plus/icons-vue'
+import VueCropper from 'vue-cropperjs'
+import 'cropperjs/dist/cropper.css'
+import { ElNotification, ElUpload, genFileId } from 'element-plus'
 
-import {useUserStoreWithOut} from "@/store/modules/user";
-import {uploadSingleApi} from "@/api/common";
-import { NAME_REG } from "@/constants";
-import { formatFileSize } from "@/formater";
+import { useUserStoreWithOut } from '@/store/modules/user'
+import { uploadSingleApi } from '@/api/common'
+import { NAME_REG } from '@/constants'
+import { formatFileSize } from '@/formater'
 
 type UserForm = {
   oldPassword: string
@@ -100,7 +102,7 @@ const config = {
   limit: 1,
   name: 'file',
   size: 1024 * 1024 * 2, // 2MB
-  accept: "image/*"
+  accept: 'image/*'
 }
 const userForm = reactive<UserForm>({
   oldPassword: '',
@@ -108,7 +110,11 @@ const userForm = reactive<UserForm>({
   newPassword2: '',
   signature: userInfo.value.signature
 })
-const patternRule = { pattern: NAME_REG, trigger: 'blur', message: '格式错误（只支持：字母开头，可包含：字母、数字、下划线）' }
+const patternRule = {
+  pattern: NAME_REG,
+  trigger: 'blur',
+  message: '格式错误（只支持：字母开头，可包含：字母、数字、下划线）'
+}
 const validatePass2 = (rule: any, value: any, callback: any) => {
   if (value !== userForm.newPassword) {
     callback(new Error('密码不一致'))
@@ -117,9 +123,13 @@ const validatePass2 = (rule: any, value: any, callback: any) => {
   callback()
 }
 const rules: FormRules<UserForm> = {
-  oldPassword: [{ required: true, trigger: 'blur', message: '请输入旧密码'}, patternRule],
-  newPassword: [{ required: true, trigger: 'blur', message: '请输入新密码'}, patternRule],
-  newPassword2: [{ required: true, trigger: 'blur', message: '请输入确认密码' }, patternRule, { validator: validatePass2, trigger: 'submit' }],
+  oldPassword: [{ required: true, trigger: 'blur', message: '请输入旧密码' }, patternRule],
+  newPassword: [{ required: true, trigger: 'blur', message: '请输入新密码' }, patternRule],
+  newPassword2: [
+    { required: true, trigger: 'blur', message: '请输入确认密码' },
+    patternRule,
+    { validator: validatePass2, trigger: 'submit' }
+  ]
 }
 
 const img = ref()
@@ -127,19 +137,19 @@ const cropperRef = ref<InstanceType<typeof VueCropper>>()
 const elUploadRef = ref<UploadInstance>()
 const userFormRef = ref<FormInstance>()
 
-const onChange: UploadProps['onChange'] = file => {
+const onChange: UploadProps['onChange'] = (file) => {
   if (!file) return
-  const {size, raw} = file
+  const { size, raw } = file
   if (raw?.type?.split('/')[0] !== config.accept.split('/')[0]) {
     ElNotification.warning(`文件格式不支持：${raw!.type}`)
-    return;
+    return
   }
   if (size! > config.size) {
     ElNotification.warning(`文件大小超出限制：${formatFileSize(config.size)}`)
-    return;
+    return
   }
   const reader = new FileReader()
-  reader.onload = ev => {
+  reader.onload = (ev) => {
     cropperRef.value.replace(ev.target?.result)
   }
   reader.readAsDataURL(raw!)
@@ -165,7 +175,7 @@ function handleSubmit() {
      * 使用 FormData.set() 方法的第 3 个参数设置文件名（用于后端根据上传的文件名生成新的文件名）
      */
     formData.set(config.name, blob, 'avatar.png')
-    return uploadSingleApi(formData).then(res => {
+    return uploadSingleApi(formData).then((res) => {
       if (res.code !== 0) return
       ElNotification({ type: 'success', message: '上传成功' })
       visible.value = false
@@ -175,14 +185,11 @@ function handleSubmit() {
 }
 
 function handleSave() {
-  userFormRef.value?.validate(valid => {
+  userFormRef.value?.validate((valid) => {
     if (!valid) return
     ElNotification.success('密码修改成功！')
   })
 }
-
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

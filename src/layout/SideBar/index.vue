@@ -19,7 +19,7 @@ import type { RouteRecordRaw } from 'vue-router'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
-import { MenuItem } from "./typing";
+import { MenuItem } from './typing'
 import { basicRoutes } from '@/router/routes'
 import SideMenuBar from './SideMenuBar.vue'
 import { useSidebarState } from '@/store/modules/sidebar'
