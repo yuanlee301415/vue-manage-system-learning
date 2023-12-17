@@ -1,6 +1,6 @@
 import type { RouteRecordRaw } from 'vue-router'
 
-import { PAGE_NOT_FOUND_NAME, LAYOUT, EXCEPTION_404 } from '@/router/constant'
+import { LAYOUT, EXCEPTION_404 } from '@/router/constant'
 
 export const ROOT_ROUTE: RouteRecordRaw = {
   path: '/',
@@ -29,7 +29,6 @@ export const PAGE_NOT_FOUND_ROUTE: RouteRecordRaw = {
   children: [
     {
       path: '',
-      name: PAGE_NOT_FOUND_NAME,
       component: EXCEPTION_404
     }
   ]

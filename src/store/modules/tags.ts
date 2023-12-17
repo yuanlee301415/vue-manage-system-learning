@@ -16,6 +16,10 @@ export const useTagsState = defineStore({
   },
   actions: {
     addTag(tag: TagItem) {
+      /**
+       * 通过不定义路由的 `name`(eg. 404 页面)，使其不显示在快捷导航标签列表中
+       */
+      if (!tag.name) return;
       if (this.list.find(_ => _.name === tag.name)) return
       this.list.push({ title: tag.title, name: tag.name, path: tag.path })
     },
