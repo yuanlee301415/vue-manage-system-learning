@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { store } from '@/store'
 
 type SidebarState = {
   collapsed: boolean

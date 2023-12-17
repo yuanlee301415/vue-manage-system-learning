@@ -8,7 +8,7 @@
     <LayoutTags />
 
     <div class="content">
-      <RouterView v-slot="{ Component, route }">
+      <RouterView v-slot="{ Component }">
         <transition name="fade-slide" mode="out-in">
           <keep-alive :include="tags.names">
             <component :is="Component" />
