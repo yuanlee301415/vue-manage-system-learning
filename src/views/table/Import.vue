@@ -53,7 +53,7 @@ import {ElNotification} from "element-plus";
 import Student from "@/models/Student";
 import {Gender} from "@/enums/gender";
 import {getStudentsApi, importStudentsApi} from "@/api/student";
-import {formatDate, formatGender} from "@/filters";
+import {formatDate, formatGender} from "@/formater";
 
 const studentData = reactive<{
   list: Student[]

@@ -86,7 +86,7 @@ import {ElNotification} from "element-plus";
 
 import {LetterStatus} from "@/enums/letterStatus";
 import {deleteLettersApi, getLettersApi, updateLetterStatusApi} from "@/api/letter";
-import {formatDate} from "@/filters";
+import {formatDate} from "@/formater";
 
 type LetterData = {
   data: Letter[]

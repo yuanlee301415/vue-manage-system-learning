@@ -47,7 +47,7 @@ import {Plus} from "@element-plus/icons-vue";
 import {ElNotification } from "element-plus";
 
 import { uploadMultiApi } from "@/api/common";
-import {formatDate, formatFileSize} from "@/filters";
+import {formatDate, formatFileSize} from "@/formater";
 
 const config = {
   name: 'files',

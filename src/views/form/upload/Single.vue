@@ -42,7 +42,7 @@ import {UploadFilled} from "@element-plus/icons-vue";
 import {ElNotification} from "element-plus";
 
 import { uploadSingleApi } from "@/api/common";
-import { formatFileSize } from "@/filters";
+import { formatFileSize } from "@/formater";
 
 const config = {
   name: 'file',

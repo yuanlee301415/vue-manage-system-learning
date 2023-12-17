@@ -111,7 +111,7 @@ import { getProvinceApi } from "@/api/configure";
 import UserForm from "./components/UserForm.vue";
 import {FormAction} from '@/enums/formAction'
 import {State, StateMap} from "@/enums/state";
-import {formatState, formatDate} from "@/filters";
+import {formatState, formatDate} from "@/formater";
 
 const province = ref<Configure[]>([])
 

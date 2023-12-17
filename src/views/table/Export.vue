@@ -43,7 +43,7 @@ import * as XLSL from 'xlsx'
 import Student from "@/models/Student";
 import {GenderMap} from "@/enums/gender";
 import {getStudentsApi} from "@/api/student";
-import {formatDate, formatGender} from "@/filters";
+import {formatDate, formatGender} from "@/formater";
 
 const studentData = reactive<{
   list: Student[]
