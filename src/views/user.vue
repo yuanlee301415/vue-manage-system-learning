@@ -54,13 +54,13 @@
       <template #footer>
         <el-upload
             ref="elUploadRef"
-            :limit="1"
+            :name="config.name"
+            :limit="config.limit"
+            :accept="config.accept"
             :auto-upload="false"
             :show-file-list="false"
             :on-change="onChange"
             :on-exceed="onExceed"
-            :name="fieldName"
-            accept="image/*"
             style="display: inline-flex; vertical-align: middle;margin-right: 20px;"
         >
           <el-button type="primary">选择图片</el-button>
@@ -83,6 +83,7 @@ import {ElNotification, ElUpload, genFileId} from "element-plus";
 import {useUserStoreWithOut} from "@/store/modules/user";
 import {uploadSingleApi} from "@/api/common";
 import { NAME_REG } from "@/constants";
+import { formatFileSize } from "@/formater";
 
 type UserForm = {
   oldPassword: string
@@ -93,19 +94,20 @@ type UserForm = {
 
 const userStore = useUserStoreWithOut()
 const userInfo = computed(() => userStore.getUserInfo)
+
 const visible = ref(false)
-const cropperRef = ref<InstanceType<typeof VueCropper>>()
-const elUploadRef = ref<UploadInstance>()
-const img = ref()
-const croppedBlob = ref<Blob>()
-const fieldName = 'file'
+const config = {
+  limit: 1,
+  name: 'file',
+  size: 1024 * 1024 * 2, // 2MB
+  accept: "image/*"
+}
 const userForm = reactive<UserForm>({
   oldPassword: '',
   newPassword: '',
   newPassword2: '',
   signature: userInfo.value.signature
 })
-const userFormRef = ref<FormInstance>()
 const patternRule = { pattern: NAME_REG, trigger: 'blur', message: '格式错误（只支持：字母开头，可包含：字母、数字、下划线）' }
 const validatePass2 = (rule: any, value: any, callback: any) => {
   if (value !== userForm.newPassword) {
@@ -120,14 +122,27 @@ const rules: FormRules<UserForm> = {
   newPassword2: [{ required: true, trigger: 'blur', message: '请输入确认密码' }, patternRule, { validator: validatePass2, trigger: 'submit' }],
 }
 
+const img = ref()
+const cropperRef = ref<InstanceType<typeof VueCropper>>()
+const elUploadRef = ref<UploadInstance>()
+const userFormRef = ref<FormInstance>()
+
 const onChange: UploadProps['onChange'] = file => {
   if (!file) return
-  const url = file.raw
+  const {size, raw} = file
+  if (raw?.type?.split('/')[0] !== config.accept.split('/')[0]) {
+    ElNotification.warning(`文件格式不支持：${raw!.type}`)
+    return;
+  }
+  if (size! > config.size) {
+    ElNotification.warning(`文件大小超出限制：${formatFileSize(config.size)}`)
+    return;
+  }
   const reader = new FileReader()
   reader.onload = ev => {
     cropperRef.value.replace(ev.target?.result)
   }
-  reader.readAsDataURL(url!)
+  reader.readAsDataURL(raw!)
 }
 
 const onExceed: UploadProps['onExceed'] = (files) => {
@@ -149,7 +164,7 @@ function handleSubmit() {
      * VueCropper 裁剪图片后，返回的 Blob 文件名默认为 `blob`(没有文件后缀名)
      * 使用 FormData.set() 方法的第 3 个参数设置文件名（用于后端根据上传的文件名生成新的文件名）
      */
-    formData.set(fieldName, blob, 'avatar.png')
+    formData.set(config.name, blob, 'avatar.png')
     return uploadSingleApi(formData).then(res => {
       if (res.code !== 0) return
       ElNotification({ type: 'success', message: '上传成功' })
@@ -165,6 +180,7 @@ function handleSave() {
     ElNotification.success('密码修改成功！')
   })
 }
+
 </script>
 
 <style scoped>
