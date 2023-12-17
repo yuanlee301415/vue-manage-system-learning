@@ -1,9 +1,12 @@
 <template>
   <div>
     <div class="flex flex-row space-x-4">
-      <el-card header="基础信息" class="basis-1/2">
-        <div class="text-center">
-          <div class="relative  w-[180px] h-[180px] mx-auto group/avatar">
+      <el-card class="basis-1/2">
+        <template #header>
+          <p class="text-base">基础信息</p>
+        </template>
+        <div class="text-center pt-8">
+          <div class="relative rounded-full w-[180px] h-[180px] mx-auto group/avatar">
             <el-avatar :src="userInfo.avatar" :size="180"/>
             <div
                 class="absolute top-0 left-0 w-full h-full rounded-full bg-black/[0.3] flex items-center justify-center invisible group-hover/avatar:visible"
@@ -17,7 +20,10 @@
         </div>
       </el-card>
 
-      <el-card header="帐户编辑" class="basis-1/2">
+      <el-card class="basis-1/2">
+        <template #header>
+          <p class="text-base">帐户编辑</p>
+        </template>
         <el-form ref="userFormRef" :model="userForm" :rules="rules" label-width="100">
           <el-form-item label="用户名">{{ userInfo.username }}</el-form-item>
           <el-form-item label="旧密码" prop="oldPassword">
