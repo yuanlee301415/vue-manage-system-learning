@@ -5,17 +5,6 @@ import User from '@/models/User'
 import request from '@/utils/http/axios'
 import { HttpMethod } from '@/enums'
 
-export enum UserApi {
-  GetUserInfo = 'user/1003'
-}
-
-export function getUserInfoApi(): Promise<User> {
-  return request({
-    url: UserApi.GetUserInfo,
-    method: HttpMethod.GET
-  })
-}
-
 export function getUsersApi({
   username,
   province,

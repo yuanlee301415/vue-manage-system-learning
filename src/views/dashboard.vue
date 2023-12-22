@@ -8,9 +8,9 @@
             class="user-info flex items-center pb-[20px] mb-[20px]"
             style="border-bottom: 2px solid #ccc"
           >
-            <el-avatar :src="avatarUrl" :size="120" />
+            <el-avatar :src="authUser.avatar" :size="120" />
             <div class="user-info-content pl-[50px] flex-1 text-[14px] text-gray-400">
-              <h6 class="text-[30px] text-slate-700">Admin</h6>
+              <h6 class="text-[30px] text-slate-700">{{ authUser!.displayName }}</h6>
               <p>超级管理员</p>
             </div>
           </div>
@@ -133,9 +133,8 @@
 
 <script setup lang="ts">
 import { ChatDotRound, Goods, User } from '@element-plus/icons-vue'
-import { reactive } from 'vue'
-
-import avatarUrl from '@/assets/img/avatar.jpg'
+import {computed, reactive} from 'vue'
+import { useUserStore } from "@/store/modules/user";
 
 class Todo {
   id: number
@@ -187,6 +186,9 @@ const todos = reactive(
     )
   )
 )
+
+const userStore = useUserStore()
+const authUser = computed(() => userStore.authUser!)
 
 function handleDel(todo: Todo) {
   todos.delete(todo)

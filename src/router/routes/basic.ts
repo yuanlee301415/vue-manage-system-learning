@@ -23,6 +23,11 @@ export const HOME_ROUTE: RouteRecordRaw = {
   ]
 }
 
+export const REDIRECT_ROUTE: RouteRecordRaw = {
+  path: '/redirect',
+  component: () => import('@/views/redirect.vue')
+}
+
 export const PAGE_NOT_FOUND_ROUTE: RouteRecordRaw = {
   path: '/:path(.*)*',
   component: LAYOUT,

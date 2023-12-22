@@ -1,6 +1,7 @@
 import type { RouteRecordRaw } from 'vue-router'
 
 import { LAYOUT } from '@/router/constant'
+import {Role} from "@/enums/role";
 
 const PERMISSION_ROUTE: RouteRecordRaw = {
   path: '/permission',
@@ -12,7 +13,8 @@ const PERMISSION_ROUTE: RouteRecordRaw = {
       component: () => import('@/views/permission.vue'),
       meta: {
         title: '权限管理',
-        icon: 'Warning'
+        icon: 'Warning',
+        roles: [Role.ADMIN]
       }
     }
   ]

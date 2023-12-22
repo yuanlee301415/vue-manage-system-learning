@@ -7,7 +7,7 @@
         </template>
         <div class="text-center pt-8">
           <div class="relative rounded-full w-[180px] h-[180px] mx-auto group/avatar">
-            <el-avatar :src="userInfo.avatar" :size="180" />
+            <el-avatar :src="authUser.avatar" :size="180" />
             <div
               class="absolute top-0 left-0 w-full h-full rounded-full bg-black/[0.3] flex items-center justify-center invisible group-hover/avatar:visible"
               @click="handleOpen"
@@ -15,8 +15,8 @@
               <el-icon class="text-white" size="50"><Camera /></el-icon>
             </div>
           </div>
-          <h3 class="py-2">{{ userInfo.displayName }}</h3>
-          <p>{{ userInfo.signature }}</p>
+          <h3 class="py-2">{{ authUser.displayName }}</h3>
+          <p>{{ authUser.signature }}</p>
         </div>
       </el-card>
 
@@ -25,7 +25,7 @@
           <p class="text-base">帐户编辑</p>
         </template>
         <el-form ref="userFormRef" :model="userForm" :rules="rules" label-width="100">
-          <el-form-item label="用户名">{{ userInfo.username }}</el-form-item>
+          <el-form-item label="用户名">{{ authUser.username }}</el-form-item>
           <el-form-item label="旧密码" prop="oldPassword">
             <el-input v-model="userForm.oldPassword" type="password" maxlength="20" />
           </el-form-item>
@@ -95,7 +95,7 @@ type UserForm = {
 }
 
 const userStore = useUserStoreWithOut()
-const userInfo = computed(() => userStore.getUserInfo)
+const authUser = computed(() => userStore.authUser!)
 
 const visible = ref(false)
 const config = {
@@ -108,7 +108,7 @@ const userForm = reactive<UserForm>({
   oldPassword: '',
   newPassword: '',
   newPassword2: '',
-  signature: userInfo.value.signature
+  signature: authUser.value.signature
 })
 const patternRule = {
   pattern: NAME_REG,
@@ -164,7 +164,7 @@ const onExceed: UploadProps['onExceed'] = (files) => {
 
 function handleOpen() {
   visible.value = true
-  img.value = userInfo.value.avatar
+  img.value = authUser.value.avatar
 }
 
 function handleSubmit() {
@@ -179,7 +179,7 @@ function handleSubmit() {
       if (res.code !== 0) return
       ElNotification({ type: 'success', message: '上传成功' })
       visible.value = false
-      userInfo.value.avatar = res.data?.url
+      authUser.value.avatar = res.data?.url
     })
   })
 }

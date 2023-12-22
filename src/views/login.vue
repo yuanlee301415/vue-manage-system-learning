@@ -4,7 +4,7 @@
   >
     <el-card class="w-[350px] h-[280px] mt-[-100px] bg-[rgba(255,255,255,0.5)]">
       <template #header>
-        <h2 class="text-white text-center">后台管理系统</h2>
+        <h2 class="text-white text-center">{{ title }}</h2>
       </template>
       <el-form ref="formRef" :model="loginForm" :rules="rules">
         <el-form-item prop="username">
@@ -24,34 +24,43 @@
 
 <script setup lang="ts">
 import type { FormInstance, FormRules } from 'element-plus'
+import type {LoginParams} from "#/index";
 
 import { reactive, ref } from 'vue'
 import { ElNotification } from 'element-plus'
-
+import { useRoute } from 'vue-router'
 import { router } from '@/router'
+import { useUserStoreWithOut } from "@/store/modules/user";
+import { REDIRECT_ROUTE } from "@/router/routes/basic";
 
-type LoginForm = {
-  username: string
-  password: string
-}
-
-const loginForm = reactive<LoginForm>({
+const title = import.meta.env.VITE_APP_TITLE
+const loginForm = reactive<LoginParams>({
   username: 'admin',
-  password: '123'
+  password: '123456'
 })
 
-const rules: FormRules<LoginForm> = {
+const rules: FormRules<LoginParams> = {
   username: [{ required: true, trigger: 'blur', message: '请输入用户名' }],
   password: [{ required: true, trigger: 'blur', message: '请输入密码' }]
 }
 
 const formRef = ref<FormInstance>()
+const route = useRoute()
+const userStore = useUserStoreWithOut()
 
 function handleLogin() {
-  formRef.value?.validate((isValid) => {
+  formRef.value?.validate(async (isValid) => {
     if (!isValid) return
-    ElNotification.success('登录成功')
-    router.push('/')
+    try {
+      await userStore.logIn(loginForm)
+      await userStore.getAuthUser()
+      await router.push({ path: REDIRECT_ROUTE.path, query: { path: route.query.redirect }})
+      ElNotification.success('登录成功')
+    } catch (e) {
+      console.error('登录失败:')
+      console.dir(e)
+      ElNotification.error('登录失败，用户名或密码错误')
+    }
   })
 }
 </script>

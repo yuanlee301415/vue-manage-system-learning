@@ -23,11 +23,11 @@
           </el-tooltip>
         </div>
 
-        <el-avatar class="mx-3.5" :size="30" :src="avatarUrl" />
+        <el-avatar class="mx-3.5" :size="30" :src="authUser.avatar" />
 
         <el-dropdown trigger="click" @command="handleCommand">
           <span class="cursor-pointer text-white">
-            {{ userInfo.displayName }}
+            {{ authUser.displayName }}
             <el-icon>
               <arrow-down />
             </el-icon>
@@ -54,7 +54,6 @@ import { ArrowDown, Bell, Expand, Fold } from '@element-plus/icons-vue'
 import { router } from '@/router'
 import { useUserStoreWithOut } from '@/store/modules/user'
 import { useSidebarState } from '@/store/modules/sidebar'
-import avatarUrl from '@/assets/img/avatar.jpg'
 import TABS_ROUTE from '@/router/routes/modules/tabs'
 import USER_ROUTE from '@/router/routes/modules/user'
 import LOGIN_ROUTE from '@/router/routes/modules/login'
@@ -66,7 +65,7 @@ enum Command {
 
 const userStore = useUserStoreWithOut()
 const sidebarStore = useSidebarState()
-const userInfo = computed(() => userStore.getUserInfo)
+const authUser = computed(() => userStore.authUser!)
 
 function handleCommand(command: Command) {
   switch (command) {
@@ -74,8 +73,8 @@ function handleCommand(command: Command) {
       router.push(USER_ROUTE.path)
       break
     case Command.SignOut:
-      router.push(LOGIN_ROUTE.path).then(() => {
-        window.location.reload()
+      userStore.logOut().then(() => {
+        router.push(LOGIN_ROUTE.path)
       })
       break
   }

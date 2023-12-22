@@ -1,4 +1,4 @@
-import { ROOT_ROUTE, HOME_ROUTE, PAGE_NOT_FOUND_ROUTE } from '@/router/routes/basic'
+import { ROOT_ROUTE, HOME_ROUTE, PAGE_NOT_FOUND_ROUTE, REDIRECT_ROUTE } from '@/router/routes/basic'
 import TABLE_ROUTE from '@/router/routes/modules/table'
 import TABS_ROUTE from '@/router/routes/modules/tabs'
 import FORM_ROUTE from '@/router/routes/modules/form'
@@ -15,11 +15,15 @@ export const basicRoutes = [
   TABLE_ROUTE,
   TABS_ROUTE,
   FORM_ROUTE,
-  PERMISSION_ROUTE,
   USER_ROUTE,
   LOGIN_ROUTE,
   // ABOUT_ROUTE,
   // TEST_ROUTE,
   // NESTED_ROUTE,
-  PAGE_NOT_FOUND_ROUTE
+  PAGE_NOT_FOUND_ROUTE,
+  REDIRECT_ROUTE
+]
+
+export const asyncRoutes = [
+  PERMISSION_ROUTE,
 ]

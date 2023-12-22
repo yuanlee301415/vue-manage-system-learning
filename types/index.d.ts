@@ -1,4 +1,4 @@
-import type {QueryParams} from "#/axios";
+import type {QueryParams, Result} from "#/axios";
 
 import User from "@/models/User";
 import {State} from "@/enums/state";
@@ -10,3 +10,6 @@ export type UpdateUser = Omit<User, '_id' | 'createdAt'>
 export type UserParams = QueryParams & {username?: string, address?: string, displayName?: string, state?: State }
 export type LetterParams = QueryParams & { status?: LetterStatus }
 
+export type LoginParams = Pick<User, 'username'>  & {password: string}
+export type LoginResult = Result<{ access_token: string }>
+export type AuthUserResult = Result<{ access_token: string }>
