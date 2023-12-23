@@ -28,6 +28,8 @@ export function getUsersApi({
 export function createUserApi({
   username,
   displayName,
+    password,
+    roles,
   mobile,
   email,
   province,
@@ -43,6 +45,8 @@ export function createUserApi({
     data: {
       username,
       displayName,
+      password,
+      roles,
       mobile,
       email,
       province,
@@ -60,6 +64,8 @@ export function updateUserApi(
   {
     username,
     displayName,
+      password,
+      roles,
     email,
     mobile,
     province,
@@ -78,6 +84,8 @@ export function updateUserApi(
     data: {
       username,
       displayName,
+      password,
+      roles,
       email,
       mobile,
       province,

@@ -15,6 +15,10 @@ export default class User {
   // 显示名
   displayName: string
 
+  password: string
+
+  roles: Role[]
+
   mobile: string
 
   email: string
@@ -43,15 +47,14 @@ export default class User {
   // 个性签名
   signature: string
 
-  // 角色
-  roles: Role[]
-
   createdAt: number
 
   constructor(user: User = {} as User) {
     this._id = user._id
     this.username = user.username
     this.displayName = user.displayName
+    this.password = user.password
+    this.roles = user.roles
     this.email = user.email
     this.mobile = user.mobile
     this.province = user.province

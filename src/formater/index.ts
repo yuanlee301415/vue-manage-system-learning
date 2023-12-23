@@ -2,6 +2,7 @@ import dayjs from 'dayjs'
 
 import { State, StateMap } from '@/enums/state'
 import { Gender, GenderMap } from '@/enums/gender'
+import { Role, RoleMap } from "@/enums/role";
 
 // 状态
 export function formatState(state: State) {
@@ -11,6 +12,11 @@ export function formatState(state: State) {
 // 性别
 export function formatGender(gender: Gender) {
   return GenderMap.get(gender) || '-'
+}
+
+// 角色
+export function formatRole(role: Role) {
+  return RoleMap.get(role) || '-'
 }
 
 // 日期时间

@@ -13,6 +13,16 @@
       <el-input v-model="user.displayName" maxlength="20" placeholder="请输入显示名称" />
     </el-form-item>
 
+    <el-form-item prop="password" label="密码">
+      <el-input v-model="user.password" type="password" maxlength="20" placeholder="请输入密码" />
+    </el-form-item>
+
+    <el-form-item prop="roles" label="角色">
+      <el-select v-model="user.roles" class="w-full" multiple>
+        <el-option v-for="[value, label] of RoleMap" :key="value" :value="value" :label="label"/>
+      </el-select>
+    </el-form-item>
+
     <el-form-item prop="mobile" label="手机号">
       <el-input v-model="user.mobile" maxlength="11" placeholder="请输入手机号" />
     </el-form-item>
@@ -86,6 +96,7 @@ import { FormAction } from '@/enums/formAction'
 import User from '@/models/User'
 import Configure from '@/models/Configure'
 import { State } from '@/enums/state'
+import { RoleMap } from '@/enums/role'
 import { GenderMap } from '@/enums/gender'
 import { NAME_REG, EMAIL_REG, MOBILE_REG } from '@/constants'
 
@@ -110,6 +121,8 @@ const rules: FormRules<User> = {
     }
   ],
   displayName: [{ required: true, trigger: 'blur', message: '请输入显示名称' }],
+  password: [{ required: true, trigger: 'blur', message: '请输入密码' }],
+  roles: [{ required: true, trigger: 'blur', message: '请选择角色' }],
   mobile: [{ required: true, pattern: MOBILE_REG, trigger: 'blur', message: '手机号格式错误' }],
   email: [{ required: true, pattern: EMAIL_REG, trigger: 'blur', message: '邮箱格式错误' }],
   avatar: [{ required: true, trigger: 'blur', message: '请选择头像' }],

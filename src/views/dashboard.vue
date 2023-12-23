@@ -11,7 +11,7 @@
             <el-avatar :src="authUser.avatar" :size="120" />
             <div class="user-info-content pl-[50px] flex-1 text-[14px] text-gray-400">
               <h6 class="text-[30px] text-slate-700">{{ authUser.displayName }}</h6>
-              <p v-if="authUser.roles?.includes(Role.ADMIN)">超级管理员</p>
+              <p>{{ authUser.roles?.map(_ => formatRole(_)).join('、') }}</p>
             </div>
           </div>
 
@@ -135,7 +135,7 @@
 import {ChatDotRound, Goods, User} from '@element-plus/icons-vue'
 import {computed, reactive} from 'vue'
 import {useUserStore} from "@/store/modules/user";
-import {Role} from "@/enums/role";
+import { formatRole } from "@/formater";
 
 class Todo {
   id: number

@@ -205,6 +205,8 @@ function onUserFormSubmit(data: User) {
     _id,
     username,
     displayName,
+      password,
+      roles,
     mobile,
     email,
     province,
@@ -216,6 +218,7 @@ function onUserFormSubmit(data: User) {
     amount,
     state
   } = data
+  console.log('onUserFormSubmit>data:', data)
   const cb = (action: FormAction) => {
     getData()
     ing.value = false
@@ -232,6 +235,8 @@ function onUserFormSubmit(data: User) {
       createUserApi({
         username,
         displayName,
+        password,
+        roles,
         email,
         mobile,
         province,
@@ -243,6 +248,8 @@ function onUserFormSubmit(data: User) {
       }).then((res) => {
         if (res.code !== 0) return
         cb(formAction.value)
+      }).finally(() => {
+        ing.value = false
       })
       break
 
@@ -250,6 +257,8 @@ function onUserFormSubmit(data: User) {
       updateUserApi(_id, {
         username,
         displayName,
+        password,
+        roles,
         email,
         mobile,
         province,
@@ -263,6 +272,8 @@ function onUserFormSubmit(data: User) {
       }).then((res) => {
         if (res.code !== 0) return
         cb(formAction.value)
+      }).finally(() => {
+        ing.value = false
       })
       break
   }
