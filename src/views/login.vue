@@ -8,7 +8,7 @@
       </template>
       <el-form ref="formRef" :model="loginForm" :rules="rules">
         <el-form-item prop="username">
-          <el-input v-model="loginForm.username" prefix-icon="User" />
+          <el-input v-model="loginForm.username" prefix-icon="User" @keydown.enter="handleLogin" />
         </el-form-item>
         <el-form-item prop="password">
           <el-input v-model="loginForm.password" type="password" prefix-icon="Lock" />
@@ -53,7 +53,6 @@ function handleLogin() {
     if (!isValid) return
     try {
       await userStore.logIn(loginForm)
-      await userStore.getAuthUser()
       await router.push({ path: REDIRECT_ROUTE.path, query: { path: route.query.redirect }})
       ElNotification.success('登录成功')
     } catch (e) {

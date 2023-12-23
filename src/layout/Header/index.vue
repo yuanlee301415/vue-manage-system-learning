@@ -65,7 +65,7 @@ enum Command {
 
 const userStore = useUserStoreWithOut()
 const sidebarStore = useSidebarState()
-const authUser = computed(() => userStore.authUser!)
+const authUser = computed(() => userStore.authUser)
 
 function handleCommand(command: Command) {
   switch (command) {
@@ -73,9 +73,8 @@ function handleCommand(command: Command) {
       router.push(USER_ROUTE.path)
       break
     case Command.SignOut:
-      userStore.logOut().then(() => {
-        router.push(LOGIN_ROUTE.path)
-      })
+      router.push(LOGIN_ROUTE.path)
+      userStore.logOut()
       break
   }
 }

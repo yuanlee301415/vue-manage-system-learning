@@ -6,39 +6,38 @@ import { useTagsState } from "@/store/modules/tags";
 import User from '@/models/User'
 import {getAuthUserApi, loginApi} from '@/api/rights'
 import { setAuthToken, removeAuthToken } from "@/utils/auth";
+import { usePermissionStateWithOut } from "@/store/modules/permission";
 
 interface UserState {
-    authUser: Nullable<User>
+    authUser: User
 }
 
+const permission = usePermissionStateWithOut()
 
 export const useUserStore = defineStore({
     id: 'user',
     state: (): UserState => ({
-        authUser: null
+        authUser: new User()
     }),
 
     actions: {
-        setAuthUser(data: User | null) {
-            console.log('setAuthUser>data:', data)
-            this.authUser = data
-        },
-
         async getAuthUser() {
             const res = await getAuthUserApi()
             if (!res.data) {
-                throw new Error('获取用户信息错误')
+                throw new Error('获取用户信息异常')
             }
-            this.setAuthUser(new User(res.data))
+            this.authUser = new User(res.data)
+            return this.authUser
         },
 
         async logIn(data: LoginParams) {
             const res = await loginApi(data)
             const token = res.data?.access_token
             if (!token) {
-                throw '登录失败'
+                throw new Error('登录异常')
             }
             setAuthToken(res.data.access_token)
+            permission.resetRoutes()
             return token
         },
 
@@ -46,7 +45,7 @@ export const useUserStore = defineStore({
             const tags = useTagsState()
             tags.closeAll()
             removeAuthToken()
-            this.setAuthUser(null)
+            this.$reset()
         }
     }
 })

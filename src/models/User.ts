@@ -1,3 +1,5 @@
+import type {Role} from "@/enums/role";
+
 import { State } from '@/enums/state'
 import { Gender } from '@/enums/gender'
 
@@ -41,6 +43,9 @@ export default class User {
   // 个性签名
   signature: string
 
+  // 角色
+  roles: Role[]
+
   createdAt: number
 
   constructor(user: User = {} as User) {
@@ -57,6 +62,7 @@ export default class User {
     this.amount = user.amount
     this.state = user.state
     this.signature = user.signature
+    this.roles = user.roles
     this.createdAt = user.createdAt
   }
 }

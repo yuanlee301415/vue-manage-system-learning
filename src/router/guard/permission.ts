@@ -1,43 +1,45 @@
 import type { Router } from 'vue-router'
-
 import { useUserStoreWithOut } from '@/store/modules/user'
 import { getAuthToken } from "@/utils/auth";
 import LOGIN_ROUTE from "@/router/routes/modules/login";
 import {REDIRECT_ROUTE} from "@/router/routes/basic";
+import { usePermissionStateWithOut } from "@/store/modules/permission";
 
 const whiteList = [LOGIN_ROUTE.path, REDIRECT_ROUTE.path]
+const permissionState = usePermissionStateWithOut()
 
 // 权限
 export function createPermissionGuard(router: Router) {
   const userStore = useUserStoreWithOut()
-  router.beforeEach(async  (to, from, next) => {
+  router.beforeEach(async  (to, from) => {
     const authToken = getAuthToken()
+
     if (!authToken) {
       if (whiteList.includes(to.path)) {
-        next()
-      } else {
-        await userStore.logOut()
-        next({ path: LOGIN_ROUTE.path, query: { redirect: to.path }})
+        return true
       }
-      return
-    }
-    if (to.path === LOGIN_ROUTE.path) {
-      next(from.path ?? '/')
-      return
+      await userStore.logOut()
+      return LOGIN_ROUTE.path
     }
 
-    if (userStore.authUser) {
-      next()
-      return
+    if (to.path === LOGIN_ROUTE.path) {
+      return from.path
+    }
+
+    if (userStore.authUser.username) {
+      return true
     }
 
     try {
-      await userStore.getAuthUser()
+      const user = await userStore.getAuthUser()
+      permissionState.generateRoutes(user?.roles)
     } catch (e) {
+      console.error('createPermissionGuard>error:')
+      console.log(e)
       await userStore.logOut()
-      next({ path: LOGIN_ROUTE.path, query: { redirect: to.path }})
+      return LOGIN_ROUTE.path
     }
-    next()
+    return { ...to, replace: true }
   })
 }
 

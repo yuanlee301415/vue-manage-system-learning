@@ -6,6 +6,9 @@ import {Role} from "@/enums/role";
 const PERMISSION_ROUTE: RouteRecordRaw = {
   path: '/permission',
   component: LAYOUT,
+  meta: {
+    roles: [Role.ADMIN]
+  },
   children: [
     {
       path: '',

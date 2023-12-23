@@ -20,19 +20,21 @@ import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
 import { MenuItem } from './typing'
-import { basicRoutes } from '@/router/routes'
+import { basicRoutes } from "@/router/routes";
+import { usePermissionStateWithOut } from "@/store/modules/permission";
 import SideMenuBar from './SideMenuBar.vue'
 import { useSidebarState } from '@/store/modules/sidebar'
 
 const route = useRoute()
+const permission = usePermissionStateWithOut()
 const currentRoute = computed(() => route.path)
-const items: MenuItem[] = genItems(basicRoutes)
+const items: MenuItem[] = genItems([...basicRoutes, ...permission.addRoutes])
 const userSidebar = useSidebarState()
 
 function genItems(routes: RouteRecordRaw[], items: MenuItem[] = [], index?: string): MenuItem[] {
   for (const route of routes) {
     const item: MenuItem = new MenuItem()
-    if (route.meta) {
+    if (route.meta?.title) {
       item.index = [index, route.path].filter(Boolean).join('/')
       item.meta = route.meta
       item.children = route.children && genItems(route.children, [], item.index)

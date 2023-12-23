@@ -10,8 +10,8 @@
           >
             <el-avatar :src="authUser.avatar" :size="120" />
             <div class="user-info-content pl-[50px] flex-1 text-[14px] text-gray-400">
-              <h6 class="text-[30px] text-slate-700">{{ authUser!.displayName }}</h6>
-              <p>超级管理员</p>
+              <h6 class="text-[30px] text-slate-700">{{ authUser.displayName }}</h6>
+              <p v-if="authUser.roles?.includes(Role.ADMIN)">超级管理员</p>
             </div>
           </div>
 
@@ -132,9 +132,10 @@
 </template>
 
 <script setup lang="ts">
-import { ChatDotRound, Goods, User } from '@element-plus/icons-vue'
+import {ChatDotRound, Goods, User} from '@element-plus/icons-vue'
 import {computed, reactive} from 'vue'
-import { useUserStore } from "@/store/modules/user";
+import {useUserStore} from "@/store/modules/user";
+import {Role} from "@/enums/role";
 
 class Todo {
   id: number
@@ -188,7 +189,7 @@ const todos = reactive(
 )
 
 const userStore = useUserStore()
-const authUser = computed(() => userStore.authUser!)
+const authUser = computed(() => userStore.authUser)
 
 function handleDel(todo: Todo) {
   todos.delete(todo)
