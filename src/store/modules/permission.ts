@@ -5,6 +5,7 @@ import { defineStore } from "pinia";
 import { router } from "@/router";
 import { asyncRoutes } from "@/router/routes";
 import { store } from "@/store";
+import filterAsyncRoutes from "@/utils/filterAsyncRoutes";
 
 type PermissionState = {
     addRoutes: RouteRecordRaw[]
@@ -33,26 +34,6 @@ export const usePermissionState = defineStore({
     }
 })
 
-function filterAsyncRoutes(roles: Role[], routes?: RouteRecordRaw[]): RouteRecordRaw[] {
-    const ret = []
-    if (!routes) return void 0 as unknown as RouteRecordRaw[];
-    for (const route of routes) {
-        const {children, ...temp} = { ...route }
-        if (hasPermission(roles, temp)) {
-            ret.push({
-                ...temp,
-                children: children && filterAsyncRoutes(roles, children)
-            })
-        }
-    }
-    return ret as RouteRecordRaw[]
-}
-
 export function usePermissionStateWithOut() {
     return usePermissionState(store)
-}
-
-function hasPermission(roles: Role[], route: Omit<RouteRecordRaw, 'children'>) {
-    if (!route.meta?.roles) return true
-    return (route.meta.roles as Role[]).some(_ => roles.includes(_))
 }
