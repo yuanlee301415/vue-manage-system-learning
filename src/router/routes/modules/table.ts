@@ -1,6 +1,7 @@
 import type { RouteRecordRaw } from 'vue-router'
 
 import { LAYOUT } from '@/router/constant'
+import {Role} from "@/enums/role";
 
 const TABLE_ROUTE: RouteRecordRaw = {
   path: '/table',
@@ -25,7 +26,8 @@ const TABLE_ROUTE: RouteRecordRaw = {
       name: 'TableImport',
       component: () => import('@/views/table/import.vue'),
       meta: {
-        title: '导入 Excel'
+        title: '导入 Excel',
+        roles: [Role.ADMIN]
       }
     },
     {

@@ -19,7 +19,7 @@ export const usePermissionState = defineStore({
     }),
     actions: {
         generateRoutes(roles: Role[]) {
-            this.addRoutes = filterAsyncRoutes(asyncRoutes, roles)
+            this.addRoutes = filterAsyncRoutes(roles, asyncRoutes)
             for (const route of this.addRoutes) {
                 this.removeRouteFns.push(router.addRoute(route))
             }
@@ -33,25 +33,26 @@ export const usePermissionState = defineStore({
     }
 })
 
-function filterAsyncRoutes(routes: RouteRecordRaw[], roles: Role[]) {
+function filterAsyncRoutes(roles: Role[], routes?: RouteRecordRaw[]): RouteRecordRaw[] {
     const ret = []
+    if (!routes) return void 0 as unknown as RouteRecordRaw[];
     for (const route of routes) {
-        const temp = { ...route }
-        if (hasPermission(temp, roles)) {
-            if (temp.children) {
-                temp.children = filterAsyncRoutes(temp.children, roles)
-            }
-            ret.push(temp)
+        const {children, ...temp} = { ...route }
+        if (hasPermission(roles, temp)) {
+            ret.push({
+                ...temp,
+                children: children && filterAsyncRoutes(roles, children)
+            })
         }
     }
-    return ret
+    return ret as RouteRecordRaw[]
 }
 
 export function usePermissionStateWithOut() {
     return usePermissionState(store)
 }
 
-function hasPermission(route: RouteRecordRaw, roles: Role[]) {
+function hasPermission(roles: Role[], route: Omit<RouteRecordRaw, 'children'>) {
     if (!route.meta?.roles) return true
     return (route.meta.roles as Role[]).some(_ => roles.includes(_))
 }

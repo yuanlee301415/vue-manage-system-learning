@@ -1,7 +1,7 @@
 import type { Router } from 'vue-router'
 import { useUserStoreWithOut } from '@/store/modules/user'
 import { getAuthToken } from "@/utils/auth";
-import LOGIN_ROUTE from "@/router/routes/modules/login";
+import { LOGIN_ROUTE } from '@/router/routes/basic'
 import {REDIRECT_ROUTE} from "@/router/routes/basic";
 import { usePermissionStateWithOut } from "@/store/modules/permission";
 

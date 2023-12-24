@@ -56,7 +56,7 @@ import { useUserStoreWithOut } from '@/store/modules/user'
 import { useSidebarState } from '@/store/modules/sidebar'
 import TABS_ROUTE from '@/router/routes/modules/tabs'
 import USER_ROUTE from '@/router/routes/modules/user'
-import LOGIN_ROUTE from '@/router/routes/modules/login'
+import { LOGIN_ROUTE } from '@/router/routes/basic'
 
 enum Command {
   User,

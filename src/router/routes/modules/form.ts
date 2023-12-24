@@ -1,6 +1,7 @@
 import type { RouteRecordRaw } from 'vue-router'
 
 import { LAYOUT } from '@/router/constant'
+import {Role} from "@/enums/role";
 
 const FORM_ROUTE: RouteRecordRaw = {
   path: '/form',
@@ -24,7 +25,8 @@ const FORM_ROUTE: RouteRecordRaw = {
       path: 'upload',
       name: 'FormUpload',
       meta: {
-        title: '文件上传'
+        title: '文件上传',
+        roles: [Role.ADMIN]
       },
       children: [
         {

@@ -38,3 +38,8 @@ export const PAGE_NOT_FOUND_ROUTE: RouteRecordRaw = {
     }
   ]
 }
+
+export const LOGIN_ROUTE: RouteRecordRaw = {
+  path: '/login',
+  component: () => import('@/views/login.vue')
+}
