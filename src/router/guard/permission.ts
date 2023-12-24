@@ -19,11 +19,11 @@ export function createPermissionGuard(router: Router) {
         return true
       }
       await userStore.logOut()
-      return LOGIN_ROUTE.path
+      return { path:LOGIN_ROUTE.path, query: { redirect: to.path }}
     }
 
     if (to.path === LOGIN_ROUTE.path) {
-      return from.path
+      return from.path ?? '/'
     }
 
     if (userStore.authUser.username) {
@@ -37,8 +37,12 @@ export function createPermissionGuard(router: Router) {
       console.error('createPermissionGuard>error:')
       console.log(e)
       await userStore.logOut()
-      return LOGIN_ROUTE.path
+      return { path:LOGIN_ROUTE.path, query: { redirect: to.path }}
     }
+
+    /**
+     * 强制跳转
+     */
     return { ...to, replace: true }
   })
 }
