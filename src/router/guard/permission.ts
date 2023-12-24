@@ -1,11 +1,10 @@
 import type { Router } from 'vue-router'
 import { useUserStoreWithOut } from '@/store/modules/user'
 import { getAuthToken } from "@/utils/auth";
-import { LOGIN_ROUTE } from '@/router/routes/basic'
-import {REDIRECT_ROUTE} from "@/router/routes/basic";
+import { LOGIN_ROUTE, REDIRECT_ROUTE, EXCEPTION_404_ROUTE } from '@/router/routes/basic'
 import { usePermissionStateWithOut } from "@/store/modules/permission";
 
-const whiteList = [LOGIN_ROUTE.path, REDIRECT_ROUTE.path]
+const whiteList = [LOGIN_ROUTE.path, REDIRECT_ROUTE.path, EXCEPTION_404_ROUTE.path]
 const permissionState = usePermissionStateWithOut()
 
 // 权限
