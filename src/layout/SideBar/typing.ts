@@ -1,7 +1,8 @@
-import type { RouteMeta } from 'vue-router'
-
-export class MenuItem {
+// 菜单目录树
+export class MenuTree {
   index!: string
-  meta!: RouteMeta
-  children?: MenuItem[]
+  name!: string
+  title!: string
+  icon!: string
+  children?: MenuTree[]
 }

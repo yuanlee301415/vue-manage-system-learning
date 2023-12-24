@@ -3,28 +3,28 @@
     <el-sub-menu v-if="item.children" :index="item.index">
       <template #title>
         <el-icon>
-          <component :is="item.meta.icon" />
+          <component :is="item.icon" />
         </el-icon>
-        <span>{{ item.meta.title }}</span>
+        <span>{{ item.title }}</span>
       </template>
       <SideMenuBar :items="item.children" />
     </el-sub-menu>
 
     <el-menu-item v-else :index="item.index">
       <el-icon>
-        <component :is="item.meta.icon" />
+        <component :is="item.icon" />
       </el-icon>
-      <template #title>{{ item.meta.title }}</template>
+      <template #title>{{ item.title }}</template>
     </el-menu-item>
   </template>
 </template>
 
 <script setup lang="ts">
-import { MenuItem } from './typing'
+import { MenuTree } from './typing'
 import { toRef } from 'vue'
 
 const props = defineProps<{
-  items: MenuItem[]
+  items: MenuTree[]
 }>()
 
 const items = toRef(props, 'items')

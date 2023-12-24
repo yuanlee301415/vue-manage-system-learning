@@ -14,37 +14,19 @@
 </template>
 
 <script lang="ts" setup>
-import type { RouteRecordRaw } from 'vue-router'
-
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-
-import { MenuItem } from './typing'
 import { basicRoutes } from "@/router/routes";
-import { usePermissionStateWithOut } from "@/store/modules/permission";
+import { usePermissionState } from "@/store/modules/permission";
 import SideMenuBar from './SideMenuBar.vue'
 import { useSidebarState } from '@/store/modules/sidebar'
+import generateMenuTree from "@/utils/generateMenuTree";
 
 const route = useRoute()
-const permission = usePermissionStateWithOut()
+const permission = usePermissionState()
 const currentRoute = computed(() => route.path)
-const items: MenuItem[] = genItems([...basicRoutes, ...permission.addRoutes])
+const items = generateMenuTree([...basicRoutes, ...permission.addRoutes])
 const userSidebar = useSidebarState()
+console.log('Sidebar>items:', items)
 
-function genItems(routes: RouteRecordRaw[], items: MenuItem[] = [], index?: string): MenuItem[] {
-  for (const route of routes) {
-    const item: MenuItem = new MenuItem()
-    if (route.meta?.title) {
-      item.index = [index, route.path].filter(Boolean).join('/')
-      item.meta = route.meta
-      item.children = route.children && genItems(route.children, [], item.index)
-      items.push(item)
-    } else {
-      if (route.children) {
-        genItems(route.children, items, route.path)
-      }
-    }
-  }
-  return items
-}
 </script>

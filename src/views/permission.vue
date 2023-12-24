@@ -28,52 +28,33 @@
 </template>
 
 <script setup lang="ts">
-import type { RouteRecordRaw } from 'vue-router'
+import type {MenuTree} from "@/layout/SideBar/typing";
 
 import { reactive, ref } from 'vue'
 import { ElTree } from 'element-plus'
 import { Role, RoleMap } from '@/enums/role'
 import { basicRoutes } from '@/router/routes'
+import { usePermissionState } from "@/store/modules/permission";
+import generateMenuTree from "@/utils/generateMenuTree";
 
-type Tree = {
-  name: string | Symbol
-  title: string
-  children?: Tree[]
-}
 
 const treeProps = {
   label: 'title',
   children: 'children'
 }
 const treeRef = ref<InstanceType<typeof ElTree>>()
+const permission = usePermissionState()
 const formData = reactive({
   role: Role.ADMIN,
-  treeData: reactive<Tree[]>(genTreeData(basicRoutes))
+  treeData: reactive<MenuTree[]>(generateMenuTree([...basicRoutes, ...permission.addRoutes]))
 })
 const checkedKeys: string[] = []
+console.log('treeData:', formData.treeData)
 
 function handleSave() {
   console.log('save:', treeRef.value?.getCheckedKeys())
 }
 
-function genTreeData(routes: RouteRecordRaw[]): Tree[] {
-  function _(routes: RouteRecordRaw[], items: Tree[] = []): Tree[] {
-    for (const route of routes) {
-      if (route.meta) {
-        const parent: Tree = {
-          name: route.name!,
-          title: route.meta.title as unknown as string
-        }
-        parent.children = route.children && _(route.children)
-        items.push(parent)
-      } else if (route.children) {
-        _(route.children, items)
-      }
-    }
-    return items
-  }
-  return _(routes)
-}
 </script>
 
 <style scoped></style>
