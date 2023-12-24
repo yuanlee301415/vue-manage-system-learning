@@ -27,6 +27,6 @@ const permission = usePermissionState()
 const currentRoute = computed(() => route.path)
 const items = generateMenuTree([...basicRoutes, ...permission.addRoutes])
 const userSidebar = useSidebarState()
-console.log('Sidebar>items:', items)
+// console.log('Sidebar>items:', items)
 
 </script>

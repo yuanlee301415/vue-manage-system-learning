@@ -3,7 +3,7 @@
     <el-row :gutter="20">
       <!--user-->
       <el-col :span="8">
-        <el-card shadow="hover" class="mb-[20px] h-[252px]">
+        <el-card class="mb-[20px] h-[252px]">
           <div
             class="user-info flex items-center pb-[20px] mb-[20px]"
             style="border-bottom: 2px solid #ccc"
@@ -11,7 +11,9 @@
             <el-avatar :src="authUser.avatar" :size="120" />
             <div class="user-info-content pl-[50px] flex-1 text-[14px] text-gray-400">
               <h6 class="text-[30px] text-slate-700">{{ authUser.displayName }}</h6>
-              <p>{{ authUser.roles?.map(_ => formatRole(_)).join('、') }}</p>
+              <p v-for="role of authUser.roles">
+                <span>{{ formatRole(role) }}</span>
+              </p>
             </div>
           </div>
 
@@ -28,15 +30,14 @@
         </el-card>
 
         <!--语言详情-->
-        <el-card header="语言详情" shadow="hover" class="h-[252px]">
-          <b>Vue</b>
-          <el-progress :percentage="79.4" color="#42b983" />
-          <b>Typescript</b>
-          <el-progress :percentage="14" color="#f1e05a" />
-          <b>CSS</b>
-          <el-progress :percentage="5.6" />
-          <b>HTML</b>
-          <el-progress :percentage="1" color="#f56c6c" />
+        <el-card class="h-[252px]">
+          <template #header>
+            <span class="text-base">语言详情</span>
+          </template>
+          <template v-for="_ of languages" :key="_.title">
+            <b>{{ _.title }}</b>
+            <el-progress :percentage="_.percentage" :color="_.color" />
+          </template>
         </el-card>
         <!--语言详情 End-->
       </el-col>
@@ -50,7 +51,7 @@
               <el-card class="h-[100px]" body-style="padding:0;">
                 <div class="flex items-center">
                   <el-icon size="50" class="bg-blue-500 w-[100px] h-[100px] text-white">
-                    <User />
+                    <User/>
                   </el-icon>
                   <dl class="flex-1 text-center">
                     <dd class="text-blue-500 text-3xl font-medium">1234</dd>
@@ -59,12 +60,13 @@
                 </div>
               </el-card>
             </el-col>
+
             <el-col :span="8">
-              <el-card class="h-[100px]" body-style="padding:0">
+              <el-card class="h-[100px]" body-style="padding:0;">
                 <div class="flex items-center">
-                  <el-icon size="50" class="bg-green-500 w-[100px] h-[100px] text-white"
-                    ><ChatDotRound
-                  /></el-icon>
+                  <el-icon size="50" class="bg-green-500 w-[100px] h-[100px] text-white">
+                    <ChatDotRound/>
+                  </el-icon>
                   <dl class="flex-1 text-center">
                     <dd class="text-green-500 text-3xl font-medium">321</dd>
                     <dt class="text-sm">系统消息</dt>
@@ -72,12 +74,13 @@
                 </div>
               </el-card>
             </el-col>
+
             <el-col :span="8">
-              <el-card class="h-[100px]" body-style="padding:0">
+              <el-card class="h-[100px]" body-style="padding:0;">
                 <div class="flex items-center">
-                  <el-icon size="50" class="bg-red-500 w-[100px] h-[100px] text-white"
-                    ><Goods
-                  /></el-icon>
+                  <el-icon size="50" class="bg-red-500 w-[100px] h-[100px] text-white">
+                    <Goods/>
+                  </el-icon>
                   <dl class="flex-1 text-center">
                     <dd class="text-red-500 text-3xl font-medium">5000</dd>
                     <dt class="text-sm">商品数量</dt>
@@ -167,7 +170,6 @@ class Todos {
     const idx = this.list.findIndex((_) => _.id === todo.id)
     if (idx === -1) return
     this.list.splice(idx, 1)
-    console.log('delete>list:', this.list)
   }
   confirm(todo: Todo) {
     delete todo.isNew
@@ -190,10 +192,7 @@ const todos = reactive(
 
 const userStore = useUserStore()
 const authUser = computed(() => userStore.authUser)
-
-function handleDel(todo: Todo) {
-  todos.delete(todo)
-}
+const languages = _getLanguages()
 
 function handleAdd() {
   todos.add(
@@ -209,6 +208,24 @@ function handleConfirm(todo: Todo) {
   if (!todo.text || !todo.text.trim()) return
   todos.confirm(todo)
 }
+
+function handleDel(todo: Todo) {
+  todos.delete(todo)
+}
+
+function _getLanguages() {
+  const languages = ['Vue', 'Typescript', 'CSS', 'HTML']
+  const colors = ['#f56c6c', '#e6a23c', '#5cb87a', '#6f7ad3']
+  return languages.map(_ => {
+    const percentage = (Math.random() * 1000 | 0) / 10
+    return {
+      title: _,
+      percentage,
+      color: colors[Math.round(percentage / 25)]
+    }
+  })
+}
+
 </script>
 
 <style scoped></style>

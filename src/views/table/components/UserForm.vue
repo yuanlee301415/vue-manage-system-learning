@@ -32,7 +32,7 @@
     </el-form-item>
 
     <el-form-item prop="avatar" label="头像">
-      <el-select v-model="user.avatar" class="w-full">
+      <el-select v-model="user.avatar" class="w-full" filterable>
         <el-option v-for="_ of AVATARS" :key="_.value" :label="_.label" :value="_.value">
           <div class="flex justify-center items-center">
             <el-avatar :size="20" :src="_.value" />
@@ -62,7 +62,7 @@
     </template>
 
     <el-form-item prop="province" label="省份">
-      <el-select v-model="user.province" class="w-full" placeholder="请选择省份">
+      <el-select v-model="user.province" class="w-full" placeholder="请选择省份" filterable>
         <el-option v-for="_ of province" :key="_.value" :label="_.label" :value="_.value" />
       </el-select>
     </el-form-item>

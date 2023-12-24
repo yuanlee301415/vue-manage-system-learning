@@ -7,7 +7,7 @@
         </el-form-item>
 
         <el-form-item>
-          <el-select v-model="params.province" placeholder="省份" clearable class="w-[200px]">
+          <el-select v-model="params.province" placeholder="省份" clearable filterable class="w-[200px]">
             <el-option
               v-for="_ of province"
               :key="_.value"
