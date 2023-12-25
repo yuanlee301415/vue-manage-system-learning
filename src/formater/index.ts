@@ -20,7 +20,9 @@ export function formatRole(role: Role) {
 }
 
 // 日期时间
-export function formatDate(date: number, format = 'YYYY-MM-DD HH:mm:ss') {
+export function formatDate(date: number | string, format = 'YYYY-MM-DD HH:mm:ss') {
+  const time = new Date(date).getTime()
+  if (Number.isNaN(time)) return '-'
   return dayjs(date).format(format)
 }
 

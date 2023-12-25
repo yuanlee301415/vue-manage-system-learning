@@ -14,7 +14,7 @@
     <div class="float-right pr-[50px]">
       <div class="head-user-con flex items-center">
         <div class="flex items-center cursor-pointer h-[30px]">
-          <el-tooltip effect="dark" content="消息中心" placement="bottom">
+          <el-tooltip effect="dark" :content="authUser.unread ? `有${authUser.unread}条未读消息` : '消息中心'" placement="bottom">
             <el-badge is-dot @click="$router.push(TABS_ROUTE.path)">
               <el-icon :size="30">
                 <Bell />

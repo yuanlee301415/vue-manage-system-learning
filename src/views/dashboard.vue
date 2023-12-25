@@ -20,7 +20,7 @@
           <div class="text-gray-400">
             <el-row>
               <el-col :span="12">上次登录时间：</el-col>
-              <el-col :span="12">2023-10-24</el-col>
+              <el-col :span="12">{{ formatDate(authUser.lastSignInTime) }}</el-col>
             </el-row>
             <el-row>
               <el-col :span="12">上次登录地点：</el-col>
@@ -138,7 +138,7 @@
 import {ChatDotRound, Goods, User} from '@element-plus/icons-vue'
 import {computed, reactive} from 'vue'
 import {useUserStore} from "@/store/modules/user";
-import { formatRole } from "@/formater";
+import {formatDate, formatRole} from "@/formater";
 
 class Todo {
   id: number

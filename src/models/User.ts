@@ -47,6 +47,12 @@ export default class User {
   // 个性签名
   signature: string
 
+  // 上次登录时间
+  lastSignInTime: string
+
+  // 未读消息数
+  unread: number
+
   createdAt: number
 
   constructor(user: User = {} as User) {
@@ -65,7 +71,8 @@ export default class User {
     this.amount = user.amount
     this.state = user.state
     this.signature = user.signature
-    this.roles = user.roles
+    this.lastSignInTime = user.lastSignInTime
+    this.unread = user.unread
     this.createdAt = user.createdAt
   }
 }
