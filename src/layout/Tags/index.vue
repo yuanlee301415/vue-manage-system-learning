@@ -5,7 +5,7 @@
         <div
           v-for="tag of tags.list"
           :key="tag.name"
-          :class="{ active: $route.path === tag.path }"
+          :class="{ active: $route.name === tag.name }"
           class="tag"
         >
           <router-link :to="tag.path">{{ tag.title }}</router-link>
