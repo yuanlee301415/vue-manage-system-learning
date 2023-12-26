@@ -13,7 +13,6 @@ export const basicRoutes = [
   LOGIN_ROUTE,
   HOME_ROUTE,
   EXCEPTION_404_ROUTE,
-  PAGE_NOT_FOUND_ROUTE,
   REDIRECT_ROUTE
 ]
 
@@ -26,4 +25,5 @@ export const asyncRoutes = [
   // ABOUT_ROUTE,
   // TEST_ROUTE,
   // NESTED_ROUTE,
+  PAGE_NOT_FOUND_ROUTE,
 ]

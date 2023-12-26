@@ -14,20 +14,14 @@ export function createPermissionGuard(router: Router) {
     const authToken = getAuthToken()
 
     if (!authToken) {
-      if (whiteList.includes(to.path)) {
-        return true
-      }
+      if (whiteList.includes(to.path)) return true
       await userStore.logOut()
       return { path:LOGIN_ROUTE.path, query: { redirect: to.path }}
     }
 
-    if (to.path === LOGIN_ROUTE.path) {
-      return from.path ?? '/'
-    }
+    if (to.path === LOGIN_ROUTE.path) return from.path ?? '/'
 
-    if (userStore.authUser.username) {
-      return true
-    }
+    if (userStore.authUser.username) return true
 
     try {
       const user = await userStore.getAuthUser()
