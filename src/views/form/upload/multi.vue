@@ -51,6 +51,10 @@ import { ElNotification } from 'element-plus'
 import { uploadMultiApi } from '@/api/common'
 import { formatDate, formatFileSize } from '@/formater'
 
+defineOptions({
+  name: 'FormMulti'
+})
+
 const config = {
   name: 'files',
   limit: 3,

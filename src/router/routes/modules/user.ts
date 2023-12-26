@@ -12,7 +12,7 @@ const USER_ROUTE: RouteRecordRaw = {
   children: [
     {
       path: '',
-      name: 'User',
+      name: 'UserCenter',
       component: () => import('@/views/user.vue'),
       meta: {
         title: '个人中心',

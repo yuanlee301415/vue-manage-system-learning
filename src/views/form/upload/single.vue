@@ -40,6 +40,10 @@ import { ElNotification } from 'element-plus'
 import { uploadSingleApi } from '@/api/common'
 import { formatFileSize } from '@/formater'
 
+defineOptions({
+  name: 'FormSingle'
+})
+
 const config = {
   name: 'file',
   limit: 1,

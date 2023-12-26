@@ -47,6 +47,10 @@ import {asyncRoutes, basicRoutes} from '@/router/routes'
 import filterAsyncRoutes from "@/utils/filterAsyncRoutes";
 import generateMenuTree from "@/utils/generateMenuTree";
 
+defineOptions({
+  name: 'Permission'
+})
+
 const treeProps = {
   label: 'title',
   children: 'children'

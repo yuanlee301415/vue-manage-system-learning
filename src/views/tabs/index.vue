@@ -120,6 +120,10 @@ type LetterData = {
   size: number
 }
 
+defineOptions({
+  name: 'Tabs'
+})
+
 const tabName = ref<LetterStatus>(LetterStatus.UNREAD)
 
 const letter = reactive<{

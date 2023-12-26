@@ -72,6 +72,10 @@ type BasicForm = {
   desc: string
 }
 
+defineOptions({
+  name: 'FormBasic'
+})
+
 const types = [
   { value: 'success', label: '成功' },
   { value: 'warning', label: '警告' },

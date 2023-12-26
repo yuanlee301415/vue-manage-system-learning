@@ -46,6 +46,10 @@ import { GenderMap } from '@/enums/gender'
 import { getStudentsApi } from '@/api/student'
 import { formatDate, formatGender } from '@/formater'
 
+defineOptions({
+  name: 'TableExport'
+})
+
 const studentData = reactive<{
   list: Student[]
   total: number

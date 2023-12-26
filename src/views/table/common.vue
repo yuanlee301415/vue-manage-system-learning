@@ -127,6 +127,10 @@ import { FormAction } from '@/enums/formAction'
 import { State, StateMap } from '@/enums/state'
 import { formatState, formatDate } from '@/formater'
 
+defineOptions({
+  name: 'TableCommon'
+})
+
 const province = ref<Configure[]>([])
 
 const params = reactive<UserParams>({

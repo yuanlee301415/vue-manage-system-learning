@@ -190,6 +190,10 @@ const todos = reactive(
   )
 )
 
+defineOptions({
+  name: 'Dashboard'
+})
+
 const userStore = useUserStore()
 const authUser = computed(() => userStore.authUser)
 const languages = _getLanguages()

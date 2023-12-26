@@ -95,6 +95,10 @@ type UserForm = {
   signature: string
 }
 
+defineOptions({
+  name: 'UserCenter'
+})
+
 const userStore = useUserStoreWithOut()
 const authUser = computed(() => userStore.authUser!)
 

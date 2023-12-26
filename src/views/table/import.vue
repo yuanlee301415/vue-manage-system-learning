@@ -59,6 +59,10 @@ import { Gender } from '@/enums/gender'
 import { getStudentsApi, importStudentsApi } from '@/api/student'
 import { formatDate, formatGender } from '@/formater'
 
+defineOptions({
+  name: 'TableImport'
+})
+
 const studentData = reactive<{
   list: Student[]
   total: number
