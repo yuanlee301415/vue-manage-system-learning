@@ -7,7 +7,13 @@
         </el-form-item>
 
         <el-form-item>
-          <el-select v-model="params.province" placeholder="省份" clearable filterable class="w-[200px]">
+          <el-select
+            v-model="params.province"
+            placeholder="省份"
+            clearable
+            filterable
+            class="w-[200px]"
+          >
             <el-option
               v-for="_ of province"
               :key="_.value"
@@ -209,8 +215,8 @@ function onUserFormSubmit(data: User) {
     _id,
     username,
     displayName,
-      password,
-      roles,
+    password,
+    roles,
     mobile,
     email,
     province,
@@ -249,12 +255,14 @@ function onUserFormSubmit(data: User) {
         gender,
         avatar,
         signature
-      }).then((res) => {
-        if (res.code !== 0) return
-        cb(formAction.value)
-      }).finally(() => {
-        ing.value = false
       })
+        .then((res) => {
+          if (res.code !== 0) return
+          cb(formAction.value)
+        })
+        .finally(() => {
+          ing.value = false
+        })
       break
 
     case FormAction.EDIT:
@@ -273,12 +281,14 @@ function onUserFormSubmit(data: User) {
         signature,
         amount,
         state
-      }).then((res) => {
-        if (res.code !== 0) return
-        cb(formAction.value)
-      }).finally(() => {
-        ing.value = false
       })
+        .then((res) => {
+          if (res.code !== 0) return
+          cb(formAction.value)
+        })
+        .finally(() => {
+          ing.value = false
+        })
       break
   }
 }

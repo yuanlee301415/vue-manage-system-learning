@@ -19,7 +19,7 @@
 
     <el-form-item prop="roles" label="角色">
       <el-select v-model="user.roles" class="w-full" multiple>
-        <el-option v-for="[value, label] of RoleMap" :key="value" :value="value" :label="label"/>
+        <el-option v-for="[value, label] of RoleMap" :key="value" :value="value" :label="label" />
       </el-select>
     </el-form-item>
 

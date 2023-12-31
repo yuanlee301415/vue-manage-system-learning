@@ -24,14 +24,14 @@
 
 <script setup lang="ts">
 import type { FormInstance, FormRules } from 'element-plus'
-import type {LoginParams} from "#/index";
+import type { LoginParams } from '#/index'
 
 import { reactive, ref } from 'vue'
 import { ElNotification } from 'element-plus'
 import { useRoute } from 'vue-router'
 import { router } from '@/router'
-import { useUserStoreWithOut } from "@/store/modules/user";
-import { REDIRECT_ROUTE } from "@/router/routes/basic";
+import { useUserStoreWithOut } from '@/store/modules/user'
+import { REDIRECT_ROUTE } from '@/router/routes/basic'
 
 const title = import.meta.env.VITE_APP_TITLE
 const loginForm = reactive<LoginParams>({
@@ -53,7 +53,7 @@ function handleLogin() {
     if (!isValid) return
     try {
       await userStore.logIn(loginForm)
-      await router.push({ path: REDIRECT_ROUTE.path, query: { path: route.query.redirect }})
+      await router.push({ path: REDIRECT_ROUTE.path, query: { path: route.query.redirect } })
       ElNotification.success('登录成功')
     } catch (e) {
       console.error('登录失败:')

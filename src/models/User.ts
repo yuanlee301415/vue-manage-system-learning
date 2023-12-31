@@ -1,4 +1,4 @@
-import type {Role} from "@/enums/role";
+import type { Role } from '@/enums/role'
 
 import { State } from '@/enums/state'
 import { Gender } from '@/enums/gender'

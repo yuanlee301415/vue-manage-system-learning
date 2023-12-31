@@ -14,11 +14,12 @@
 
       <el-form-item label="菜单：">
         <el-checkbox
-            v-model="checkAll"
-            :indeterminate="isIndeterminate"
-            class="basis-full"
-            @change="handleCheckAllChange"
-        >Check all</el-checkbox>
+          v-model="checkAll"
+          :indeterminate="isIndeterminate"
+          class="basis-full"
+          @change="handleCheckAllChange"
+          >Check all</el-checkbox
+        >
         <el-tree
           ref="treeRef"
           :data="treeData"
@@ -37,15 +38,15 @@
 </template>
 
 <script setup lang="ts">
-import type {RouteRecordRaw} from "vue-router";
-import type {MenuTree} from "@/layout/SideBar/typing";
+import type { RouteRecordRaw } from 'vue-router'
+import type { MenuTree } from '@/layout/SideBar/typing'
 
-import {reactive, ref} from 'vue'
-import {ElTree} from 'element-plus'
-import {Role, RoleMap} from '@/enums/role'
-import {asyncRoutes, basicRoutes} from '@/router/routes'
-import filterAsyncRoutes from "@/utils/filterAsyncRoutes";
-import generateMenuTree from "@/utils/generateMenuTree";
+import { reactive, ref } from 'vue'
+import { ElTree } from 'element-plus'
+import { Role, RoleMap } from '@/enums/role'
+import { asyncRoutes, basicRoutes } from '@/router/routes'
+import filterAsyncRoutes from '@/utils/filterAsyncRoutes'
+import generateMenuTree from '@/utils/generateMenuTree'
 
 defineOptions({
   name: 'Permission'
@@ -57,7 +58,7 @@ const treeProps = {
 }
 const treeRef = ref<InstanceType<typeof ElTree>>()
 const formData = reactive({
-  role: Role.ADMIN,
+  role: Role.ADMIN
 })
 const treeData = reactive<MenuTree[]>(generateMenuTree([...basicRoutes, ...asyncRoutes]))
 const checkedKeys = ref<string[]>(_getPermissionKeys([formData.role]))
@@ -116,7 +117,6 @@ function _getPermissionKeys(roles: Role[]) {
   }
   return _(routes)
 }
-
 </script>
 
 <style scoped></style>

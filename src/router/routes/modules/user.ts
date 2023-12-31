@@ -1,7 +1,7 @@
 import type { RouteRecordRaw } from 'vue-router'
 
 import { LAYOUT } from '@/router/constant'
-import {Role} from "@/enums/role";
+import { Role } from '@/enums/role'
 
 const USER_ROUTE: RouteRecordRaw = {
   path: '/user',

@@ -16,7 +16,7 @@
             </div>
           </div>
           <h3 class="py-2">{{ authUser.displayName }}</h3>
-          <p>{{ authUser.roles?.map(_ => formatRole(_)).join('、') }}</p>
+          <p>{{ authUser.roles?.map((_) => formatRole(_)).join('、') }}</p>
           <p>{{ authUser.signature }}</p>
         </div>
       </el-card>
@@ -86,7 +86,7 @@ import { ElNotification, ElUpload, genFileId } from 'element-plus'
 import { useUserStoreWithOut } from '@/store/modules/user'
 import { uploadSingleApi } from '@/api/common'
 import { NAME_REG } from '@/constants'
-import {formatFileSize, formatRole} from '@/formater'
+import { formatFileSize, formatRole } from '@/formater'
 
 type UserForm = {
   oldPassword: string

@@ -2,7 +2,7 @@ import dayjs from 'dayjs'
 
 import { State, StateMap } from '@/enums/state'
 import { Gender, GenderMap } from '@/enums/gender'
-import { Role, RoleMap } from "@/enums/role";
+import { Role, RoleMap } from '@/enums/role'
 
 // 状态
 export function formatState(state: State) {

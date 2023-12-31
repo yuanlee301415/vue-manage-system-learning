@@ -51,7 +51,7 @@
               <el-card class="h-[100px]" body-style="padding:0;">
                 <div class="flex items-center">
                   <el-icon size="50" class="bg-blue-500 w-[100px] h-[100px] text-white">
-                    <User/>
+                    <User />
                   </el-icon>
                   <dl class="flex-1 text-center">
                     <dd class="text-blue-500 text-3xl font-medium">1234</dd>
@@ -65,7 +65,7 @@
               <el-card class="h-[100px]" body-style="padding:0;">
                 <div class="flex items-center">
                   <el-icon size="50" class="bg-green-500 w-[100px] h-[100px] text-white">
-                    <ChatDotRound/>
+                    <ChatDotRound />
                   </el-icon>
                   <dl class="flex-1 text-center">
                     <dd class="text-green-500 text-3xl font-medium">321</dd>
@@ -79,7 +79,7 @@
               <el-card class="h-[100px]" body-style="padding:0;">
                 <div class="flex items-center">
                   <el-icon size="50" class="bg-red-500 w-[100px] h-[100px] text-white">
-                    <Goods/>
+                    <Goods />
                   </el-icon>
                   <dl class="flex-1 text-center">
                     <dd class="text-red-500 text-3xl font-medium">5000</dd>
@@ -135,10 +135,10 @@
 </template>
 
 <script setup lang="ts">
-import {ChatDotRound, Goods, User} from '@element-plus/icons-vue'
-import {computed, reactive} from 'vue'
-import {useUserStore} from "@/store/modules/user";
-import {formatDate, formatRole} from "@/formater";
+import { ChatDotRound, Goods, User } from '@element-plus/icons-vue'
+import { computed, reactive } from 'vue'
+import { useUserStore } from '@/store/modules/user'
+import { formatDate, formatRole } from '@/formater'
 
 class Todo {
   id: number
@@ -220,8 +220,8 @@ function handleDel(todo: Todo) {
 function _getLanguages() {
   const languages = ['Vue', 'Typescript', 'CSS', 'HTML']
   const colors = ['#f56c6c', '#e6a23c', '#5cb87a', '#6f7ad3']
-  return languages.map(_ => {
-    const percentage = (Math.random() * 1000 | 0) / 10
+  return languages.map((_) => {
+    const percentage = ((Math.random() * 1000) | 0) / 10
     return {
       title: _,
       percentage,
@@ -229,7 +229,6 @@ function _getLanguages() {
     }
   })
 }
-
 </script>
 
 <style scoped></style>
